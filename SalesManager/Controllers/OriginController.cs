@@ -122,9 +122,9 @@ namespace SalesManager.Controllers
                 {
                     foreach (var item in model.DisplayOrders)
                     {
-                        new Warranty
+                        new Origin
                         {
-                            WarrantyId = item.WarrantyId,
+                            OriginId = item.WarrantyId,
                             DisplayOrder = item.DisplayOrder
                         }.UpdateDisplayOrder();
                     }

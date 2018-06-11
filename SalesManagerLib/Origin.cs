@@ -258,6 +258,20 @@ namespace SalesManagerLib
             return RetVal;
         }
 
+        public void UpdateDisplayOrder()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("Origin_Update_DisplayOrder") { CommandType = CommandType.StoredProcedure };
+                sqlCommand.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
+                sqlCommand.Parameters.Add(new SqlParameter("@OriginId", this.OriginId));
+                this.db.ExecuteSQL(sqlCommand);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
     }
 }
