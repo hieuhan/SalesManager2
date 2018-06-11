@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{783C7058-0FA6-4A5A-B07A-E7FD1016E757}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SalesManagerLib</RootNamespace>
+    <AssemblyName>SalesManagerLib</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions.cs" />
+    <Compile Include="ActionStatus.cs" />
+    <Compile Include="CustomerGroups.cs" />
+    <Compile Include="Customers.cs" />
+    <Compile Include="DBAccess.cs" />
+    <Compile Include="Genders.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="LibConstants.cs" />
+    <Compile Include="Manufacturers.cs" />
+    <Compile Include="md5.cs" />
+    <Compile Include="MediaGroups.cs" />
+    <Compile Include="Medias.cs" />
+    <Compile Include="MediaTypes.cs" />
+    <Compile Include="OrderByClauses.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReviewStatus.cs" />
+    <Compile Include="RoleActions.cs" />
+    <Compile Include="Roles.cs" />
+    <Compile Include="Stores.cs" />
+    <Compile Include="StringUtil.cs" />
+    <Compile Include="Suppliers.cs" />
+    <Compile Include="SystemErrors.cs" />
+    <Compile Include="SystemMessages.cs" />
+    <Compile Include="Units.cs" />
+    <Compile Include="UserActions.cs" />
+    <Compile Include="UserRoles.cs" />
+    <Compile Include="Users.cs" />
+    <Compile Include="UserStatus.cs" />
+    <Compile Include="UserTypes.cs" />
+    <Compile Include="Warehouse.cs" />
+    <Compile Include="WarehouseStatus.cs" />
+    <Compile Include="Warranty.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

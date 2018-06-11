@@ -1,0 +1,110 @@
+﻿@using SalesManager.Models
+@using SalesManager.AppCode
+@model ActionsModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chọn chức năng mặc định</title>
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/Js")
+</head>
+<body class="w3-padding">
+    <form action="@(SalesManagerConstants.ROOT_PATH)Actions/Select" method="post">
+        <div class="w3-row w3-padding-bottom">
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Từ khóa:</label>
+            </div>
+            <div class="w3-col s3">
+                @Html.TextBoxFor(m => m.ActionName, new { @class = "w3-input w3-round w3-border w3-padding-small" })
+            </div>
+        </div>
+        <div class="w3-row w3-padding-bottom">
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Chức năng cha:</label>
+            </div>
+            <div class="w3-col s3">
+                @Html.DropDownListFor(m => m.ParentActionId, new SelectList(Model.ListParentActions, "ActionId", "ActionDesc", Model.ParentActionId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            </div>
+            <div class="w3-col s2 w3-padding-left">
+                <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
+                    <i class="fa fa-search"></i> Tìm kiếm
+                </button>
+            </div>
+        </div>
+        <hr style="margin:5px 0 5px">
+    </form>
+
+    @using (Html.BeginForm("MultipleAction", "Actions", FormMethod.Post, null))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger w3-center" })
+        @Html.AntiForgeryToken()
+        <div>
+            <div class="w3-padding-top w3-left">
+                <b>Tổng cộng: @(Model.ListActions.HasValue() ? Model.ListActions.Count : 0) chức năng</b>
+            </div>
+            <div class="w3-padding-bottom w3-right">
+            </div>
+        </div>
+        <div>
+            <table class="w3-table w3-bordered w3-striped w3-border">
+                <thead class="w3-blue">
+                    <tr>
+                        <th class="w3-border w3-center">#</th>
+                        <th class="w3-border">Tên</th>
+                        <th class="w3-border">Mô tả</th>
+                        <th class="w3-border">Url</th>
+                        <th class="w3-border w3-center">Hiển thị</th>
+                        <th class="w3-border w3-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.ListActions.HasValue())
+                    {
+                        for (int index = 0; index < Model.ListActions.Count; index++)
+                        {
+                            var action = Model.ListActions[index];
+                            <tr>
+                                <td class="w3-border w3-center">@(index + 1)</td>
+                                <td class="w3-border">
+                                    <b>
+                                        @if (action.ParentActionId > 0)
+                                        {
+                                            @:<span>&nbsp;&nbsp;&nbsp;</span>
+                                        } @action.ActionName
+                                    </b>
+                                </td>
+                                <td class="w3-border">
+                                    @if (action.ParentActionId > 0)
+                                    {
+                                        @:<span>&nbsp;&nbsp;&nbsp;</span>
+                                    } @action.ActionDesc
+                                </td>
+                                <td class="w3-border">@action.Url</td>
+                                <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(action.Display == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
+                                <td class="w3-border w3-center">
+                                    @if (action.ParentActionId > 0)
+                                    {
+                                        <a href="#" data-id="@action.ActionId" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange action-select" title="Chọn chức năng"></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        {
+            Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
+        }
+    }
+</body>
+</html>
+
+

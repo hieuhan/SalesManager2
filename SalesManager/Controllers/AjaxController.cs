@@ -1,0 +1,57 @@
+﻿using SalesManager.AppCode;
+using SalesManager.AppCode.Attributes;
+using SalesManagerLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace SalesManager.Controllers
+{
+    public class AjaxController : Controller
+    {
+        // GET: Ajax
+
+        [HttpPost]
+        [SalesManagerAuthorize]
+        public AjaxResult MediaSelect(int mediaId = 0)
+        {
+            string mediaPath = string.Empty;
+            if (mediaId > 0)
+            {
+                var media = new Medias { MediaId = mediaId }.Get();
+
+                if (media.MediaId > 0)
+                {
+                    mediaPath = media.FilePath;
+                }
+            }
+            return new AjaxResult
+            {
+                StatusCode = 200,
+                AllowGet = true,
+                Message = mediaPath,
+                Completed = !string.IsNullOrEmpty(mediaPath)
+            };
+        }
+
+        [HttpPost]
+        [SalesManagerAuthorize]
+        public AjaxResult ActionSelect(short actionId = 0)
+        {
+            Actions action = null;
+            if (actionId > 0)
+            {
+                action = new Actions { ActionId = actionId }.Get(actionId);
+            }
+            return new AjaxResult
+            {
+                StatusCode = 200,
+                AllowGet = true,
+                Data = action,
+                Completed = action.ActionId > 0
+            };
+        }
+    }
+}

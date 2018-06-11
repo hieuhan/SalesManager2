@@ -1,0 +1,85 @@
+﻿@using SalesManagerLib
+@using SalesManager.Models
+@using SalesManager.AppCode
+@model StoresModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a.popup').on('click', function (e) {
+            var page = $(this).attr("href");
+            var cdialog = $('<div id="divEdit" style="overflow:hidden;"></div>')
+                .html('<iframe id="ifEdit" style="border: 0px;" src="' + page + '" width="100%" height="100%" scrolling="yes"></iframe>')
+                .dialog({
+                    autoOpen: false,
+                    modal: true,
+                    height: 500,
+                    width: 650,
+                    title: $(this).attr("title"),
+                    closeText: 'Đóng',
+                    close: function (event, ui) {
+                        $(this).remove();
+                        window.location = salesManager.virtualPath('/Stores/Index');
+                    }
+                });
+            cdialog.dialog('open');
+            e.preventDefault();
+        });
+    });
+</script>
+
+<div>
+    <div class="w3-padding-top w3-left">
+        <b>Tổng cộng: @Model.RowCount</b>
+    </div>
+    <div class="w3-padding-bottom w3-right">
+    </div>
+</div>
+<div>
+    <table class="w3-table w3-bordered w3-striped w3-border">
+        <thead class="w3-blue">
+            <tr>
+                <th class="w3-border w3-center">#</th>
+                <th class="w3-border w3-center">Tên</th>
+                <th class="w3-border w3-center">Mô tả</th>
+                <th class="w3-border w3-center">Địa chỉ</th>
+                <th class="w3-border w3-center">Điện thoại</th>
+                <th class="w3-border w3-center">Email</th>
+                <th class="w3-border w3-center">Website</th>
+                <th class="w3-border w3-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListStores.HasValue())
+            {
+                for (int i = 0; i < Model.ListStores.Count; i++)
+                {
+                    var store = Model.ListStores[i];
+            <tr>
+                <td class="w3-border w3-center">@(i + 1)</td>
+                <td class="w3-border ">@store.StoreName</td>
+                <td class="w3-border ">@store.StoreDesc</td>
+                <td class="w3-border">@store.Address</td>
+                <td class="w3-border">@store.Mobile</td>
+                <td class="w3-border w3-center">@store.Email</td>
+                <td class="w3-border w3-center">@store.Website</td>
+                <td class="w3-border w3-center">
+                    <a href="@(SalesManagerConstants.ROOT_PATH)Stores/Edit?storeId=@store.StoreId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section menudieuhuong{
+    <div class="menudieuhuong">
+        <div class="menudieuhuong_conen">
+            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
+            <b>Thông tin cửa hàng</b>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,86 @@
+﻿@using SalesManagerLib
+@using SalesManager.Models
+@using SalesManager.AppCode
+@model SystemErrorsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Từ ngày:</label>
+        </div>
+        <div class="w3-col s3">
+            <div class="w3-col s5">
+                @Html.TextBoxFor(m => m.DateFrom, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+            </div>
+            <div class="w3-col s2 w3-padding-top w3-padding-left">
+                <label class="w3-label">Đến:</label>
+            </div>
+            <div class="w3-col s5">
+                @Html.TextBoxFor(m => m.DateTo, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+            </div>
+        </div>
+        <div class="w3-col s2 w3-padding-left">
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+        </div>
+    </div>
+    <hr style="margin: 5px 0 5px">
+}
+@Html.AntiForgeryToken()
+<div>
+    <div class="w3-padding-top w3-left">
+        <b>Tổng cộng: @Model.RowCount</b>
+    </div>
+    <div class="w3-padding-bottom w3-right">
+    </div>
+</div>
+<div>
+    <table class="w3-table w3-bordered w3-striped w3-border">
+        <thead class="w3-blue">
+            <tr>
+                <th class="w3-border w3-center">#</th>
+                <th class="w3-border w3-center" width="50px">ErrorLevelId</th>
+                <th class="w3-border w3-center" width="50%">Thông tin lỗi</th>
+                <th class="w3-border w3-center">ObjectId</th>
+                <th class="w3-border w3-center">Tên thủ tục</th>
+                <th class="w3-border w3-center">Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListSystemErrors.HasValue())
+            {
+                for (int i = 0; i < Model.ListSystemErrors.Count; i++)
+                {
+                    var systemError = Model.ListSystemErrors[i];
+                    int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
+                    <tr>
+                        <td class="w3-border w3-center">@(number)</td>
+                        <td class="w3-border w3-center">@systemError.ErrorLevelId</td>
+                        <td class="w3-border">@systemError.SystemErrorInfo</td>
+                        <td class="w3-border w3-center">@systemError.ObjectId</td>
+                        <td class="w3-border">@systemError.ObjectName</td>
+                        <td class="w3-border w3-center">
+                            @systemError.CrDateTime.toString("dd/MM/yyyy HH:mm")
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@{
+    Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
+}
+@section menudieuhuong{
+    <div class="menudieuhuong">
+        <div class="menudieuhuong_conen">
+            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
+            <b>Nhật ký hệ thống</b>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,63 @@
+﻿@using SalesManager.AppCode
+@using SalesManagerLib
+@model List<Actions>
+<div class="logoconten">
+    <div class="logotop">
+        <span class="tieudehethong">
+            Hệ thống quản trị nội dung
+        </span>
+    </div>
+    <div class="logotopright">
+        <div id="divDateTime" class="datetime">@DateTime.Now.ToString("dd-MM-yyyy HH:mm")</div>
+        &nbsp;&nbsp;&nbsp;
+        @if (SessionHelpers.UserId > 0)
+        {
+            <ul class="menu_admin">
+                <li>
+                    <a href="#">
+                        Xin chào
+                        @SessionHelpers.UserName				<img src="@Url.Content("~/assets/images/admin.png")" alt="admin" />
+                    </a>
+                    <ul>
+                        <li><a href="@(SalesManagerConstants.ROOT_PATH)Users/ChangePassword" title="Đổi mật khẩu" class="html5adminadmin popup">Đổi mật khẩu</a></li>
+                        <li><a href="@(SalesManagerConstants.ROOT_PATH)Users/Profile" title="Thông tin profile" class="html5adminadmin popup">Thông tin profile</a></li>
+                        <li><a href="@(SalesManagerConstants.ROOT_PATH)Users/Logout" title="Đăng xuất tài khoản" class="html5adminadmin">Thoát</a></li>
+                    </ul>
+                </li>
+            </ul>
+        }
+    </div>
+</div>
+
+<div class="menu">
+    <ul id="nav">
+        <li class="site-name"><a href="@(SalesManagerConstants.ROOT_PATH)" title="Trang chủ">&nbsp;</a></li>
+        @if (Model.HasValue())
+        {
+            foreach (var item in Model)
+            {
+                if (item.ParentActionId == 0)
+                {
+                    var listActions = Model.ListActionsByParentId(item.ActionId);
+                    <li class="menudown">
+                        <a href="@item.Url" title="@item.ActionDesc">@item.ActionDesc</a>
+                        @if (listActions.HasValue())
+                        {
+                            <ul>
+                                @foreach (var action in listActions)
+                                {
+                                    <li><a href="@(SalesManagerConstants.ROOT_PATH)@action.Url">@action.ActionDesc</a></li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            }
+        }
+        @if (SessionHelpers.UserId <= 0)
+        {
+            <li class="menudown"><a href="@(SalesManagerConstants.ROOT_PATH)Users/Login" title="Đăng nhập">&nbsp;Đăng nhập</a></li>
+        }
+    </ul>
+</div>
+

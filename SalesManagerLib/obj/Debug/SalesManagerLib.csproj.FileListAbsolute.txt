@@ -1,0 +1,17 @@
+D:\Projects\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.dll
+D:\Projects\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.pdb
+D:\Projects\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csproj.CoreCompileInputs.cache
+D:\Projects\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.dll
+D:\Projects\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.pdb
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csprojResolveAssemblyReference.cache
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csproj.CoreCompileInputs.cache
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.dll
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.pdb
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.dll
+C:\Users\hieuht\Desktop\pj\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.pdb
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.dll
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.pdb
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csprojResolveAssemblyReference.cache
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csproj.CoreCompileInputs.cache
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.dll
+C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.pdb
