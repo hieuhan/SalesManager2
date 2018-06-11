@@ -1,1 +1,218 @@
-﻿
+﻿@using SalesManagerLib
+@using SalesManager.Models
+@using SalesManager.AppCode
+@model ProductsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('a.popup').on('click',
+                function (e) {
+                    var page = $(this).attr("href");
+                    var cdialog = $('<div id="divEdit" style="overflow:hidden;"></div>')
+                        .html('<iframe id="ifEdit" style="border: 0px;" src="' +
+                        page +
+                        '" width="100%" height="100%" scrolling="yes"></iframe>')
+                        .dialog({
+                            autoOpen: false,
+                            modal: true,
+                            height: 650,
+                            width: 650,
+                            title: $(this).attr("title"),
+                            closeText: 'Đóng',
+                            close: function (event, ui) {
+                                $(this).remove();
+                                window.location = cms.virtualPath('/Products/Index');
+                            }
+                        });
+                    cdialog.dialog('open');
+                    e.preventDefault();
+                });
+
+            $('a.popupviewfile').on('click',
+                function (e) {
+                    var page = $(this).attr("href");
+                    var cdialog = $('<div id="divEdit" style="overflow:hidden;"></div>')
+                        .html('<iframe id="ifEdit" style="border: 0px;" src="' +
+                        page +
+                        '" width="100%" height="100%" scrolling="yes"></iframe>')
+                        .dialog({
+                            autoOpen: false,
+                            modal: true,
+                            height: 500,
+                            width: 650,
+                            title: $(this).attr("title"),
+                            closeText: 'Đóng',
+                            close: function (event, ui) {
+                                $(this).remove();
+                            }
+                        });
+                    cdialog.dialog('open');
+                    e.preventDefault();
+                });
+        });
+    </script>
+
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Từ khóa :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.TextBoxFor(m => m.ProductName, new { @class = "w3-input w3-round w3-border  w3-padding-small" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Hãng sản xuất :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.ManufacturerId, new SelectList(Model.ListManufacturers, "ManufacturerId", "ManufacturerDesc", Model.ManufacturerId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Nhóm sản phẩm :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.ProductGroupId, new SelectList(Model.ListProductGroups, "ProductGroupId", "ProductGroupDesc", Model.ProductGroupId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+    </div>
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Loại sản phẩm :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.ProductTypeId, new SelectList(Model.ListProductTypes, "ProductTypeId", "ProductTypeDesc", Model.ProductTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Nguồn gốc (xuất xứ) :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.OriginId, new SelectList(Model.ListOrigin, "OriginId", "OriginDesc", Model.OriginId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Thời hạn bảo hành :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.WarrantyId, new SelectList(Model.ListWarranty, "WarrantyId", "WarrantyDesc", Model.WarrantyId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+    </div>
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Đơn vị tính :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.ListUnits, "UnitId", "UnitDesc", Model.UnitId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Trạng thái :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width: 12%;">
+            <label class="w3-label">Người tạo :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+    </div>
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Sắp xếp :</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+
+        </div>
+        <div class="w3-col s1 w3-padding-top w3-padding-left" style="width:12%;">
+        </div>
+        <div class="w3-col s2">
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+        </div>
+    </div>
+    <hr style="margin: 5px 0 5px">
+}
+@using (Html.BeginForm("MultipleAction", "Products", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false, "", new { @class = "text-danger w3-center" })
+    <div>
+        <div class="w3-padding-top w3-left">
+            <b>Tổng cộng: @Model.RowCount</b>
+        </div>
+        <div class="w3-padding-bottom w3-right">
+            <a href="@(SalesManagerConstants.ROOT_PATH)Products/Edit"
+               class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange"
+               title="Tạo mới"><i class="fa fa-plus"></i>Thêm mới</a>
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange"
+                    name="delete" value="delete" type="submit">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="w3-table w3-bordered w3-striped w3-border">
+            <thead class="w3-blue">
+                <tr>
+                    <th class="w3-border w3-center">#</th>
+                    <th class="w3-border w3-center" width="20%">Tên</th>
+                    <th class="w3-border w3-center" width="20%">Nhà cung cấp</th>
+                    <th class="w3-border w3-center">Icon</th>
+                    <th class="w3-border w3-center">Đơn vị tính</th>
+                    <th class="w3-border w3-center">Tạo bởi</th>
+                    <th class="w3-border w3-center">Thao tác</th>
+                    <th class="w3-border w3-center"><input id="selectall" type="checkbox" class="w3-check"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListProducts.HasValue())
+                {
+                    for (int i = 0; i < Model.ListProducts.Count; i++)
+                    {
+                        var product = Model.ListProducts[i];
+                        <tr>
+                            <td class="w3-border w3-center">@(i + 1)</td>
+                            <td class="w3-border"><b>@product.ProductName</b></td>
+                            <td class="w3-border">@Manufacturers.Static_Get(product.ManufacturerId, Model.ListManufacturers).ManufacturerDesc</td>
+                            <td class="w3-border w3-center">
+                                @if (Helpers.FileUploadHelpers.IsImageFile(product.ImagePath.TrimmedOrDefault(string.Empty)))
+                                {
+                                    <a class="popupviewfile" href="@(string.Concat(!product.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, product.ImagePath))" alt="icon menuitem" title="Xem trước file"><img src="@(string.Concat(!product.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, product.ImagePath.Replace("Original", "Icon")))" style="width: 40px; height: 40px" /></a>
+                                }
+                            </td>
+                            <td class="w3-border w3-center">
+                                @Units.Static_Get(product.UnitId, Model.ListUnits).UnitDesc
+                            </td>
+                            <td class="w3-border w3-center w3-small">
+                                <label class="w3-label">
+                                    @Users.Static_Get(product.CrUserId, Model.ListUsers).UserName
+                                </label>
+                                <br />@product.CrDateTime.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+                            <td class="w3-border w3-center">
+                                <a href="@(SalesManagerConstants.ROOT_PATH)Products/Edit?productId=@product.ProductId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange" title="Sửa thông tin"></a>
+                                <a href="@(SalesManagerConstants.ROOT_PATH)Products/Delete?productId=@product.ProductId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Bạn muốn xóa dữ liệu này ?');" title="Xóa dữ liệu"></a>
+                            </td>
+                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="ProductsId" value="@product.ProductId"></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    {
+        Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
+    }
+}
+@section menudieuhuong{
+    <div class="menudieuhuong">
+        <div class="menudieuhuong_conen">
+            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
+            <b>Danh sách sản phẩm</b>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,241 @@
+﻿@using SalesManagerLib
+@using SalesManager.Models
+@using SalesManager.AppCode
+@model ProductsEditModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="khungcontenpading">
+    <script type="text/javascript" src="/assets/Integrated/ckeditor/ckeditor.js?t=C6HH5UF"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (!(typeof CKEDITOR == 'undefined')) {
+                var editor = CKEDITOR.replace('ProductContent', {
+                    filebrowserBrowseUrl: '/medias/select',
+                    filebrowserUploadUrl: '/medias/edit',
+                    enterMode: CKEDITOR.ENTER_DIV
+                });
+            }
+        });
+    </script>
+    @using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {@Html.AntiForgeryToken()
+    <div class="w3-container" style="overflow: hidden;">
+        <!--Begin LeftTop 7/12-->
+
+        <div class="w3-col s7 w3-padding-top">
+            <!-- Line 1 -->
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Nhóm sản phẩm:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.DropDownListFor(m => m.ProductGroupId, new SelectList(Model.ListProductGroups, "ProductGroupId", "ProductGroupDesc", Model.ProductGroupId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+
+            <div class="w3-col s2 w3-padding-top w3-padding-left">
+                <label class="w3-label">Loại sản phẩm:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.DropDownListFor(m => m.ProductTypeId, new SelectList(Model.ListProductTypes, "ProductTypeId", "ProductTypeDesc", Model.ProductTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+            <!-- Line 2 -->
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Hãng sản xuất:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.DropDownListFor(m => m.ManufacturerId, new SelectList(Model.ListManufacturers, "ManufacturerId", "ManufacturerDesc", Model.ManufacturerId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+
+            <div class="w3-col s2 w3-padding-top w3-padding-left">
+                <label class="w3-label">Nguồn gốc:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.DropDownListFor(m => m.OriginId, new SelectList(Model.ListOrigin, "OriginId", "OriginDesc", Model.OriginId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+            <!-- Line 3 -->
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Tiêu đề:</label>
+            </div>
+            <div class="w3-col s10 w3-padding-top">
+                @Html.ValidationMessageFor(m => m.ProductName, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(m => m.ProductName, new { @class = "w3-input w3-border w3-round w3-padding-small" })
+            </div>
+            <!-- Line 5 -->
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Ảnh:</label>
+            </div>
+            <div class="w3-col s10 w3-padding-top">
+                <img alt="Chọn ảnh" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? string.Concat(!Model.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, Model.ImagePath) : string.Empty)" onclick="SelectName()" Id="popup-media" style="width: 60px; height: 40px; cursor: pointer;" />
+                @*<img alt="Chọn ảnh" src="" onclick="SelectName()" id="popup-media" style="width: 60px;height: 40px; cursor:pointer;">*@
+                <input type="checkbox" id="Display" name="Display" class="w3-check">			<label class="w3-label1">Xóa ảnh</label>
+            </div>
+        </div>
+        <!--End LeftTop-->
+        <!--Begin RightTop 5/12-->
+        <div class="w3-col s5 w3-padding-top w3-padding-left">
+
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Bảo hành:</label>
+            </div>
+            <div class="w3-col s10 w3-padding-top">
+                @Html.DropDownListFor(m => m.WarrantyId, new SelectList(Model.ListWarranty, "WarrantyId", "WarrantyDesc", Model.WarrantyId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Trạng thái:</label>
+            </div>
+            <div class="w3-col s10 w3-padding-top">
+                @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+            <div class="w3-col s2 w3-padding-top">
+                <label class="w3-label">Đơn vị tính:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.ListUnits, "UnitId", "UnitDesc", Model.UnitId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+            </div>
+            <div class="w3-col s2 w3-padding-top w3-padding-left">
+                <label class="w3-label">Thứ tự:</label>
+            </div>
+            <div class="w3-col s4 w3-padding-top">
+                @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "w3-input w3-border w3-round w3-padding-small", type = "number", min = "0" })
+            </div>
+
+        </div>
+        <!--End RightTop-->
+        <!--Begin Bottom-->
+        <div class="w3-col s12 w3-padding-top">
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Nội dung:</label>
+            </div>
+            <div class="w3-col s11 w3-padding-top">
+                @Html.TextAreaFor(m=>m.ProductContent, new { @class = "w3-input w3-border w3-round w3-padding-small ckeditor" })
+            </div>
+        </div>
+        <div class="w3-col s12 w3-padding-top">
+            <div class="w3-col s11 w3-padding-top">
+            </div>
+            @Html.HiddenFor(m => m.ProductId)
+            @Html.HiddenFor(m => m.ImagePath)
+        </div>
+        <!--Begin Bottom-->
+    </div>
+    <div class="w3-right-align w3-bottom w3-padding-large">
+        <a class="w3-btn w3-border w3-round w3-blue" href="/Products/Index">
+            <i class="fa fa-floppy-o fa-reply"></i> <b>Quay lại</b>
+        </a>
+        <button class="w3-btn w3-border w3-round w3-blue" type="submit" name="SaveBack" value="SaveBack">
+            <i class="fa fa-floppy-o"></i> <b>Lưu và quay lại</b>
+        </button>
+        <button class="w3-btn w3-border w3-round w3-blue" type="submit" name="SaveAdd" value="SaveAdd">
+            <i class="fa fa-plus"></i> <b>Lưu và thêm mới</b>
+        </button>
+    </div>
+}
+    <script type="text/javascript">
+        $("#SiteId").change(function () {
+            var value = $(this).val();
+            $.ajax({
+                type: "get",
+                url: "/jsondata/get_category/" + value,
+                success: function (response) {
+                    if (response != null) {
+                        $("#CategoryId option")
+                            .not(":first").remove();
+                        parsed = $.parseJSON(response);
+                        $.each(parsed, function (key, value) {
+                            $("#CategoryId")
+                                .append($("<option></option>")
+                                    .attr("value", value.CategoryId)
+                                    .text(value.CategoryDesc));
+                        });
+                    }
+                }
+            });
+        });
+        // $("select#DataTypeId").change(function() {
+        //     var value = $(this).val();
+        // 	window.location.href = updateQueryStringParameter(window.location.href,"DataTypeId", value);
+        // });
+        // $("select#SiteId").change(function() {
+        //     var value = $(this).val();
+        // 	window.location.href = updateQueryStringParameter(window.location.href,"SiteId", value);
+        // });
+        // $("select#CategoryId").change(function() {
+        //     var value = $(this).val();
+        // 	window.location.href = updateQueryStringParameter(window.location.href,"CategoryId", value);
+        // });
+        //Thêm mới hoặc cập nhật key query string url
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            }
+            else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+        function SelectName() {
+            popup = window.open("/medias/select", "Popup", "width=850,height=550,scrollbars=1");
+            popup.focus();
+            return false
+        }
+        $(function () {
+
+            function split(val) {
+                return val.split(/,\s*/);
+            }
+            function extractLast(term) {
+                return split(term).pop();
+            }
+
+            $("#AuthorDesc").autocomplete({
+                source: function (request, response) {
+
+                    var val = extractLast(request.term);
+                    var siteid = $("#SiteId").val();
+                    $.ajax({
+                        url: "/jsondata/getTopAuthor/" + siteid + "?keyword=" + val,
+                        dataType: "json",
+                        type: "get",
+                        //contentType: "application/json; charset=utf-8",
+                        dataFilter: function (data) { return data; },
+                        success: function (data) {
+                            response($.ui.autocomplete.filter(
+                                data, extractLast(request.term)));
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(textStatus);
+                        }
+                    });
+                },
+                minLength: 0,
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push("");
+                    this.value = terms.join(", ");
+                    return false;
+                }
+            });
+            $.ui.autocomplete.filter = function (array, term) {
+                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+                return $.grep(array, function (value) {
+                    return matcher.test(value.label || value.value || value);
+                });
+            };
+        });
+    </script>
+    <div class="clear5px"></div>
+</div>
+@section menudieuhuong{
+    <div class="menudieuhuong">
+        <div class="menudieuhuong_conen">
+            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
+            <b>Thêm/Sửa thông tin sản phẩm</b>
+        </div>
+    </div>
+}

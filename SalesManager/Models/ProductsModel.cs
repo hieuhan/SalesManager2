@@ -12,6 +12,7 @@ namespace SalesManager.Models
         public short[] ProductsId { get; set; }
         public string ProductName { get; set; }
         public int ManufacturerId { get; set; }
+        public int UserId { get; set; }
         public short UnitId { get; set; }
         public short ProductGroupId { get; set; }
         public short ProductTypeId { get; set; }
@@ -19,6 +20,7 @@ namespace SalesManager.Models
         public short WarrantyId { get; set; }
         public byte StatusId { get; set; }
         public int DisplayOrder { get; set; }
+        public string OrderBy { get; set; }
         public string SubmitType { get; set; }
         public List<Products> ListProducts { get; set; }
         public List<Manufacturers> ListManufacturers { get; set; }
@@ -28,6 +30,8 @@ namespace SalesManager.Models
         public List<Warranty> ListWarranty { get; set; }
         public List<Units> ListUnits { get; set; }
         public List<Status> ListStatus { get; set; }
+        public List<Users> ListUsers { get; set; }
+        public List<OrderByClauses> ListOrderByClauses { get; set; }
         /// <summary>
         /// Danh sách thứ tự hiển thị
         /// </summary>
@@ -53,6 +57,18 @@ namespace SalesManager.Models
         public int DisplayOrder { get; set; }
         public int CrUserId { get; set; }
         public int UpdateUserId { get; set; }
+        public DateTime CrDateTime { get; set; }
+
+        public List<Products> ListProducts { get; set; }
+        public List<Manufacturers> ListManufacturers { get; set; }
+        public List<ProductGroups> ListProductGroups { get; set; }
+        public List<ProductTypes> ListProductTypes { get; set; }
+        public List<Origin> ListOrigin { get; set; }
+        public List<Warranty> ListWarranty { get; set; }
+        public List<Units> ListUnits { get; set; }
+        public List<Status> ListStatus { get; set; }
+        public List<Users> ListUsers { get; set; }
+        public List<OrderByClauses> ListOrderByClauses { get; set; }
     }
 
     public class ProductsDisplayOrders

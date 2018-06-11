@@ -296,7 +296,15 @@ namespace SalesManagerLib
             RetVal = m_Manufacturers.ManufacturerName;
             return RetVal;
         }
-
+        //-------------------------------------------------------------- 
+        public static Manufacturers Static_Get(int manufacturerId, List<Manufacturers> listManufacturers)
+        {
+            Manufacturers RetVal;
+            RetVal = listManufacturers.Find(x => x.ManufacturerId == manufacturerId);
+            if (RetVal == null)
+                RetVal = new Manufacturers();
+            return RetVal;
+        }
         #endregion
     }
 }
