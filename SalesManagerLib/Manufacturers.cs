@@ -271,6 +271,22 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
+        public List<Manufacturers> GetList()
+        {
+            List<Manufacturers> RetVal = new List<Manufacturers>();
+            try
+            {
+                string sql = "SELECT * FROM Manufacturers";
+                SqlCommand cmd = new SqlCommand(sql);
+                RetVal = Init(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RetVal;
+        }
+        //--------------------------------------------------------------
         public static string Static_GetDisplayString(int ManufacturerId)
         {
             string RetVal = "";

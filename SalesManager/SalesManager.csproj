@@ -159,6 +159,8 @@
     <Compile Include="Controllers\MediasController.cs" />
     <Compile Include="Controllers\OriginController.cs" />
     <Compile Include="Controllers\ProductGroupsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductTypesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
@@ -179,6 +181,8 @@
     <Compile Include="Models\MediasModel.cs" />
     <Compile Include="Models\OriginModel.cs" />
     <Compile Include="Models\ProductGroupsModel.cs" />
+    <Compile Include="Models\ProductsModel.cs" />
+    <Compile Include="Models\ProductTypesModel.cs" />
     <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\SharedModel.cs" />
     <Compile Include="Models\StoresModel.cs" />
@@ -917,6 +921,9 @@
     <Content Include="Views\Origin\Edit.cshtml" />
     <Content Include="Views\ProductGroups\Index.cshtml" />
     <Content Include="Views\ProductGroups\Edit.cshtml" />
+    <Content Include="Views\ProductTypes\Index.cshtml" />
+    <Content Include="Views\ProductTypes\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

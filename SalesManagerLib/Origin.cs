@@ -248,6 +248,22 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
+        public List<Origin> GetList()
+        {
+            List<Origin> RetVal = new List<Origin>();
+            try
+            {
+                string sql = "SELECT * FROM Origin";
+                SqlCommand cmd = new SqlCommand(sql);
+                RetVal = Init(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RetVal;
+        }
+        //--------------------------------------------------------------
         public static string Static_GetDisplayString(short OriginId)
         {
             string RetVal = "";

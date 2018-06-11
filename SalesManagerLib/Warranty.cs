@@ -248,6 +248,22 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
+        public List<Warranty> GetList()
+        {
+            List<Warranty> RetVal = new List<Warranty>();
+            try
+            {
+                string sql = "SELECT * FROM Warranty";
+                SqlCommand cmd = new SqlCommand(sql);
+                RetVal = Init(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RetVal;
+        }
+        //--------------------------------------------------------------
         public static string Static_GetDisplayString(short WarrantyId)
         {
             string RetVal = "";

@@ -248,6 +248,22 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
+        public List<ProductTypes> GetList()
+        {
+            List<ProductTypes> RetVal = new List<ProductTypes>();
+            try
+            {
+                string sql = "SELECT * FROM ProductTypes";
+                SqlCommand cmd = new SqlCommand(sql);
+                RetVal = Init(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RetVal;
+        }
+        //--------------------------------------------------------------
         public static string Static_GetDisplayString(short ProductTypeId)
         {
             string RetVal = "";
@@ -256,6 +272,21 @@ namespace SalesManagerLib
             m_ProductTypes = m_ProductTypes.Get();
             RetVal = m_ProductTypes.ProductTypeName;
             return RetVal;
+        }
+
+        public void UpdateDisplayOrder()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("ProductTypes_Update_DisplayOrder") { CommandType = CommandType.StoredProcedure };
+                sqlCommand.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
+                sqlCommand.Parameters.Add(new SqlParameter("@ProductTypeId", this.ProductTypeId));
+                this.db.ExecuteSQL(sqlCommand);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion

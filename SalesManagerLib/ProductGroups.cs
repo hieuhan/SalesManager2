@@ -248,6 +248,22 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
+        public List<ProductGroups> GetList()
+        {
+            List<ProductGroups> RetVal = new List<ProductGroups>();
+            try
+            {
+                string sql = "SELECT * FROM ProductGroups";
+                SqlCommand cmd = new SqlCommand(sql);
+                RetVal = Init(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RetVal;
+        }
+        //--------------------------------------------------------------
         public static string Static_GetDisplayString(short ProductGroupId)
         {
             string RetVal = "";
