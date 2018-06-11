@@ -1,7 +1,7 @@
 ﻿@using SalesManagerLib
 @using SalesManager.Models
 @using SalesManager.AppCode
-@model OriginModel
+@model ProductGroupsModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -20,7 +20,7 @@
                     closeText: 'Đóng',
                     close: function (event, ui) {
                         $(this).remove();
-                        window.location = salesManager.virtualPath('/Origin/Index');
+                        window.location = salesManager.virtualPath('/ProductGroups/Index');
                     }
                 });
             cdialog.dialog('open');
@@ -29,13 +29,13 @@
     });
 </script>
 
-<form action="@(SalesManagerConstants.ROOT_PATH)Origin/Index" method="post">
+<form action="@(SalesManagerConstants.ROOT_PATH)ProductGroups/Index" method="post">
     <div class="w3-row w3-padding-bottom">
         <div class="w3-col s1 w3-padding-top">
             <label class="w3-label">Từ khóa:</label>
         </div>
         <div class="w3-col s3">
-            @Html.TextBoxFor(m => m.OriginName, new { @class = "w3-input w3-round w3-border  w3-padding-small" })
+            @Html.TextBoxFor(m => m.ProductGroupsName, new { @class = "w3-input w3-round w3-border  w3-padding-small" })
         </div>
         <div class="w3-col s1 w3-padding-left">
             <button class="w3-btn w3-round w3-light-grey w3-border" type="submit"><i class="fa fa-search"></i> Tìm kiếm</button>
@@ -43,7 +43,7 @@
     </div>
     <hr style="margin:5px 0 5px">
 </form>
-@using (Html.BeginForm("MultipleAction", "Origin", FormMethod.Post, null))
+@using (Html.BeginForm("MultipleAction", "ProductGroups", FormMethod.Post, null))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(false, "", new { @class = "text-danger w3-center" })
@@ -52,7 +52,7 @@
             <b>Tổng cộng: @Model.RowCount</b>
         </div>
         <div class="w3-padding-bottom w3-right">
-            <a href="@(SalesManagerConstants.ROOT_PATH)Origin/Edit" class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup" title="Tạo mới"><i class="fa fa-plus"></i> Thêm mới</a>
+            <a href="@(SalesManagerConstants.ROOT_PATH)ProductGroups/Edit" class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup" title="Tạo mới"><i class="fa fa-plus"></i> Thêm mới</a>
             <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="updateOrders" type="submit"><i class="fa fa-floppy-o"></i> Cập nhật thứ tự</button>
             <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="SubmitType" value="deleteItems" onclick="return confirm('Bạn muốn xóa dữ liệu này?');" type="submit"><i class="fa fa-trash"></i> Xóa</button>
         </div>
@@ -70,24 +70,24 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.ListOrigin.HasValue())
+                @if (Model.ListProductGroups.HasValue())
                 {
-                    for (int i = 0; i < Model.ListOrigin.Count; i++)
+                    for (int i = 0; i < Model.ListProductGroups.Count; i++)
                     {
-                        var origin = Model.ListOrigin[i];
+                        var productGroup = Model.ListProductGroups[i];
                         <tr>
                             <td class="w3-border w3-center">@(i + 1)</td>
-                            <td class="w3-border ">@origin.OriginName</td>
-                            <td class="w3-border ">@origin.OriginDesc</td>
+                            <td class="w3-border ">@productGroup.ProductGroupName</td>
+                            <td class="w3-border ">@productGroup.ProductGroupDesc</td>
                             <td class="w3-border w3-center">
-                                <input type="number" name="DisplayOrders[@i].DisplayOrder" value="@origin.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
-                                <input type="hidden" name="DisplayOrders[@i].OriginId" value="@origin.OriginId" />
+                                <input type="number" name="DisplayOrders[@i].DisplayOrder" value="@productGroup.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
+                                <input type="hidden" name="DisplayOrders[@i].ProductGroupId" value="@productGroup.ProductGroupId" />
                             </td>
                             <td class="w3-border w3-center">
-                                <a href="@(SalesManagerConstants.ROOT_PATH)Origin/Edit?originId=@origin.OriginId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
-                                <a href="@(SalesManagerConstants.ROOT_PATH)Origin/Delete?originId=@origin.OriginId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Bạn muốn xóa dữ liệu này?');" title="Xóa dữ liệu"></a>
+                                <a href="@(SalesManagerConstants.ROOT_PATH)ProductGroups/Edit?productGroupId=@productGroup.ProductGroupId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
+                                <a href="@(SalesManagerConstants.ROOT_PATH)ProductGroups/Delete?productGroupId=@productGroup.ProductGroupId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Bạn muốn xóa dữ liệu này?');" title="Xóa dữ liệu"></a>
                             </td>
-                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="OriginsId" value="@origin.OriginId"></td>
+                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="WarrantysId" value="@productGroup.ProductGroupId"></td>
                         </tr>
                     }
                 }
@@ -102,7 +102,7 @@
     <div class="menudieuhuong">
         <div class="menudieuhuong_conen">
             <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
-            <b>Danh sách nguồn gốc (xuất xứ) hàng hóa </b>
+            <b>Danh sách nhóm sản phẩm </b>
         </div>
     </div>
 }

@@ -1,25 +1,25 @@
-﻿using System;
+﻿using SalesManager.AppCode;
+using SalesManager.AppCode.Attributes;
+using SalesManager.Models;
+using SalesManagerLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SalesManager.AppCode;
-using SalesManager.AppCode.Attributes;
-using SalesManager.Models;
-using SalesManagerLib;
 
 namespace SalesManager.Controllers
 {
     [SalesManagerAuthorize]
-    public class OriginController : Controller
+    public class ProductGroupsController : Controller
     {
-        // GET: Origin
-        public ActionResult Index(string originName = "", int page = 1)
+        // GET: ProductGroups
+        public ActionResult Index(string productGroupName = "", int page = 1)
         {
             int rowCount = 0;
-            var model = new OriginModel
+            var model = new ProductGroupsModel
             {
-                ListOrigin = new Origin { OriginName = originName}.GetPage("",SalesManagerConstants.RowAmount20,page > 0 ? page - 1 : page, ref rowCount),
+                ListProductGroups = new ProductGroups { ProductGroupName = productGroupName }.GetPage("", SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {
@@ -33,18 +33,18 @@ namespace SalesManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(short originId = 0)
+        public ActionResult Edit(short productGroupId = 0)
         {
-            var model = new OriginEditModel();
-            if (originId > 0)
+            var model = new ProductGroupsEditModel();
+            if (productGroupId > 0)
             {
-                var origin = new Origin { OriginId = originId }.Get();
-                if (origin.OriginId > 0)
+                var productGroup = new ProductGroups { ProductGroupId = productGroupId }.Get();
+                if (productGroup.ProductGroupId > 0)
                 {
-                    model.OriginId = origin.OriginId;
-                    model.OriginName = origin.OriginName;
-                    model.OriginDesc = origin.OriginDesc;
-                    model.DisplayOrder = origin.DisplayOrder;
+                    model.ProductGroupId = productGroup.ProductGroupId;
+                    model.ProductGroupName = productGroup.ProductGroupName;
+                    model.ProductGroupDesc = productGroup.ProductGroupDesc;
+                    model.DisplayOrder = productGroup.DisplayOrder;
                 }
             }
             return View(model);
@@ -52,25 +52,25 @@ namespace SalesManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(OriginEditModel model)
+        public ActionResult Edit(ProductGroupsEditModel model)
         {
             if (ModelState.IsValid)
             {
                 short sysMessageId = 0;
-                var origin = new Origin
+                var productGroup = new ProductGroups
                 {
-                    OriginId = model.OriginId,
-                    OriginName = model.OriginName,
-                    OriginDesc = model.OriginDesc,
+                    ProductGroupId = model.ProductGroupId,
+                    ProductGroupName = model.ProductGroupName,
+                    ProductGroupDesc = model.ProductGroupDesc,
                     DisplayOrder = model.DisplayOrder
                 };
-                if (model.OriginId > 0)
+                if (model.ProductGroupId > 0)
                 {
-                    origin.Update(ref sysMessageId);
+                    productGroup.Update(ref sysMessageId);
                 }
                 else
                 {
-                    origin.Insert(ref sysMessageId);
+                    productGroup.Insert(ref sysMessageId);
                 }
 
                 if (sysMessageId > 0)
@@ -83,34 +83,34 @@ namespace SalesManager.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(short originId = 0)
+        public ActionResult Delete(short productGroupId = 0)
         {
-            if (originId > 0)
+            if (productGroupId > 0)
             {
                 short sysMessageId = 0;
-                new Origin
+                new ProductGroups
                 {
-                    OriginId = originId
+                    ProductGroupId = productGroupId
                 }.Delete(ref sysMessageId);
             }
-            return Redirect("/Origin/Index");
+            return Redirect("/ProductGroups/Index");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MultipleAction(OriginModel model)
+        public ActionResult MultipleAction(ProductGroupsModel model)
         {
             //ToDo xóa
             if (model.SubmitType.Equals("deleteItems"))
             {
-                if (model.OriginsId != null && model.OriginsId.Length > 0)
+                if (model.ProductGroupsId != null && model.ProductGroupsId.Length > 0)
                 {
                     short systemMessageId = 0;
-                    foreach (var originId in model.OriginsId)
+                    foreach (var productGroupId in model.ProductGroupsId)
                     {
-                        new Origin
+                        new ProductGroups
                         {
-                            OriginId = originId
+                            ProductGroupId = productGroupId
                         }.Delete(ref systemMessageId);
                     }
                 }
@@ -122,15 +122,15 @@ namespace SalesManager.Controllers
                 {
                     foreach (var item in model.DisplayOrders)
                     {
-                        new Origin
+                        new ProductGroups
                         {
-                            OriginId = item.OriginId,
+                            ProductGroupId = item.ProductGroupId,
                             DisplayOrder = item.DisplayOrder
                         }.UpdateDisplayOrder();
                     }
                 }
             }
-            return Redirect("/Origin/Index");
+            return Redirect("/ProductGroups/Index");
         }
     }
 }

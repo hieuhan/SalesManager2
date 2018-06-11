@@ -1,6 +1,7 @@
 ﻿using SalesManagerLib;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,9 @@ namespace SalesManager.Models
     public class WarrantyEditModel:ViewModelBase
     {
         public short WarrantyId { get; set; }
+
+        [Display(Name = "Thời gian bảo hành")]
+        [Required(ErrorMessage = "Vui lòng nhập {0} (*)")]
         public string WarrantyName { get; set; }
         public string WarrantyDesc { get; set; }
         public short DisplayOrder { get; set; }

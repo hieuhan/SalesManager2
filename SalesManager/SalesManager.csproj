@@ -158,6 +158,7 @@
     <Compile Include="Controllers\MediaGroupsController.cs" />
     <Compile Include="Controllers\MediasController.cs" />
     <Compile Include="Controllers\OriginController.cs" />
+    <Compile Include="Controllers\ProductGroupsController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\StoresController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\MediaGroupsModel.cs" />
     <Compile Include="Models\MediasModel.cs" />
     <Compile Include="Models\OriginModel.cs" />
+    <Compile Include="Models\ProductGroupsModel.cs" />
     <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\SharedModel.cs" />
     <Compile Include="Models\StoresModel.cs" />
@@ -913,6 +915,8 @@
     <Content Include="Views\Warranty\Edit.cshtml" />
     <Content Include="Views\Origin\Index.cshtml" />
     <Content Include="Views\Origin\Edit.cshtml" />
+    <Content Include="Views\ProductGroups\Index.cshtml" />
+    <Content Include="Views\ProductGroups\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

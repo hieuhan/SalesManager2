@@ -24,7 +24,7 @@ namespace SalesManagerLib
         //-----------------------------------------------------------------
         public ProductGroups()
         {
-            db = new DBAccess(HealthConstants.HEALTH_CONSTR);
+            db = new DBAccess(LibConstants.CONNECTION_STRING);
         }
         //-----------------------------------------------------------------        
         public ProductGroups(string constr)
@@ -96,7 +96,7 @@ namespace SalesManagerLib
         #region Method
         private List<ProductGroups> Init(SqlCommand cmd)
         {
-            SqlConnection con = db.getConnection();
+            SqlConnection con = db.GetConnection();
             cmd.Connection = con;
             List<ProductGroups> l_ProductGroups = new List<ProductGroups>();
             try
@@ -169,7 +169,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
                 db.ExecuteSQL(cmd);
                 this.ProductGroupId = short.Parse(cmd.Parameters["@ProductGroupId"].Value.ToString());
-                SysMessageId = Convert.ToInt32((cmd.Parameters["@SysMessageId"].Value == null) ? "0" : cmd.Parameters["@SysMessageId"].Value);
+                SysMessageId = Convert.ToInt16((cmd.Parameters["@SysMessageId"].Value == null) ? "0" : cmd.Parameters["@SysMessageId"].Value);
                 RetVal = Convert.ToByte((cmd.Parameters["@SysMessageTypeId"].Value == null) ? "0" : cmd.Parameters["@SysMessageTypeId"].Value);
             }
             catch (Exception ex)
@@ -204,8 +204,6 @@ namespace SalesManagerLib
         {
             ProductGroups retVal = new ProductGroups();
             int RowCount = 0;
-            string DateFrom = "";
-            string DateTo = "";
             string OrderBy = "";
             int PageSize = 1;
             int PageNumber = 0;
@@ -258,6 +256,21 @@ namespace SalesManagerLib
             m_ProductGroups = m_ProductGroups.Get();
             RetVal = m_ProductGroups.ProductGroupName;
             return RetVal;
+        }
+
+        public void UpdateDisplayOrder()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("ProductGroups_Update_DisplayOrder") { CommandType = CommandType.StoredProcedure };
+                sqlCommand.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
+                sqlCommand.Parameters.Add(new SqlParameter("@ProductGroupId", this.ProductGroupId));
+                this.db.ExecuteSQL(sqlCommand);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         #endregion
