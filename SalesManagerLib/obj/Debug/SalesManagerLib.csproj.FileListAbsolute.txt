@@ -15,3 +15,9 @@ C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.c
 C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csproj.CoreCompileInputs.cache
 C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.dll
 C:\Users\hieuht\Desktop\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.pdb
+E:\GitHub\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.dll
+E:\GitHub\SalesManager\SalesManagerLib\bin\Debug\SalesManagerLib.pdb
+E:\GitHub\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csprojResolveAssemblyReference.cache
+E:\GitHub\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.csproj.CoreCompileInputs.cache
+E:\GitHub\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.dll
+E:\GitHub\SalesManager\SalesManagerLib\obj\Debug\SalesManagerLib.pdb

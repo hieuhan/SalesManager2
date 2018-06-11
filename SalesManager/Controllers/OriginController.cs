@@ -1,25 +1,25 @@
-﻿using SalesManager.AppCode;
-using SalesManager.AppCode.Attributes;
-using SalesManager.Models;
-using SalesManagerLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SalesManager.AppCode;
+using SalesManager.AppCode.Attributes;
+using SalesManager.Models;
+using SalesManagerLib;
 
 namespace SalesManager.Controllers
 {
     [SalesManagerAuthorize]
-    public class WarrantyController : Controller
+    public class OriginController : Controller
     {
-        // GET: Warranty
-        public ActionResult Index(string warrantyName = "" , int page = 1)
+        // GET: Origin
+        public ActionResult Index(string originName = "", int page = 1)
         {
             int rowCount = 0;
-            var model = new WarrantyModel
+            var model = new OriginModel
             {
-                ListWarranty = new Warranty { WarrantyName = warrantyName }.GetPage("",SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListOrigin = new Origin { OriginName = originName}.GetPage("",SalesManagerConstants.RowAmount20,page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {
@@ -33,18 +33,18 @@ namespace SalesManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(short warrantyId = 0)
+        public ActionResult Edit(short originId = 0)
         {
-            var model = new WarrantyEditModel();
-            if (warrantyId > 0)
+            var model = new OriginEditModel();
+            if (originId > 0)
             {
-                var warranty = new Warranty { WarrantyId = warrantyId }.Get();
-                if (warranty.WarrantyId > 0)
+                var origin = new Origin { OriginId = originId }.Get();
+                if (origin.OriginId > 0)
                 {
-                    model.WarrantyId = warranty.WarrantyId;
-                    model.WarrantyName = warranty.WarrantyName;
-                    model.WarrantyDesc = warranty.WarrantyDesc;
-                    model.DisplayOrder = warranty.DisplayOrder;
+                    model.OriginId = origin.OriginId;
+                    model.OriginName = origin.OriginName;
+                    model.OriginDesc = origin.OriginDesc;
+                    model.DisplayOrder = origin.DisplayOrder;
                 }
             }
             return View(model);
@@ -52,25 +52,25 @@ namespace SalesManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(WarrantyEditModel model)
+        public ActionResult Edit(OriginEditModel model)
         {
             if (ModelState.IsValid)
             {
                 short sysMessageId = 0;
-                var warranty = new Warranty
+                var origin = new Origin
                 {
-                    WarrantyId = model.WarrantyId,
-                    WarrantyName = model.WarrantyName,
-                    WarrantyDesc = model.WarrantyDesc,
+                    OriginId = model.OriginId,
+                    OriginName = model.OriginName,
+                    OriginDesc = model.OriginDesc,
                     DisplayOrder = model.DisplayOrder
                 };
-                if (model.WarrantyId > 0)
+                if (model.OriginId > 0)
                 {
-                    warranty.Update(ref sysMessageId);
+                    origin.Update(ref sysMessageId);
                 }
                 else
                 {
-                    warranty.Insert(ref sysMessageId);
+                    origin.Insert(ref sysMessageId);
                 }
 
                 if (sysMessageId > 0)
@@ -83,34 +83,34 @@ namespace SalesManager.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(short warrantyId = 0)
+        public ActionResult Delete(short originId = 0)
         {
-            if (warrantyId > 0)
+            if (originId > 0)
             {
                 short sysMessageId = 0;
-                new Warranty
+                new Origin
                 {
-                    WarrantyId = warrantyId
+                    OriginId = originId
                 }.Delete(ref sysMessageId);
             }
-            return Redirect("/Warranty/Index");
+            return Redirect("/Origin/Index");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MultipleAction(WarrantyModel model)
+        public ActionResult MultipleAction(OriginModel model)
         {
             //ToDo xóa
             if (model.SubmitType.Equals("deleteItems"))
             {
-                if (model.WarrantysId != null && model.WarrantysId.Length > 0)
+                if (model.OriginsId != null && model.OriginsId.Length > 0)
                 {
                     short systemMessageId = 0;
-                    foreach (var warrantyId in model.WarrantysId)
+                    foreach (var originId in model.OriginsId)
                     {
-                        new Warranty
+                        new Origin
                         {
-                            WarrantyId = warrantyId
+                            OriginId = originId
                         }.Delete(ref systemMessageId);
                     }
                 }
@@ -130,7 +130,7 @@ namespace SalesManager.Controllers
                     }
                 }
             }
-            return Redirect("/Warranty/Index");
+            return Redirect("/Origin/Index");
         }
     }
 }

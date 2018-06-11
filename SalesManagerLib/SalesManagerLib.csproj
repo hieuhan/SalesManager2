@@ -57,6 +57,7 @@
     <Compile Include="Medias.cs" />
     <Compile Include="MediaTypes.cs" />
     <Compile Include="OrderByClauses.cs" />
+    <Compile Include="Origin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReviewStatus.cs" />
     <Compile Include="RoleActions.cs" />
