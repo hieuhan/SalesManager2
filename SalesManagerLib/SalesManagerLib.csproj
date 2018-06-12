@@ -58,6 +58,8 @@
     <Compile Include="MediaTypes.cs" />
     <Compile Include="OrderByClauses.cs" />
     <Compile Include="Origin.cs" />
+    <Compile Include="PriceListDetails.cs" />
+    <Compile Include="PriceLists.cs" />
     <Compile Include="ProductGroups.cs" />
     <Compile Include="Products.cs" />
     <Compile Include="ProductTypes.cs" />

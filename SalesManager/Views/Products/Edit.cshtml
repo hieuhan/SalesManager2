@@ -22,7 +22,7 @@
     {@Html.AntiForgeryToken()
     <div class="w3-container" style="overflow: hidden;">
         <!--Begin LeftTop 7/12-->
-
+        @Html.ValidationMessageFor(m => m.SystemMessages, "", new { @class = string.Format("text-danger w3-center w3-container w3-section w3-round w3-padding {0}", Model.SystemStatus == SystemStatus.Success ? "w3-blue" : "w3-red"), id = "productMessages" })
         <div class="w3-col s7 w3-padding-top">
             <!-- Line 1 -->
             <div class="w3-col s2 w3-padding-top">
@@ -66,8 +66,8 @@
             </div>
             <div class="w3-col s10 w3-padding-top">
                 <img alt="Chọn ảnh" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? string.Concat(!Model.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, Model.ImagePath) : string.Empty)" onclick="SelectName()" Id="popup-media" style="width: 60px; height: 40px; cursor: pointer;" />
-                @*<img alt="Chọn ảnh" src="" onclick="SelectName()" id="popup-media" style="width: 60px;height: 40px; cursor:pointer;">*@
-                <input type="checkbox" id="Display" name="Display" class="w3-check">			<label class="w3-label1">Xóa ảnh</label>
+                @Html.CheckBoxFor(m => m.ImageDisplay, new { @class = "w3-check" })
+                <label for="ImageDisplay" class="w3-label1">Xóa ảnh</label>
             </div>
         </div>
         <!--End LeftTop-->
@@ -107,7 +107,7 @@
                 <label class="w3-label">Nội dung:</label>
             </div>
             <div class="w3-col s11 w3-padding-top">
-                @Html.TextAreaFor(m=>m.ProductContent, new { @class = "w3-input w3-border w3-round w3-padding-small ckeditor" })
+                @Html.TextAreaFor(m => m.ProductContent, new { @class = "w3-input w3-border w3-round w3-padding-small ckeditor" })
             </div>
         </div>
         <div class="w3-col s12 w3-padding-top">

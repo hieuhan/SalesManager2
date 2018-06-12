@@ -108,7 +108,11 @@ var salesManager = {
         }).on('paste', function (e) {
             var cb = e.originalEvent.clipboardData || window.clipboardData;
             if (!$.isNumeric(cb.getData('text'))) e.preventDefault();
-        });
+            });
+        var productMessages = $('#productMessages');
+        if (productMessages.length && productMessages.html().length > 0) {
+            productMessages.fadeIn('slow').delay(3000).fadeOut('slow');
+        }
     },
     virtualPath: function (patch) {
         var host = window.location.protocol + '//' + window.location.host;

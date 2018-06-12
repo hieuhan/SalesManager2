@@ -59,6 +59,7 @@ namespace SalesManager.Models
         public int UpdateUserId { get; set; }
         public DateTime CrDateTime { get; set; }
 
+        public bool ImageDisplay { get; set; }
         public List<Products> ListProducts { get; set; }
         public List<Manufacturers> ListManufacturers { get; set; }
         public List<ProductGroups> ListProductGroups { get; set; }

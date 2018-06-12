@@ -92,7 +92,7 @@ namespace SalesManager.Controllers
                 {
                     ProductId = model.ProductId,
                     ProductName = model.ProductName,
-                    ImagePath = model.ImagePath,
+                    ImagePath = model.ImageDisplay ? string.Empty : model.ImagePath,
                     ManufacturerId = model.ManufacturerId,
                     UnitId = model.UnitId,
                     ProductGroupId = model.ProductGroupId,
@@ -120,16 +120,16 @@ namespace SalesManager.Controllers
                     ModelState.AddModelError("SystemMessages", sysMessage.SystemMessageDesc);
                 }
                 else ModelState.AddModelError("SystemMessages", "Bạn vui lòng thử lại sau.");
-                model.ListManufacturers = new Manufacturers().GetList();
-                model.ListProductGroups = new ProductGroups().GetList();
-                model.ListProductTypes = new ProductTypes().GetList();
-                model.ListOrigin = new Origin().GetList();
-                model.ListWarranty = new Warranty().GetList();
-                model.ListUnits = new Units().GetList();
-                model.ListStatus = new Status().GetAll();
-                model.ListOrderByClauses = OrderByClauses.Static_GetList("Products");
-                model.ListUsers = new Users().GetAll();
             }
+            model.ListManufacturers = new Manufacturers().GetList();
+            model.ListProductGroups = new ProductGroups().GetList();
+            model.ListProductTypes = new ProductTypes().GetList();
+            model.ListOrigin = new Origin().GetList();
+            model.ListWarranty = new Warranty().GetList();
+            model.ListUnits = new Units().GetList();
+            model.ListStatus = new Status().GetAll();
+            model.ListOrderByClauses = OrderByClauses.Static_GetList("Products");
+            model.ListUsers = new Users().GetAll();
             return View(model);
         }
 
