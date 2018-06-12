@@ -11,9 +11,11 @@ namespace SalesManagerLib
     public class PriceListDetails
     {
         #region Private Properties
-        private int _PriceListDetail;
+        private int _PriceListDetailId;
         private int _PriceListId;
         private int _ProductId;
+        private string _ProductName;
+        private byte _StatusId;
         private short _UnitId;
         private double _Price;
         private int _CrUserId;
@@ -47,15 +49,15 @@ namespace SalesManagerLib
         }
 
         //-----------------------------------------------------------------    
-        public int PriceListDetail
+        public int PriceListDetailId
         {
             get
             {
-                return _PriceListDetail;
+                return _PriceListDetailId;
             }
             set
             {
-                _PriceListDetail = value;
+                _PriceListDetailId = value;
             }
         }
 
@@ -81,6 +83,31 @@ namespace SalesManagerLib
                 _ProductId = value;
             }
         }
+
+        public string ProductName
+        {
+            get
+            {
+                return _ProductName;
+            }
+            set
+            {
+                _ProductName = value;
+            }
+        }
+
+        public byte StatusId
+        {
+            get
+            {
+                return _StatusId;
+            }
+            set
+            {
+                _StatusId = value;
+            }
+        }
+
         public short UnitId
         {
             get
@@ -155,11 +182,13 @@ namespace SalesManagerLib
                 while (smartReader.Read())
                 {
                     PriceListDetails m_PriceListDetails = new PriceListDetails();
-                    m_PriceListDetails.PriceListDetail = smartReader.GetInt32("PriceListDetail");
+                    m_PriceListDetails.PriceListDetailId = smartReader.GetInt32("PriceListDetailId");
                     m_PriceListDetails.PriceListId = smartReader.GetInt32("PriceListId");
                     m_PriceListDetails.ProductId = smartReader.GetInt32("ProductId");
+                    m_PriceListDetails.ProductName = smartReader.GetString("ProductName");
                     m_PriceListDetails.UnitId = smartReader.GetInt16("UnitId");
                     m_PriceListDetails.Price = smartReader.GetFloat("Price");
+                    m_PriceListDetails.StatusId = smartReader.GetByte("StatusId");
                     m_PriceListDetails.CrUserId = smartReader.GetInt32("CrUserId");
                     m_PriceListDetails.UpdateUserId = smartReader.GetInt32("UpdateUserId");
                     m_PriceListDetails.CrDateTime = smartReader.GetDateTime("CrDateTime");
@@ -219,11 +248,11 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
                 cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
                 cmd.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetail", this.PriceListDetail)).Direction = ParameterDirection.InputOutput;
+                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId)).Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add("@SysMessageId", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
                 db.ExecuteSQL(cmd);
-                this.PriceListDetail = int.Parse(cmd.Parameters["@PriceListDetail"].Value.ToString());
+                this.PriceListDetailId = int.Parse(cmd.Parameters["@PriceListDetail"].Value.ToString());
                 SysMessageId = Convert.ToInt16((cmd.Parameters["@SysMessageId"].Value == null) ? "0" : cmd.Parameters["@SysMessageId"].Value);
                 RetVal = Convert.ToByte((cmd.Parameters["@SysMessageTypeId"].Value == null) ? "0" : cmd.Parameters["@SysMessageTypeId"].Value);
             }
@@ -241,7 +270,7 @@ namespace SalesManagerLib
             {
                 SqlCommand cmd = new SqlCommand("PriceListDetails_Delete");
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetail", this.PriceListDetail));
+                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
                 cmd.Parameters.Add("@SysMessageId", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
                 db.ExecuteSQL(cmd);
@@ -287,9 +316,11 @@ namespace SalesManagerLib
                 SqlCommand cmd = new SqlCommand("PriceListDetails_GetPage");
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetail", this.PriceListDetail));
+                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
                 cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
                 cmd.Parameters.Add(new SqlParameter("@ProductId", this.ProductId));
+                cmd.Parameters.Add(new SqlParameter("@ProductName", this.ProductName));
+                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
                 cmd.Parameters.Add(new SqlParameter("@UnitId", this.UnitId));
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
                 cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
@@ -311,6 +342,36 @@ namespace SalesManagerLib
         }
         //--------------------------------------------------------------
 
+        public void Insert_Auto()
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("PriceListDetails_Insert_Auto");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
+                cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
+                db.ExecuteSQL(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void UpdatePrice()
+        {
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand("PriceListDetails_Update_Price") { CommandType = CommandType.StoredProcedure };
+                sqlCommand.Parameters.Add(new SqlParameter("@Price", this.Price));
+                sqlCommand.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
+                this.db.ExecuteSQL(sqlCommand);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
     }
 }

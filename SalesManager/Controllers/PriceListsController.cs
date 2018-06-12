@@ -38,7 +38,7 @@ namespace SalesManager.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(short priceListId = 0)
+        public ActionResult Edit(int priceListId = 0)
         {
             var model = new PriceListsEditModel();
             if (priceListId > 0)

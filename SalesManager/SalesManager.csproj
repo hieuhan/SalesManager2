@@ -931,11 +931,11 @@
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\PriceLists\Index.cshtml" />
     <Content Include="Views\PriceLists\Edit.cshtml" />
+    <Content Include="Views\PriceListDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Ajax\" />
-    <Folder Include="Views\PriceListDetails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\fonts\fontawesome-webfont.eot" />
