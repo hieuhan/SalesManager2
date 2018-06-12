@@ -289,6 +289,13 @@ namespace SalesManagerLib
             }
         }
 
+        //-------------------------------------------------------------- 
+        public static ProductTypes Static_Get(short productTypeId, List<ProductTypes> listProductTypes)
+        {
+            var retVal = listProductTypes.Find(x => x.ProductTypeId == productTypeId) ?? new ProductTypes();
+            return retVal;
+        }
+
         #endregion
     }
 }

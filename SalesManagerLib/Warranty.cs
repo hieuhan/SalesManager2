@@ -288,6 +288,13 @@ namespace SalesManagerLib
                 throw ex;
             }
         }
+
+        //-------------------------------------------------------------- 
+        public static Warranty Static_Get(short warrantyId, List<Warranty> listWarranty)
+        {
+            var retVal = listWarranty.Find(x => x.WarrantyId == warrantyId) ?? new Warranty();
+            return retVal;
+        }
         #endregion
     }
 }

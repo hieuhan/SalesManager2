@@ -1,0 +1,169 @@
+﻿@using SalesManagerLib
+@using SalesManager.Models
+@using SalesManager.AppCode
+@model PriceListsModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('a.popup').on('click',
+            function (e) {
+                var page = $(this).attr("href")
+                var cdialog = $('<div id="divEdit" style="overflow:hidden;"></div>')
+                    .html('<iframe id="ifEdit" style="border: 0px;" src="' +
+                    page +
+                    '" width="100%" height="100%" scrolling="yes"></iframe>')
+                    .dialog({
+                        autoOpen: false,
+                        modal: true,
+                        height: 550,
+                        width: 650,
+                        title: $(this).attr("title"),
+                        closeText: 'Đóng',
+                        close: function (event, ui) {
+                            $(this).remove();
+                            window.location = salesManager.virtualPath('/PriceLists/Index');
+                        }
+                    });
+                cdialog.dialog('open');
+                e.preventDefault();
+            });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Từ khóa :</label>
+        </div>
+        <div class="w3-col s3">
+            @Html.TextBoxFor(m => m.PriceListName, new { @class = "w3-input w3-round w3-border w3-padding-small" })
+        </div>
+        <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
+            <label class="w3-label">Trạng thái:</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        @*<div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
+            <label class="w3-label">Sắp xếp theo:</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>*@
+    </div>
+    <div class="w3-row w3-padding-bottom">
+        <div class="w3-col s1 w3-padding-top">
+            <label class="w3-label">Từ ngày:</label>
+        </div>
+        <div class="w3-col s3">
+            <div class="w3-col s5">
+                @Html.TextBoxFor(m => m.DateFrom, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+            </div>
+            <div class="w3-col s2 w3-padding-top w3-padding-left">
+                <label class="w3-label">Đến:</label>
+            </div>
+            <div class="w3-col s5">
+                @Html.TextBoxFor(m => m.DateTo, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+            </div>
+        </div>
+        <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
+            <label class="w3-label">Sắp xếp theo:</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col s2 w3-padding-left">
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+        </div>
+    </div>
+    <hr style="margin: 5px 0 5px">
+}
+@using (Html.BeginForm("MultipleAction", "PriceLists", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <div class="w3-padding-top w3-left">
+            <b>Tổng cộng: @Model.RowCount</b>
+        </div>
+        <div class="w3-padding-bottom w3-right">
+            <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit"
+               class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup"
+               title="Tạo mới"><i class="fa fa-plus"></i>Thêm mới</a>
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="updateOrders" type="submit"><i class="fa fa-floppy-o"></i> Cập nhật thứ tự</button>
+            <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange"
+                    name="submitType" value="deleteItems" type="submit">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="w3-table w3-bordered w3-striped w3-border">
+            <thead class="w3-blue">
+                <tr>
+                    <th class="w3-border w3-center">#</th>
+                    <th class="w3-border w3-center" width="20%">Tên</th>
+                    <th class="w3-border w3-center" width="20%">Mô tả</th>
+                    <th class="w3-border w3-center">Loại</th>
+                    <th class="w3-border w3-center">Bảng giá mặc định</th>
+                    <th class="w3-border w3-center" style="width:80px">Thứ tự hiển thị</th>
+                    <th class="w3-border w3-center">Người tạo</th>
+                    <th class="w3-border w3-center">Trạng thái</th>
+                    <th class="w3-border w3-center">Thao tác</th>
+                    <th class="w3-border w3-center"><input id="selectall" type="checkbox" class="w3-check"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.ListPriceLists.HasValue())
+                {
+                    for (int i = 0; i < Model.ListPriceLists.Count; i++)
+                    {
+                        var priceList = Model.ListPriceLists[i];
+                        int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
+                        <tr>
+                            <td class="w3-border w3-center">@(number)</td>
+                            <td class="w3-border">@priceList.PriceListName</td>
+                            <td class="w3-border">@priceList.PriceListDesc</td>
+                            <td class="w3-border"></td>
+                            <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDetail == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
+                            <td class="w3-border w3-center">
+                                <input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
+                                <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="" />
+                            </td>
+                            <td class="w3-border w3-center w3-small">
+                                <label class="w3-label">
+                                    @Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName
+                                </label>
+                                <label class="w3-label">
+                                    @Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName
+                                </label>
+                                <br />@priceList.CrDateTime.toString(string.Empty,"dd/MM/yyyy HH:mm")
+                            </td>
+                            <td class="w3-border w3-center">
+                                <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit?priceListId=@priceList.PriceListId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
+                                <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/delete?priceListId=@priceList.PriceListId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Xác nhận xóa dữ liệu ?');" title="Xóa dữ liệu"></a>
+                            </td>
+                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="PriceListsId" value="@priceList.PriceListId"></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    {
+        Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
+    }
+}
+@section menudieuhuong{
+    <div class="menudieuhuong">
+        <div class="menudieuhuong_conen">
+            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
+            <b>Danh sách bảng giá sản phẩm</b>
+        </div>
+    </div>
+}
+
+

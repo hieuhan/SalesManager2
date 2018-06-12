@@ -288,6 +288,12 @@ namespace SalesManagerLib
                 throw ex;
             }
         }
+        //-------------------------------------------------------------- 
+        public static Origin Static_Get(short originId, List<Origin> listOrigin)
+        {
+            var retVal = listOrigin.Find(x => x.OriginId == originId) ?? new Origin();
+            return retVal;
+        }
         #endregion
     }
 }
