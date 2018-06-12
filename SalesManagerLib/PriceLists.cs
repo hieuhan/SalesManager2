@@ -15,7 +15,7 @@ namespace SalesManagerLib
         private string _PriceListName;
         private string _PriceListDesc;
         private byte _PriceListTypeId;
-        private byte _IsDetail;
+        private byte _IsDefault;
         private byte _StatusId;
         private int _DisplayOrder;
         private int _CrUserId;
@@ -94,15 +94,15 @@ namespace SalesManagerLib
                 _PriceListTypeId = value;
             }
         }
-        public byte IsDetail
+        public byte IsDefault
         {
             get
             {
-                return _IsDetail;
+                return _IsDefault;
             }
             set
             {
-                _IsDetail = value;
+                _IsDefault = value;
             }
         }
         public byte StatusId
@@ -184,7 +184,7 @@ namespace SalesManagerLib
                         PriceListName = smartReader.GetString("PriceListName"),
                         PriceListDesc = smartReader.GetString("PriceListDesc"),
                         PriceListTypeId = smartReader.GetByte("PriceListTypeId"),
-                        IsDetail = smartReader.GetByte("IsDetail"),
+                        IsDefault = smartReader.GetByte("IsDefault"),
                         StatusId = smartReader.GetByte("StatusId"),
                         DisplayOrder = smartReader.GetInt32("DisplayOrder"),
                         CrUserId = smartReader.GetInt32("CrUserId"),
@@ -244,7 +244,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@PriceListName", this.PriceListName));
                 cmd.Parameters.Add(new SqlParameter("@PriceListDesc", this.PriceListDesc));
                 cmd.Parameters.Add(new SqlParameter("@PriceListTypeId", this.PriceListTypeId));
-                cmd.Parameters.Add(new SqlParameter("@IsDetail", this.IsDetail));
+                cmd.Parameters.Add(new SqlParameter("@IsDefault", this.IsDefault));
                 cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
                 cmd.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
                 cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
@@ -321,7 +321,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@PriceListName", this.PriceListName));
                 cmd.Parameters.Add(new SqlParameter("@PriceListDesc", this.PriceListDesc));
                 cmd.Parameters.Add(new SqlParameter("@PriceListTypeId", this.PriceListTypeId));
-                cmd.Parameters.Add(new SqlParameter("@IsDetail", this.IsDetail));
+                cmd.Parameters.Add(new SqlParameter("@IsDefault", this.IsDefault));
                 cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
                 cmd.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
                 cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));

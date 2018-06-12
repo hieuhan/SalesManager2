@@ -209,9 +209,17 @@
                                 @Units.Static_Get(product.UnitId, Model.ListUnits).UnitDesc
                             </td>
                             <td class="w3-border w3-center w3-small">
+                                Người tạo:
                                 <label class="w3-label">
-                                    @Users.Static_Get(product.CrUserId, Model.ListUsers).UserName
+                                    <b>@Users.Static_Get(product.CrUserId, Model.ListUsers).UserName</b>
                                 </label>
+                                @if (product.UpdateUserId > 0)
+    {<br />
+                            <span>Cập nhật:</span>
+                            <label class="w3-label">
+                                <b>@Users.Static_Get(product.UpdateUserId, Model.ListUsers).UserName</b>
+                            </label>
+}
                                 <br />@product.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
                             </td>
                             <td class="w3-border w3-center">

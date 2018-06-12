@@ -51,7 +51,7 @@ namespace SalesManager.Controllers
                     model.PriceListDesc = priceList.PriceListDesc;
                     model.PriceListTypeId = priceList.PriceListTypeId;
                     model.DisplayOrder = priceList.DisplayOrder;
-                    model.IsDefault = priceList.IsDetail == 1;
+                    model.IsDefault = priceList.IsDefault == 1;
                     model.StatusId = priceList.StatusId;
                 }
             }
@@ -74,7 +74,7 @@ namespace SalesManager.Controllers
                     PriceListDesc = model.PriceListDesc,
                     PriceListTypeId = model.PriceListTypeId,
                     StatusId = model.StatusId,
-                    IsDetail = (byte) (model.IsDefault ? 1 : 0),
+                    IsDefault = (byte) (model.IsDefault ? 1 : 0),
                     DisplayOrder = model.DisplayOrder
                 };
                 if (model.PriceListId > 0)
