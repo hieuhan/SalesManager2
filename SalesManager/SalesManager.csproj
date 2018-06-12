@@ -158,6 +158,7 @@
     <Compile Include="Controllers\MediaGroupsController.cs" />
     <Compile Include="Controllers\MediasController.cs" />
     <Compile Include="Controllers\OriginController.cs" />
+    <Compile Include="Controllers\PriceListDetailsController.cs" />
     <Compile Include="Controllers\PriceListsController.cs" />
     <Compile Include="Controllers\ProductGroupsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Models\MediaGroupsModel.cs" />
     <Compile Include="Models\MediasModel.cs" />
     <Compile Include="Models\OriginModel.cs" />
+    <Compile Include="Models\PriceListDetailsModel.cs" />
     <Compile Include="Models\PriceListsModel.cs" />
     <Compile Include="Models\ProductGroupsModel.cs" />
     <Compile Include="Models\ProductsModel.cs" />
@@ -933,6 +935,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Ajax\" />
+    <Folder Include="Views\PriceListDetails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\fonts\fontawesome-webfont.eot" />

@@ -47,11 +47,11 @@
             @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
         @*<div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
-            <label class="w3-label">Sắp xếp theo:</label>
-        </div>
-        <div class="w3-col s2">
-            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
-        </div>*@
+                <label class="w3-label">Sắp xếp theo:</label>
+            </div>
+            <div class="w3-col s2">
+                @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            </div>*@
     </div>
     <div class="w3-row w3-padding-bottom">
         <div class="w3-col s1 w3-padding-top">
@@ -125,7 +125,7 @@
                         int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
                         <tr>
                             <td class="w3-border w3-center">@(number)</td>
-                            <td class="w3-border">@priceList.PriceListName</td>
+                            <td class="w3-border">@priceList.PriceListName<br/><a href="@(SalesManagerConstants.ROOT_PATH)PriceListDetails/Index?priceListId=@priceList.PriceListId" class="w3-label" title="@string.Format("Chi tiết bảng giá: {0}", priceList.PriceListName)"><b>Chi tiết bảng giá</b></a></td>
                             <td class="w3-border">@priceList.PriceListDesc</td>
                             <td class="w3-border">@PriceListTypes.Static_Get(priceList.PriceListTypeId, Model.ListPriceListTypes).PriceListTypeDesc</td>
                             <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDefault == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
@@ -146,6 +146,9 @@
                                     </label>
                                 }
                                 <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
+                            </td>
+                            <td class="w3-border w3-center">
+                                @Status.Static_Get(priceList.StatusId, Model.ListStatus).StatusDesc
                             </td>
                             <td class="w3-border w3-center">
                                 <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit?priceListId=@priceList.PriceListId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>

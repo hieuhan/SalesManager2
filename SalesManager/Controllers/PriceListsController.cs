@@ -99,5 +99,18 @@ namespace SalesManager.Controllers
             model.ListPriceListTypes = new PriceListTypes().GetAll();
             return View(model);
         }
+
+        public ActionResult Delete(short priceListId = 0)
+        {
+            if (priceListId > 0)
+            {
+                short sysMessageId = 0;
+                new PriceLists
+                {
+                    PriceListId = priceListId
+                }.Delete(ref sysMessageId);
+            }
+            return Redirect("/PriceLists/Index");
+        }
     }
 }
