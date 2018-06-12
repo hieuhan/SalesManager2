@@ -364,6 +364,7 @@ namespace SalesManagerLib
             {
                 SqlCommand sqlCommand = new SqlCommand("PriceListDetails_Update_Price") { CommandType = CommandType.StoredProcedure };
                 sqlCommand.Parameters.Add(new SqlParameter("@Price", this.Price));
+                sqlCommand.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
                 sqlCommand.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
                 this.db.ExecuteSQL(sqlCommand);
             }

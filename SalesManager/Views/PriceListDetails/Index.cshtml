@@ -19,7 +19,7 @@
         @*<a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit"
             class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup"
             title="Tạo mới"><i class="fa fa-plus"></i>Tạo mới danh sách sản phẩm</a>*@
-        <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="insertPriceListDetail" type="submit"><i class="fa fa-plus"></i> Tạo mới danh sách sản phẩm</button>
+        <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="insertPriceListDetail" type="submit" onclick="return confirm('Xác nhận tạo mới danh sách? Danh sách giá sản phẩm cũ sẽ bị thay thế !!!');"><i class="fa fa-plus"></i> Tạo mới danh sách sản phẩm</button>
         <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="updatePrices" type="submit"><i class="fa fa-floppy-o"></i> Cập nhật giá</button>
         <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange"
                 name="submitType" value="deleteItems" type="submit">

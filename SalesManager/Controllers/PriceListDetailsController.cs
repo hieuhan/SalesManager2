@@ -23,7 +23,7 @@ namespace SalesManager.Controllers
                 ListUnits = new Units().GetList(),
                 ListUsers = new Users().GetAll(),
                 ListStatus = new Status().GetAll(),
-                ListPriceListDetails = new PriceListDetails { PriceListId = priceListId }.GetPage(string.Empty, string.Empty, string.Empty, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListPriceListDetails = priceListId > 0 ? new PriceListDetails { PriceListId = priceListId }.GetPage(string.Empty, string.Empty, string.Empty, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount) : new List<PriceListDetails>(),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {
@@ -52,13 +52,14 @@ namespace SalesManager.Controllers
                     {
                         new PriceListDetails
                         {
+                            UpdateUserId = _userId,
                             PriceListDetailId = item.PriceListDetailId,
                             Price = Double.Parse(item.Price, System.Globalization.NumberStyles.Currency)
                         }.UpdatePrice();
                     }
                 }
             }
-            return Redirect("/PriceListDetails/Index");
+            return Redirect(string.Concat("/PriceListDetails/Index?priceListId=", model.PriceListId));
         }
     }
 }
