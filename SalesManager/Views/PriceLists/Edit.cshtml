@@ -33,11 +33,14 @@
         <label class="w3-label w3-left">Trạng thái:</label>
         @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small" })
 
+        <label class="w3-label w3-left">Loại:</label>
+        @Html.DropDownListFor(m => m.PriceListTypeId, new SelectList(Model.ListPriceListTypes, "PriceListTypeId", "PriceListTypeDesc", Model.PriceListTypeId).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small" })
+
         <label class="w3-label w3-left">Thứ tự hiển thị:</label>
         @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "w3-input w3-border w3-round w3-padding-small", type = "number" })
-        
+
         <label for="IsDefault" class="w3-label w3-left w3-padding-top">Bảng giá mặc định:</label>
-        <input type="checkbox" id="IsDefault" name="IsDefault" class="w3-check">
+        @Html.CheckBoxFor(m=>m.IsDefault, new {@class= "w3-check" })
 
         @Html.HiddenFor(m => m.PriceListId)
     </div>

@@ -134,13 +134,18 @@
                                 <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />
                             </td>
                             <td class="w3-border w3-center w3-small">
+                                Người tạo:
                                 <label class="w3-label">
-                                    @Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName
+                                    <b>@Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName</b>
                                 </label>
-                                <label class="w3-label">
-                                    @Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName
-                                </label>
-                                <br />@priceList.CrDateTime.toString(string.Empty,"dd/MM/yyyy HH:mm")
+                                @if (priceList.UpdateUserId > 0)
+                                {<br />
+                                    <span>Cập nhật:</span>
+                                    <label class="w3-label">
+                                        <b>@Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName</b>
+                                    </label>
+                                }
+                                <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
                             </td>
                             <td class="w3-border w3-center">
                                 <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit?priceListId=@priceList.PriceListId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>

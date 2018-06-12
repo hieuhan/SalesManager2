@@ -34,7 +34,7 @@ namespace SalesManager.Models
         public string PriceListName { get; set; }
         public string PriceListDesc { get; set; }
         public byte PriceListTypeId { get; set; }
-        public byte IsDetail { get; set; }
+        public bool IsDefault { get; set; }
         public byte StatusId { get; set; }
         public int DisplayOrder { get; set; }
         public List<Status> ListStatus { get; set; }

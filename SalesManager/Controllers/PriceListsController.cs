@@ -13,6 +13,7 @@ namespace SalesManager.Controllers
     [SalesManagerAuthorize]
     public class PriceListsController : Controller
     {
+        private readonly int _userId = SessionHelpers.UserId;
         // GET: PriceLists
         public ActionResult Index(string priceListName = "", string dateFrom = "", string dateTo = "", string orderBy = "", int page = 1)
         {
@@ -50,7 +51,7 @@ namespace SalesManager.Controllers
                     model.PriceListDesc = priceList.PriceListDesc;
                     model.PriceListTypeId = priceList.PriceListTypeId;
                     model.DisplayOrder = priceList.DisplayOrder;
-                    model.IsDetail = priceList.IsDetail;
+                    model.IsDefault = priceList.IsDetail == 1;
                     model.StatusId = priceList.StatusId;
                 }
             }
@@ -71,16 +72,19 @@ namespace SalesManager.Controllers
                     PriceListId = model.PriceListId,
                     PriceListName = model.PriceListName,
                     PriceListDesc = model.PriceListDesc,
+                    PriceListTypeId = model.PriceListTypeId,
                     StatusId = model.StatusId,
-                    IsDetail = model.IsDetail,
+                    IsDetail = (byte) (model.IsDefault ? 1 : 0),
                     DisplayOrder = model.DisplayOrder
                 };
                 if (model.PriceListId > 0)
                 {
+                    priceList.UpdateUserId = _userId;
                     priceList.Update(ref sysMessageId);
                 }
                 else
                 {
+                    priceList.CrUserId = _userId;
                     priceList.Insert(ref sysMessageId);
                 }
 
@@ -92,6 +96,7 @@ namespace SalesManager.Controllers
                 else ModelState.AddModelError("SystemMessages", "Bạn vui lòng thử lại sau.");
             }
             model.ListStatus = new Status().GetAll();
+            model.ListPriceListTypes = new PriceListTypes().GetAll();
             return View(model);
         }
     }
