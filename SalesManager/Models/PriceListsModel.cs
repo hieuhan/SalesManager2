@@ -20,6 +20,8 @@ namespace SalesManager.Models
         public List<Users> ListUsers { get; set; }
         public List<OrderByClauses> ListOrderByClauses { get; set; }
 
+        public List<PriceListTypes> ListPriceListTypes { get; set; }
+
         /// <summary>
         /// Danh sách thứ tự hiển thị
         /// </summary>
@@ -36,6 +38,7 @@ namespace SalesManager.Models
         public byte StatusId { get; set; }
         public int DisplayOrder { get; set; }
         public List<Status> ListStatus { get; set; }
+        public List<PriceListTypes> ListPriceListTypes { get; set; }
     }
 
     public class PriceListsDisplayOrders

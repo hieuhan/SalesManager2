@@ -20,6 +20,8 @@ namespace SalesManager.Controllers
             var model = new PriceListsModel
             {
                 ListStatus = new Status().GetAll(),
+                ListUsers = new Users().GetAll(),
+                ListPriceListTypes = new PriceListTypes().GetAll(),
                 ListOrderByClauses = OrderByClauses.Static_GetList("PriceLists"),
                 ListPriceLists = new PriceLists { PriceListName = priceListName }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
@@ -52,6 +54,8 @@ namespace SalesManager.Controllers
                     model.StatusId = priceList.StatusId;
                 }
             }
+            model.ListStatus = new Status().GetAll();
+            model.ListPriceListTypes = new PriceListTypes().GetAll();
             return View(model);
         }
 
@@ -87,6 +91,7 @@ namespace SalesManager.Controllers
                 }
                 else ModelState.AddModelError("SystemMessages", "Bạn vui lòng thử lại sau.");
             }
+            model.ListStatus = new Status().GetAll();
             return View(model);
         }
     }

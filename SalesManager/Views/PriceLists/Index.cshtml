@@ -127,11 +127,11 @@
                             <td class="w3-border w3-center">@(number)</td>
                             <td class="w3-border">@priceList.PriceListName</td>
                             <td class="w3-border">@priceList.PriceListDesc</td>
-                            <td class="w3-border"></td>
+                            <td class="w3-border">@PriceListTypes.Static_Get(priceList.PriceListTypeId, Model.ListPriceListTypes).PriceListTypeDesc</td>
                             <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDetail == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
                             <td class="w3-border w3-center">
-                                <input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
-                                <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="" />
+                                <input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="@priceList.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
+                                <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />
                             </td>
                             <td class="w3-border w3-center w3-small">
                                 <label class="w3-label">
