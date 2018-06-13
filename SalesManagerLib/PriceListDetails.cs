@@ -21,6 +21,7 @@ namespace SalesManagerLib
         private int _CrUserId;
         private int _UpdateUserId;
         private DateTime _CrDateTime;
+        private DateTime _UpdDateTime;
         private DBAccess db;
 
         #endregion
@@ -164,6 +165,18 @@ namespace SalesManagerLib
             }
         }
 
+        public DateTime UpdDateTime
+        {
+            get
+            {
+                return _UpdDateTime;
+            }
+            set
+            {
+                _UpdDateTime = value;
+            }
+        }
+
 
 
         #endregion
@@ -181,17 +194,21 @@ namespace SalesManagerLib
                 SmartDataReader smartReader = new SmartDataReader(reader);
                 while (smartReader.Read())
                 {
-                    PriceListDetails m_PriceListDetails = new PriceListDetails();
-                    m_PriceListDetails.PriceListDetailId = smartReader.GetInt32("PriceListDetailId");
-                    m_PriceListDetails.PriceListId = smartReader.GetInt32("PriceListId");
-                    m_PriceListDetails.ProductId = smartReader.GetInt32("ProductId");
-                    m_PriceListDetails.ProductName = smartReader.GetString("ProductName");
-                    m_PriceListDetails.UnitId = smartReader.GetInt16("UnitId");
-                    m_PriceListDetails.Price = smartReader.GetFloat("Price");
-                    m_PriceListDetails.StatusId = smartReader.GetByte("StatusId");
-                    m_PriceListDetails.CrUserId = smartReader.GetInt32("CrUserId");
-                    m_PriceListDetails.UpdateUserId = smartReader.GetInt32("UpdateUserId");
-                    m_PriceListDetails.CrDateTime = smartReader.GetDateTime("CrDateTime");
+                    PriceListDetails m_PriceListDetails =
+                        new PriceListDetails
+                        {
+                            PriceListDetailId = smartReader.GetInt32("PriceListDetailId"),
+                            PriceListId = smartReader.GetInt32("PriceListId"),
+                            ProductId = smartReader.GetInt32("ProductId"),
+                            ProductName = smartReader.GetString("ProductName"),
+                            UnitId = smartReader.GetInt16("UnitId"),
+                            Price = smartReader.GetFloat("Price"),
+                            StatusId = smartReader.GetByte("StatusId"),
+                            CrUserId = smartReader.GetInt32("CrUserId"),
+                            UpdateUserId = smartReader.GetInt32("UpdateUserId"),
+                            CrDateTime = smartReader.GetDateTime("CrDateTime"),
+                            UpdDateTime = smartReader.GetDateTime("UpdDateTime")
+                        };
                     l_PriceListDetails.Add(m_PriceListDetails);
                 }
                 reader.Close();

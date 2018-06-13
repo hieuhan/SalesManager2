@@ -125,7 +125,7 @@
                         int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
                         <tr>
                             <td class="w3-border w3-center">@(number)</td>
-                            <td class="w3-border">@priceList.PriceListName<br/><a href="@(SalesManagerConstants.ROOT_PATH)PriceListDetails/Index?priceListId=@priceList.PriceListId" class="w3-label" title="@string.Format("Chi tiết bảng giá: {0}", priceList.PriceListName)"><b>Chi tiết bảng giá</b></a></td>
+                            <td class="w3-border">@priceList.PriceListName<br/><a href="@(SalesManagerConstants.ROOT_PATH)PriceListDetails/Index?priceListId=@(priceList.PriceListId)&priceListTypeId=@priceList.PriceListTypeId" class="w3-label" title="@string.Format("Chi tiết bảng giá: {0}", priceList.PriceListName)"><b>Chi tiết bảng giá</b></a></td>
                             <td class="w3-border">@priceList.PriceListDesc</td>
                             <td class="w3-border">@PriceListTypes.Static_Get(priceList.PriceListTypeId, Model.ListPriceListTypes).PriceListTypeDesc</td>
                             <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDefault == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
