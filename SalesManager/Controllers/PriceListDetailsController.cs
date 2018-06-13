@@ -20,6 +20,7 @@ namespace SalesManager.Controllers
             int rowCount = 0;
             var model = new PriceListDetailsModel
             {
+                PriceListId = priceListId,
                 PriceListTypeId = priceListTypeId,
                 ListUnits = new Units().GetList(),
                 ListUsers = new Users().GetAll(),
@@ -60,7 +61,7 @@ namespace SalesManager.Controllers
                     }
                 }
             }
-            return Redirect(string.Concat("/PriceListDetails/Index?priceListId=", model.PriceListId));
+            return Redirect(string.Format("/PriceListDetails/Index?priceListId={0}&priceListTypeId={1}", model.PriceListId , model.PriceListTypeId));
         }
     }
 }

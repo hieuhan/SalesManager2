@@ -326,8 +326,8 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@DisplayOrder", this.DisplayOrder));
                 cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
                 cmd.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
-                if (!string.IsNullOrEmpty(DateFrom)) cmd.Parameters.Add(new SqlParameter("@DateFrom", StringUtil.ConvertToDateTime(DateFrom)));
-                if (!string.IsNullOrEmpty(DateTo)) cmd.Parameters.Add(new SqlParameter("@DateTo", StringUtil.ConvertToDateTime(DateTo)));
+                cmd.Parameters.Add(new SqlParameter("@DateFrom", DateFrom));
+                cmd.Parameters.Add(new SqlParameter("@DateTo",DateTo));
                 cmd.Parameters.Add(new SqlParameter("@OrderBy", OrderBy));
                 cmd.Parameters.Add(new SqlParameter("@PageSize", PageSize));
                 cmd.Parameters.Add(new SqlParameter("@PageNumber", PageNumber));

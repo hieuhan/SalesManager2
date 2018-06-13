@@ -288,6 +288,24 @@ namespace SalesManagerLib
             return RetVal;
         }
 
+        public List<Warehouse> GetAll()
+        {
+            List<Warehouse> result = new List<Warehouse>();
+            try
+            {
+                string cmdText = "SELECT * FROM Warehouse";
+                result = this.Init(new SqlCommand(cmdText)
+                {
+                    CommandType = CommandType.Text
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
         #endregion
     }
 }

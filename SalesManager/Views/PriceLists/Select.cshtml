@@ -19,20 +19,19 @@
     @Scripts.Render("~/bundles/jqueryval")
 </head>
 <body class="w3-padding">
-    <form action="@(SalesManagerConstants.ROOT_PATH)PriceLists/Select" method="get">
-        <div class="w3-row w3-padding-top w3-padding-bottom">
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
+    @using (Html.BeginForm())
+    {
+        <div class="w3-row w3-padding-bottom">
+            <div class="w3-col s1 w3-padding-top">
                 <label class="w3-label">Từ khóa :</label>
             </div>
-            <div class="w3-col s4">
+            <div class="w3-col s3">
                 @Html.TextBoxFor(m => m.PriceListName, new { @class = "w3-input w3-round w3-border w3-padding-small" })
             </div>
-        </div>
-        <div class="w3-row w3-padding-bottom">
-            <div class="w3-col s2 w3-padding-top">
+            <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
                 <label class="w3-label">Trạng thái:</label>
             </div>
-            <div class="w3-col s4">
+            <div class="w3-col s2">
                 @Html.DropDownListFor(m => m.StatusId, new SelectList(Model.ListStatus, "StatusId", "StatusDesc", Model.StatusId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
             </div>
         </div>
@@ -54,99 +53,85 @@
             <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
                 <label class="w3-label">Sắp xếp theo:</label>
             </div>
-            <div class="w3-col s2">
+            <div class="w3-col s3">
                 @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
             </div>
             <div class="w3-col s2 w3-padding-left">
                 <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
-                    <i class="fa "></i> Tìm kiếm
+                    <i class="fa fa-search"></i> Tìm kiếm
                 </button>
             </div>
         </div>
         <hr style="margin: 5px 0 5px">
-        @Html.HiddenFor(m => m.PriceListTypeId)
-    </form>
-    @using (Html.BeginForm("MultipleAction", "PriceLists", FormMethod.Post, new {onsubmit="return validPriceListSelect();"}))
-    {
-        @Html.AntiForgeryToken()
+    }
         <div>
             <div class="w3-padding-top w3-left">
                 <b>Tổng cộng: @Model.RowCount</b>
             </div>
             <div class="w3-padding-bottom w3-right">
-                <button class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange w3-padding-small" type="submit"><i class="fa fa-floppy-o"></i> Chọn</button>
+                <button class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange w3-padding-small" id="selectPriceList" data-id="@Model.PriceListId"><i class="fa fa-floppy-o"></i> Chọn</button>
             </div>
         </div>
         <div>
             <table class="w3-table w3-bordered w3-striped w3-border">
                 <thead class="w3-blue">
-                <tr>
-                    <th class="w3-border w3-center">#</th>
-                    <th class="w3-border w3-center" width="20%">Tên</th>
-                    <th class="w3-border w3-center" width="20%">Mô tả</th>
-                    <th class="w3-border w3-center">Loại</th>
-                    <th class="w3-border w3-center">Bảng giá mặc định</th>
-                    <th class="w3-border w3-center" style="width:80px">Thứ tự hiển thị</th>
-                    <th class="w3-border w3-center">Người tạo</th>
-                    <th class="w3-border w3-center">Trạng thái</th>
-                    <th class="w3-border w3-center">Chọn</th>
-                </tr>
+                    <tr>
+                        <th class="w3-border w3-center">#</th>
+                        <th class="w3-border w3-center" width="20%">Tên</th>
+                        <th class="w3-border w3-center" width="20%">Mô tả</th>
+                        <th class="w3-border w3-center">Loại</th>
+                        <th class="w3-border w3-center">Bảng giá mặc định</th>
+                        <th class="w3-border w3-center" style="width:80px">Thứ tự hiển thị</th>
+                        <th class="w3-border w3-center">Người tạo</th>
+                        <th class="w3-border w3-center">Trạng thái</th>
+                        <th class="w3-border w3-center">Chọn</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @if (Model.ListPriceLists.HasValue())
-                {
-                    for (int i = 0; i < Model.ListPriceLists.Count; i++)
+                    @if (Model.ListPriceLists.HasValue())
                     {
-                        var priceList = Model.ListPriceLists[i];
-                        int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
-                        <tr>
-                            <td class="w3-border w3-center">@(number)</td>
-                            <td class="w3-border">@priceList.PriceListName<br /><a href="@(SalesManagerConstants.ROOT_PATH)PriceListDetails/Index?priceListId=@(priceList.PriceListId)&priceListTypeId=@priceList.PriceListTypeId" class="w3-label" title="@string.Format("Chi tiết bảng giá: {0}", priceList.PriceListName)"><b>Chi tiết bảng giá</b></a></td>
-                            <td class="w3-border">@priceList.PriceListDesc</td>
-                            <td class="w3-border">@PriceListTypes.Static_Get(priceList.PriceListTypeId, Model.ListPriceListTypes).PriceListTypeDesc</td>
-                            <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDefault == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
-                            <td class="w3-border w3-center">
-                                <input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="@priceList.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
-                                <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />
-                            </td>
-                            <td class="w3-border w3-center w3-small">
-                                Người tạo:
-                                <label class="w3-label">
-                                    <b>@Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName</b>
-                                </label>
-                                @if (priceList.UpdateUserId > 0)
-                                {<br />
-                                    <span>Cập nhật:</span>
+                        for (int i = 0; i < Model.ListPriceLists.Count; i++)
+                        {
+                            var priceList = Model.ListPriceLists[i];
+                            int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
+                            <tr>
+                                <td class="w3-border w3-center">@(number)</td>
+                                <td class="w3-border">@priceList.PriceListName<br /><a href="@(SalesManagerConstants.ROOT_PATH)PriceListDetails/Index?priceListId=@(priceList.PriceListId)&priceListTypeId=@priceList.PriceListTypeId" class="w3-label" title="@string.Format("Chi tiết bảng giá: {0}", priceList.PriceListName)"><b>Chi tiết bảng giá</b></a></td>
+                                <td class="w3-border">@priceList.PriceListDesc</td>
+                                <td class="w3-border">@PriceListTypes.Static_Get(priceList.PriceListTypeId, Model.ListPriceListTypes).PriceListTypeDesc</td>
+                                <td class="w3-border w3-center"><input type="checkbox" class="w3-check" @(priceList.IsDefault == 1 ? "checked" : string.Empty) disabled="disabled" /></td>
+                                <td class="w3-border w3-center">
+                                    <input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="@priceList.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
+                                    <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />
+                                </td>
+                                <td class="w3-border w3-center w3-small">
+                                    Người tạo:
                                     <label class="w3-label">
-                                        <b>@Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName</b>
+                                        <b>@Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName</b>
                                     </label>
-                                }
-                                <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
-                            </td>
-                            <td class="w3-border w3-center">
-                                @Status.Static_Get(priceList.StatusId, Model.ListStatus).StatusDesc
-                            </td>
-                            <td class="w3-border w3-center"><input class="checkall w3-radio" type="radio" name="PriceListId" value="@priceList.PriceListId"></td>
-                        </tr>
+                                    @if (priceList.UpdateUserId > 0)
+                                    {<br />
+                                        <span>Cập nhật:</span>
+                                        <label class="w3-label">
+                                            <b>@Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName</b>
+                                        </label>
+                                    }
+                                    <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
+                                </td>
+                                <td class="w3-border w3-center">
+                                    @Status.Static_Get(priceList.StatusId, Model.ListStatus).StatusDesc
+                                </td>
+                                <td class="w3-border w3-center"><input class="checkall w3-radio" type="radio" name="PriceListId" value="@priceList.PriceListId"></td>
+                            </tr>
+                        }
                     }
-                }
                 </tbody>
             </table>
         </div>
-        {
+        @{
             Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
         }
-    }
-<script type="text/javascript">
-    function validPriceListSelect() {
-        if ($("input:radio[name='PriceListId']").is(":checked")) {
-            return true;
-        }
-        alert('Bạn vui lòng chọn bảng giá !');
-        return false;
-    }
-</script>
-</body>
+    </body>
 </html>
 
 

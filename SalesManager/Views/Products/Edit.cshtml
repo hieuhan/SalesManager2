@@ -65,7 +65,7 @@
                 <label class="w3-label">Ảnh:</label>
             </div>
             <div class="w3-col s10 w3-padding-top">
-                <img alt="Chọn ảnh" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? string.Concat(!Model.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, Model.ImagePath) : string.Empty)" onclick="SelectName()" Id="popup-media" style="width: 60px; height: 40px; cursor: pointer;" />
+                <img alt="Chọn ảnh" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? string.Concat(!Model.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, Model.ImagePath) : string.Empty)" Id="popup-media" style="width: 60px; height: 40px; cursor: pointer;" />
                 @Html.CheckBoxFor(m => m.ImageDisplay, new { @class = "w3-check" })
                 <label for="ImageDisplay" class="w3-label1">Xóa ảnh</label>
             </div>
@@ -130,105 +130,6 @@
         </button>
     </div>
 }
-    <script type="text/javascript">
-        $("#SiteId").change(function () {
-            var value = $(this).val();
-            $.ajax({
-                type: "get",
-                url: "/jsondata/get_category/" + value,
-                success: function (response) {
-                    if (response != null) {
-                        $("#CategoryId option")
-                            .not(":first").remove();
-                        parsed = $.parseJSON(response);
-                        $.each(parsed, function (key, value) {
-                            $("#CategoryId")
-                                .append($("<option></option>")
-                                    .attr("value", value.CategoryId)
-                                    .text(value.CategoryDesc));
-                        });
-                    }
-                }
-            });
-        });
-        // $("select#DataTypeId").change(function() {
-        //     var value = $(this).val();
-        // 	window.location.href = updateQueryStringParameter(window.location.href,"DataTypeId", value);
-        // });
-        // $("select#SiteId").change(function() {
-        //     var value = $(this).val();
-        // 	window.location.href = updateQueryStringParameter(window.location.href,"SiteId", value);
-        // });
-        // $("select#CategoryId").change(function() {
-        //     var value = $(this).val();
-        // 	window.location.href = updateQueryStringParameter(window.location.href,"CategoryId", value);
-        // });
-        //Thêm mới hoặc cập nhật key query string url
-        function updateQueryStringParameter(uri, key, value) {
-            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-            if (uri.match(re)) {
-                return uri.replace(re, '$1' + key + "=" + value + '$2');
-            }
-            else {
-                return uri + separator + key + "=" + value;
-            }
-        }
-        function SelectName() {
-            popup = window.open("/medias/select", "Popup", "width=850,height=550,scrollbars=1");
-            popup.focus();
-            return false
-        }
-        $(function () {
-
-            function split(val) {
-                return val.split(/,\s*/);
-            }
-            function extractLast(term) {
-                return split(term).pop();
-            }
-
-            $("#AuthorDesc").autocomplete({
-                source: function (request, response) {
-
-                    var val = extractLast(request.term);
-                    var siteid = $("#SiteId").val();
-                    $.ajax({
-                        url: "/jsondata/getTopAuthor/" + siteid + "?keyword=" + val,
-                        dataType: "json",
-                        type: "get",
-                        //contentType: "application/json; charset=utf-8",
-                        dataFilter: function (data) { return data; },
-                        success: function (data) {
-                            response($.ui.autocomplete.filter(
-                                data, extractLast(request.term)));
-                        },
-                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log(textStatus);
-                        }
-                    });
-                },
-                minLength: 0,
-                select: function (event, ui) {
-                    var terms = split(this.value);
-                    // remove the current input
-                    terms.pop();
-                    // add the selected item
-                    terms.push(ui.item.value);
-                    // add placeholder to get the comma-and-space at the end
-                    terms.push("");
-                    this.value = terms.join(", ");
-                    return false;
-                }
-            });
-            $.ui.autocomplete.filter = function (array, term) {
-                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
-                return $.grep(array, function (value) {
-                    return matcher.test(value.label || value.value || value);
-                });
-            };
-        });
-    </script>
     <div class="clear5px"></div>
 </div>
 @section menudieuhuong{

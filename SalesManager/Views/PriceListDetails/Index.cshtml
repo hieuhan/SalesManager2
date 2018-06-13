@@ -36,7 +36,7 @@
     </div>
     <div class="w3-padding-bottom w3-right">
         <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="insertPriceListDetail" type="submit" onclick="return confirm('Xác nhận tạo mới danh sách? Giá sản phẩm theo bảng giá này sẽ bị xóa !!!');"><i class="fa fa-plus"></i> Tạo mới</button>
-        <a onclick="SelectPriceLists(@Model.PriceListTypeId)"
+        <a href="#" id="popupPriceList" data-url="/pricelists/select?priceListId=@Model.PriceListId&priceListTypeId=@Model.PriceListTypeId" 
            class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup"
            title="Tạo mới"><i class="fa fa-plus"></i>Sao chép từ bảng giá đã có</a>
         <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="updatePrices" type="submit"><i class="fa fa-floppy-o"></i> Cập nhật giá</button>
@@ -91,13 +91,6 @@
         Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
     }
 }
-<script type="text/javascript">
-    function SelectPriceLists(priceListTypeId) {
-        var popup = window.open("/pricelists/select?priceListTypeId=" + priceListTypeId, "Popup", "width=850,height=550,scrollbars=1");
-        popup.focus();
-        return false;
-    }
-</script>
 @section menudieuhuong{
     <div class="menudieuhuong">
         <div class="menudieuhuong_conen">

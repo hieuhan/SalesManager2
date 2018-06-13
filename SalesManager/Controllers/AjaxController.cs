@@ -12,6 +12,7 @@ namespace SalesManager.Controllers
     public class AjaxController : Controller
     {
         // GET: Ajax
+        private readonly int _userId = SessionHelpers.UserId;
 
         [HttpPost]
         [SalesManagerAuthorize]
@@ -51,6 +52,21 @@ namespace SalesManager.Controllers
                 AllowGet = true,
                 Data = action,
                 Completed = action.ActionId > 0
+            };
+        }
+
+        public AjaxResult SelectPriceList(int priceListId = 0, int priceListIdClone = 0)
+        {
+            if(priceListId > 0)
+            {
+                new PriceListDetails { PriceListId = priceListId, CrUserId = _userId }.Clone_Auto(priceListIdClone);
+            }
+            return new AjaxResult
+            {
+                StatusCode = 200,
+                AllowGet = true,
+                Message = "Sao chép bảng giá thành công !",
+                Completed = true
             };
         }
     }

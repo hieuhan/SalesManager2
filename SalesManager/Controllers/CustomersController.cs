@@ -37,6 +37,29 @@ namespace SalesManager.Controllers
             return View(model);
         }
 
+        public ActionResult Select(short customerGroupId = 0, string fullName = "", string mobile = "", string dateFrom = "", string dateTo = "", string orderBy = "", int page = 1)
+        {
+            int rowCount = 0;
+            var model = new CustomersModel
+            {
+                ListCustomers = new Customers
+                {
+                    CustomerGroupId = customerGroupId,
+                    FullName = fullName,
+                    Mobile = mobile
+                }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                RowCount = rowCount,
+                Pagination = new PaginationModel
+                {
+                    TotalPage = rowCount,
+                    PageSize = SalesManagerConstants.RowAmount20,
+                    LinkLimit = 5,
+                    PageIndex = page
+                }
+            };
+            return View(model);
+        }
+
         public ActionResult Edit(int customerId = 0)
         {
             var model = new CustomerEditModel

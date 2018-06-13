@@ -73,9 +73,66 @@ var salesManager = {
         $('#popup-media').off('click').on('click',
             function (event) {
                 event.preventDefault();
-                var popup = window.open("/medias/select", "MediaPopup", "width=850,height=550,scrollbars=1");
-                popup.focus();
+                salesManager.PopupCenter('/medias/select', 'MediaPopup', 850, 550);
+                //var popup = window.open("/medias/select", "MediaPopup", "width=850,height=550,scrollbars=1");
+                //popup.focus();
                 return false;
+            });
+
+        $('#popupPriceList').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                var url = $(this).data('url');
+                salesManager.PopupCenter(url, 'popupPriceList', 1200, 800);
+            });
+
+        $('#selectCustomer').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                var url = $(this).data('url');
+                salesManager.PopupCenter(url, 'popupPriceList', 1200, 800);
+            });
+
+        $('#selectPriceList').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                if ($("input:radio[name='PriceListId']").is(":checked")) {
+                    var priceListId = $(this).data('id'),
+                    priceListIdClone = $("input:radio[name='PriceListId']:checked").val();
+                    $.ajaxPost({
+                        qname: 'selectPriceList',
+                        url: salesManager.virtualPath('/Ajax/SelectPriceList'),
+                        data: { priceListId: priceListId, priceListIdClone: priceListIdClone },
+                        success: function (resp) {
+                            if (resp.Message != null && resp.Message.length > 0) {
+                                alert(resp.Message);
+                                window.close();
+                                window.opener.location.reload(true);
+                            }
+                        }
+                    });
+                } else {
+                    alert('Bạn vui lòng chọn bảng giá !');
+                    return false;
+                }
+            });
+
+        $('#addCustomer').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                if ($("input:radio[name='CustomerId']").is(":checked")) {
+                    var customer = $("input:radio[name='CustomerId']:checked"),
+                        customerName = customer.data('name'),
+                        customerId = customer.val(),
+                    inuptCustomerName = window.opener.document.getElementById('CustomerName'),
+                    inputCustomerId = window.opener.document.getElementById('CustomerId');
+                    inuptCustomerName.value = customerName;
+                    inputCustomerId.value = customerId;
+                    window.close();
+                } else {
+                    alert('Bạn vui lòng chọn khách hàng !');
+                    return false;
+                }
             });
 
         $('.action-select').off('click').on('click',
@@ -139,6 +196,21 @@ var salesManager = {
     checkTime: function (i) {
         if (i < 10) { i = '0' + i }; 
         return i;
+    },
+    PopupCenter: function (url, title, w, h) {
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        if (window.focus) {
+            newWindow.focus();
+        }
     },
     MediaSelect: function (mediaPath) {
         var imgSelect = window.opener.document.getElementById('ImageSelect');
@@ -444,19 +516,237 @@ $.extend({
     }
 });
 
-$(document).ready(function () {
-    var url_cur = location.href;
-    if (url_cur.indexOf("#") > -1 && url_cur.indexOf('huong-dan.html') > -1) {
-        idx = url_cur.indexOf("#");
-        var str_id_guid = idx != -1 ? url_cur.substring(idx + 1) : "";
-        if (str_id_guid.length) {
-            var btn_guid = $('#' + str_id_guid);
-            if (btn_guid.length) {
-                var li_parent = btn_guid.parent();
-                if (!li_parent.hasClass('active')) {
-                    btn_guid.trigger('click');
+(function ($) {
+    var queues = {};
+    var activeReqs = {};
+
+    $.saleManagerAjax = function (qname, opts) {
+
+        if (typeof opts === 'undefined') {
+            throw ('saleManagerAjax: opts is underfined');
+        }
+
+        var deferred = $.Deferred(),
+            promise = deferred.promise();
+
+        promise.success = promise.done;
+        promise.error = promise.fail;
+        promise.complete = promise.always;
+
+        var deferredOpts = typeof opts === 'function';
+        var options = !deferredOpts ? $.extend(true, {}, opts) : null;
+        enqueue(function () {
+            var jqXHR = $.ajax.apply(window, [deferredOpts ? opts() : options]);
+
+            jqXHR.done(function () {
+                deferred.resolve.apply(this, arguments);
+            });
+            jqXHR.fail(function () {
+                deferred.reject.apply(this, arguments);
+            });
+
+            jqXHR.always(dequeue);
+
+            return jqXHR;
+        });
+
+        return promise;
+
+        function enqueue(cb) {
+            if (!queues[qname]) {
+                queues[qname] = [];
+                var xhr = cb();
+                activeReqs[qname] = xhr;
+            }
+            else {
+                queues[qname].push(cb);
+            }
+        }
+
+        function dequeue() {
+            if (!queues[qname]) {
+                return;
+            }
+            var nextCallback = queues[qname].shift();
+            if (nextCallback) {
+                var xhr = nextCallback();
+                activeReqs[qname] = xhr;
+            }
+            else {
+                delete queues[qname];
+                delete activeReqs[qname];
+            }
+        }
+    };
+    //Đăng ký phương thức icget và icget
+    $.each(['ajaxGet', 'ajaxPost'], function (i, method) {
+        $[method] = function (options) {
+            var defaults = {
+                qname: 'saleManagerQuereFirst',
+                resultId: null,
+                url: '',
+                type: method,
+                dataType: 'json',
+                data: {},
+                headers: {},
+                statusCode: {},
+                cache: false,
+                timeout: 5000,
+                removeLoadmore: true,
+                //xhr: function () {
+                //    var xhr = new window.XMLHttpRequest();
+                //    if ($('.progress').length === 0) {
+                //        $('body').append('<div class="progress"></div>');
+                //        //$('#loadingbar').addClass('waiting').append($('<dt/><dd/>'));
+                //        //$('#loadingbar').width((50 + Math.random() * 30) + "%");
+                //    }
+                //    xhr.upload.addEventListener('progress', function (evt) {
+                //        if (evt.lengthComputable) {
+                //            var percentComplete = evt.loaded / evt.total;
+                //            $('.progress').css({
+                //                width: percentComplete * 100 + '%'
+                //            });
+                //            if (percentComplete === 1) {
+                //                $('.progress').addClass('hide');
+                //            }
+                //        }
+                //    }, false);
+                //    xhr.addEventListener('progress', function (evt) {
+                //        if (evt.lengthComputable) {
+                //            var percentComplete = evt.loaded / evt.total;
+                //            $('.progress').css({
+                //                width: percentComplete * 100 + '%'
+                //            });
+                //        }
+                //    }, false);
+                //    return xhr;
+                //},
+                beforeSend: function () {
+                    if ($('#loadingbar').length === 0) {
+                        $('body').append('<div id="loadingbar"></div>');
+                        $('#loadingbar').addClass('waiting').append($('<dt/><dd/>'));
+                        $('#loadingbar').width((50 + Math.random() * 30) + "%");
+                    }
+                },
+                error: function (xhr, text, e) {
+                    if (xhr.status === 0) {
+                        alert('Không có kết nối mạng. Vui lòng kiểm tra lại.');
+                    } else if (xhr.status === 404) {
+                        alert('Không tìm thấy trang yêu cầu.')
+                    } else if (xhr.status === 500) {
+                        alert('Lỗi máy chủ nội bộ. [500].');
+                    } else if (text === 'parsererror') {
+                        alert('Yêu cầu phân tích cú pháp JSON lỗi.');
+                    } else if (text === 'timeout') {
+                        alert('Hết thời gian yêu cầu.');
+                    } else if (text === 'abort') {
+                        alert('Yêu cầu xử lý bị hủy.');
+                    } else if (xhr.status !== 403) {
+                        alert('Lỗi :.n' + xhr.responseText);
+                    }
+                },
+                complete: function (xhr, text) { },
+                success: function (data, text, xhr) {
+                    if (options.resultId != null && options.resultId && options.dataType === 'html' && data != null && data.length > 0) {
+                        $(options.resultId).html(data);
+                    }
+                },
+                always: function () {
+                    $('#loadingbar').width('101%').delay(200).fadeOut(400, function () {
+                        $('#loadingbar').remove();
+                    });
+                }
+            }
+            options = $.extend(defaults, options);
+            //if ($.isFunction(options.data)) {
+            //    options.type = options.type || options.success;
+            //    options.success = data;
+            //    options.data = undefined;
+            //}
+            return $.saleManagerAjax(options.qname, {
+                type: options.type === 'ajaxPost' ? 'post' : 'get',
+                url: options.url,
+                data: options.data,
+                dataType: options.dataType,
+                //xhr:options.xhr,
+                beforeSend: function () {
+                    if ($.isFunction(options.beforeSend)) {
+                        window.setTimeout(function () {
+                            options.beforeSend();
+                        }, 10);
+                    }
+                },
+                complete: function (data, status, xhr) {
+                    if ($.isFunction(options.complete)) {
+                        window.setTimeout(function () {
+                            options.complete(data, status, xhr);
+                        }, 10);
+                    }
+                },
+                success: function (data, status, xhr) {
+                    if ($.isFunction(options.success)) {
+                        window.setTimeout(function () {
+                            options.success(data, status, xhr);
+                        }, 10);
+                    }
+                },
+                error: function (jqXhr, errorMessage) {
+                    window.setTimeout(function () {
+                        options.error(jqXhr, errorMessage);
+                    }, 10);
+                }
+            }).always(function () {
+                window.setTimeout(function () {
+                    options.always();
+                }, 10);
+            });
+        };
+    });
+
+    var isQueueRunning = function (qname) {
+        return (queues.hasOwnProperty(qname) && queues[qname].length > 0) || activeReqs.hasOwnProperty(qname);
+    };
+
+    var isAnyQueueRunning = function () {
+        for (var i in queues) {
+            if (isQueueRunning(i)) return true;
+        }
+        return false;
+    };
+
+    $.saleManagerAjax.isRunning = function (qname) {
+        if (qname) return isQueueRunning(qname);
+        else return isAnyQueueRunning();
+    };
+
+    $.saleManagerAjax.getActiveRequest = function (qname) {
+        if (!qname) throw ('saleManagerAjax: queue name is required');
+
+        return activeReqs[qname];
+    };
+
+    $.saleManagerAjax.abort = function (qname) {
+        if (!qname) throw ('saleManagerAjax: queue name is required');
+
+        var current = $.lawAjax.getActiveRequest(qname);
+        delete queues[qname];
+        delete activeReqs[qname];
+        if (current) current.abort();
+    };
+
+    $.saleManagerAjax.clear = function (qname) {
+        if (!qname) {
+            for (var i in queues) {
+                if (queues.hasOwnProperty(i)) {
+                    queues[i] = [];
                 }
             }
         }
-    }
-});
+        else {
+            if (queues[qname]) {
+                queues[qname] = [];
+            }
+        }
+    };
+
+})(jQuery);

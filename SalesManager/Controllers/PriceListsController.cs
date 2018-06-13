@@ -15,7 +15,7 @@ namespace SalesManager.Controllers
     {
         private readonly int _userId = SessionHelpers.UserId;
         // GET: PriceLists
-        public ActionResult Index(string priceListName = "", string dateFrom = "", string dateTo = "", string orderBy = "", int page = 1)
+        public ActionResult Index(string priceListName = "", string dateFrom = "", string dateTo = "", string orderBy = "", byte statusId = 0, byte priceListTypeId = 0, int page = 1)
         {
             int rowCount = 0;
             var model = new PriceListsModel
@@ -24,7 +24,7 @@ namespace SalesManager.Controllers
                 ListUsers = new Users().GetAll(),
                 ListPriceListTypes = new PriceListTypes().GetAll(),
                 ListOrderByClauses = OrderByClauses.Static_GetList("PriceLists"),
-                ListPriceLists = new PriceLists { PriceListName = priceListName }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListPriceLists = new PriceLists { PriceListName = priceListName, StatusId = statusId, PriceListTypeId = priceListTypeId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {
@@ -37,17 +37,18 @@ namespace SalesManager.Controllers
             return View(model);
         }
 
-        public ActionResult Select(string priceListName = "", byte priceListTypeId = 0, string dateFrom = "", string dateTo = "", string orderBy = "", int page = 1)
+        public ActionResult Select(int priceListId = 0, string priceListName = "", byte priceListTypeId = 0, string dateFrom = "", string dateTo = "", string orderBy = "", byte statusId = 0, int page = 1)
         {
             int rowCount = 0;
             var model = new PriceListsModel
             {
+                PriceListId = priceListId,
                 PriceListTypeId = priceListTypeId,
                 ListStatus = new Status().GetAll(),
                 ListUsers = new Users().GetAll(),
                 ListPriceListTypes = new PriceListTypes().GetAll(),
                 ListOrderByClauses = OrderByClauses.Static_GetList("PriceLists"),
-                ListPriceLists = new PriceLists { PriceListName = priceListName, PriceListTypeId = priceListTypeId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListPriceLists = new PriceLists { PriceListName = priceListName, StatusId = statusId, PriceListTypeId = priceListTypeId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {

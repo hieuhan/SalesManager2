@@ -365,6 +365,24 @@ namespace SalesManagerLib
             return RetVal;
         }
 
+        public List<Suppliers> GetAll()
+        {
+            List<Suppliers> result = new List<Suppliers>();
+            try
+            {
+                string cmdText = "SELECT * FROM Suppliers";
+                result = this.Init(new SqlCommand(cmdText)
+                {
+                    CommandType = CommandType.Text
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
         #endregion
     }
 }

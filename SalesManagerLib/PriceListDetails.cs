@@ -375,6 +375,23 @@ namespace SalesManagerLib
             }
         }
 
+        public void Clone_Auto(int priceListId = 0)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("PriceListDetails_Clone_Auto");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
+                cmd.Parameters.Add(new SqlParameter("@PriceListIdClone", priceListId));
+                cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
+                db.ExecuteSQL(cmd);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void UpdatePrice()
         {
             try
