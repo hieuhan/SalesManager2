@@ -50,6 +50,8 @@
     <Compile Include="DBAccess.cs" />
     <Compile Include="Genders.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="InputBillDetails.cs" />
+    <Compile Include="InputBills.cs" />
     <Compile Include="LibConstants.cs" />
     <Compile Include="Manufacturers.cs" />
     <Compile Include="md5.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="MediaTypes.cs" />
     <Compile Include="OrderByClauses.cs" />
     <Compile Include="Origin.cs" />
+    <Compile Include="OutputBillDetails.cs" />
     <Compile Include="PriceListDetails.cs" />
     <Compile Include="PriceLists.cs" />
     <Compile Include="PriceListTypes.cs" />
