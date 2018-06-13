@@ -164,8 +164,8 @@
                     <th class="w3-border w3-center">Nhóm</th>
                     <th class="w3-border w3-center">Loại</th>
                     @*<th class="w3-border w3-center" style="width:120px">Hãng sản xuất</th>
-                    <th class="w3-border w3-center" style="width:120px">Nguồn gốc</th>
-                    <th class="w3-border w3-center" style="width:80px">Bảo hành</th>*@
+                        <th class="w3-border w3-center" style="width:120px">Nguồn gốc</th>
+                        <th class="w3-border w3-center" style="width:80px">Bảo hành</th>*@
                     <th class="w3-border w3-center">Đơn vị tính</th>
                     <th class="w3-border w3-center">Tạo bởi</th>
                     <th class="w3-border w3-center" style="width:80px">Thứ tự</th>
@@ -197,14 +197,14 @@
                                 @ProductTypes.Static_Get(product.ProductTypeId, Model.ListProductTypes).ProductTypeDesc
                             </td>
                             @*<td class="w3-border w3-center">
-                                @Manufacturers.Static_Get(product.ManufacturerId, Model.ListManufacturers).ManufacturerDesc
-                            </td>
-                            <td class="w3-border w3-center">
-                                @Origin.Static_Get(product.OriginId, Model.ListOrigin).OriginDesc
-                            </td>
-                            <td class="w3-border w3-center">
-                                @Warranty.Static_Get(product.WarrantyId, Model.ListWarranty).WarrantyDesc
-                            </td>*@
+                                    @Manufacturers.Static_Get(product.ManufacturerId, Model.ListManufacturers).ManufacturerDesc
+                                </td>
+                                <td class="w3-border w3-center">
+                                    @Origin.Static_Get(product.OriginId, Model.ListOrigin).OriginDesc
+                                </td>
+                                <td class="w3-border w3-center">
+                                    @Warranty.Static_Get(product.WarrantyId, Model.ListWarranty).WarrantyDesc
+                                </td>*@
                             <td class="w3-border w3-center">
                                 @Units.Static_Get(product.UnitId, Model.ListUnits).UnitDesc
                             </td>
@@ -214,12 +214,12 @@
                                     <b>@Users.Static_Get(product.CrUserId, Model.ListUsers).UserName</b>
                                 </label>
                                 @if (product.UpdateUserId > 0)
-    {<br />
-                            <span>Cập nhật:</span>
-                            <label class="w3-label">
-                                <b>@Users.Static_Get(product.UpdateUserId, Model.ListUsers).UserName</b>
-                            </label>
-}
+                                {<br />
+                                    <span>Cập nhật:</span>
+                                    <label class="w3-label">
+                                        <b>@Users.Static_Get(product.UpdateUserId, Model.ListUsers).UserName</b>
+                                    </label>
+                                }
                                 <br />@product.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
                             </td>
                             <td class="w3-border w3-center">

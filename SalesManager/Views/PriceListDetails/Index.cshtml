@@ -15,10 +15,10 @@
             @Html.TextBoxFor(m => m.ProductName, new { @class = "w3-input w3-round w3-border w3-padding-small" })
         </div>
         <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width: 11%;">
-            <label class="w3-label">Sắp xếp theo:</label>
+            <label class="w3-label">Đơn vị tính:</label>
         </div>
         <div class="w3-col s2">
-            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy).AddDefaultOption("...", ""), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.ListUnits, "UnitId", "UnitDesc", Model.UnitId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
         <div class="w3-col s2 w3-padding-left">
             <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
@@ -35,12 +35,15 @@
         <b>Tổng cộng: @Model.RowCount</b>
     </div>
     <div class="w3-padding-bottom w3-right">
-        <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="insertPriceListDetail" type="submit" onclick="return confirm('Xác nhận tạo mới danh sách? Danh sách giá sản phẩm cũ sẽ bị thay thế !!!');"><i class="fa fa-plus"></i> Tạo danh sách sản phẩm</button>
+        <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="insertPriceListDetail" type="submit" onclick="return confirm('Xác nhận tạo mới danh sách? Giá sản phẩm theo bảng giá này sẽ bị xóa !!!');"><i class="fa fa-plus"></i> Tạo mới</button>
+        <a onclick="SelectPriceLists(@Model.PriceListTypeId)"
+           class="w3-btn w3-round w3-border w3-light-grey w3-hover-orange popup"
+           title="Tạo mới"><i class="fa fa-plus"></i>Sao chép từ bảng giá đã có</a>
         <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="submitType" value="updatePrices" type="submit"><i class="fa fa-floppy-o"></i> Cập nhật giá</button>
-        <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange"
-                name="submitType" value="deleteItems" type="submit">
-            <i class="fa fa-trash"></i> Xóa
-        </button>
+        @*<button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange"
+                    name="submitType" value="deleteItems" type="submit">
+                <i class="fa fa-trash"></i> Xóa
+            </button>*@
     </div>
     <table class="w3-table w3-bordered w3-striped w3-border">
         <thead class="w3-blue">
@@ -49,8 +52,7 @@
                 <th class="w3-border w3-center" width="35%">Tên sản phẩm</th>
                 <th class="w3-border w3-center" width="120px">Đơn vị tính</th>
                 <th class="w3-border w3-center" style="width: 150px">Giá</th>
-                <th class="w3-border w3-center">Nhân viên tạo</th>
-                <th class="w3-border w3-center">Nhân viên cập nhật</th>
+                <th class="w3-border w3-center">Người tạo</th>
                 <th class="w3-border w3-center">Trạng thái</th>
             </tr>
         </thead>
@@ -73,16 +75,7 @@
                             <label class="w3-label">
                                 <b>@Users.Static_Get(priceListDetail.CrUserId, Model.ListUsers).UserName</b>
                             </label>
-                            <br />@priceListDetail.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm:ss")
-                        </td>
-                        <td class="w3-border w3-center w3-small">
-                            @if (priceListDetail.UpdateUserId > 0)
-                            {
-                                <label class="w3-label">
-                                    <b>@Users.Static_Get(priceListDetail.UpdateUserId, Model.ListUsers).UserName</b>
-                                </label>
-                            }
-                            <br />@priceListDetail.UpdDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm:ss")
+                            <br />@priceListDetail.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")
                         </td>
                         <td class="w3-border w3-center">
                             @Status.Static_Get(priceListDetail.StatusId, Model.ListStatus).StatusDesc
@@ -98,6 +91,13 @@
         Html.RenderAction("PartialPagination", "Shared", new { model = Model.Pagination });
     }
 }
+<script type="text/javascript">
+    function SelectPriceLists(priceListTypeId) {
+        var popup = window.open("/pricelists/select?priceListTypeId=" + priceListTypeId, "Popup", "width=850,height=550,scrollbars=1");
+        popup.focus();
+        return false;
+    }
+</script>
 @section menudieuhuong{
     <div class="menudieuhuong">
         <div class="menudieuhuong_conen">

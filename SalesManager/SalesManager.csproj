@@ -932,6 +932,7 @@
     <Content Include="Views\PriceLists\Index.cshtml" />
     <Content Include="Views\PriceLists\Edit.cshtml" />
     <Content Include="Views\PriceListDetails\Index.cshtml" />
+    <Content Include="Views\PriceLists\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

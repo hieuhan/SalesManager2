@@ -37,6 +37,29 @@ namespace SalesManager.Controllers
             return View(model);
         }
 
+        public ActionResult Select(string priceListName = "", byte priceListTypeId = 0, string dateFrom = "", string dateTo = "", string orderBy = "", int page = 1)
+        {
+            int rowCount = 0;
+            var model = new PriceListsModel
+            {
+                PriceListTypeId = priceListTypeId,
+                ListStatus = new Status().GetAll(),
+                ListUsers = new Users().GetAll(),
+                ListPriceListTypes = new PriceListTypes().GetAll(),
+                ListOrderByClauses = OrderByClauses.Static_GetList("PriceLists"),
+                ListPriceLists = new PriceLists { PriceListName = priceListName, PriceListTypeId = priceListTypeId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                RowCount = rowCount,
+                Pagination = new PaginationModel
+                {
+                    TotalPage = rowCount,
+                    PageSize = SalesManagerConstants.RowAmount20,
+                    LinkLimit = 5,
+                    PageIndex = page
+                }
+            };
+            return View(model);
+        }
+
         [HttpGet]
         public ActionResult Edit(int priceListId = 0)
         {

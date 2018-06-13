@@ -15,7 +15,7 @@ namespace SalesManager.Controllers
     {
         private readonly int _userId = SessionHelpers.UserId;
         // GET: PriceListDetails
-        public ActionResult Index(int priceListId = 0, byte priceListTypeId = 0, string productName = "", byte statusId = 0, string orderBy = "", int page = 1)
+        public ActionResult Index(int priceListId = 0, byte priceListTypeId = 0, string productName = "", byte unitId = 0, int page = 1)
         {
             int rowCount = 0;
             var model = new PriceListDetailsModel
@@ -24,8 +24,7 @@ namespace SalesManager.Controllers
                 ListUnits = new Units().GetList(),
                 ListUsers = new Users().GetAll(),
                 ListStatus = new Status().GetAll(),
-                ListOrderByClauses = OrderByClauses.Static_GetList("PriceListDetails"),
-                ListPriceListDetails = priceListId > 0 ? new PriceListDetails { PriceListId = priceListId, ProductName = productName,StatusId = statusId}.GetPage(string.Empty, string.Empty, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount) : new List<PriceListDetails>(),
+                ListPriceListDetails = priceListId > 0 ? new PriceListDetails { PriceListId = priceListId, ProductName = productName, UnitId = unitId }.GetPage(string.Empty, string.Empty, string.Empty, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount) : new List<PriceListDetails>(),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {

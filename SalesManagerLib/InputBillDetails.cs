@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace SalesManagerLib
 {
-    public class PriceListDetails
+    public class InputBillDetails
     {
         #region Private Properties
-        private int _PriceListDetailId;
-        private int _PriceListId;
+        private int _InputBillDetailId;
+        private int _InputBillId;
         private int _ProductId;
         private string _ProductName;
-        private byte _StatusId;
-        private short _UnitId;
+        private int _Quantity;
         private double _Price;
-        private int _CrUserId;
-        private int _UpdateUserId;
+        private string _Notes;
+        private byte _StatusId;
         private DateTime _CrDateTime;
-        private DateTime _UpdDateTime;
         private DBAccess db;
 
         #endregion
@@ -29,17 +27,17 @@ namespace SalesManagerLib
         #region Public Properties
 
         //-----------------------------------------------------------------
-        public PriceListDetails()
+        public InputBillDetails()
         {
             db = new DBAccess(LibConstants.CONNECTION_STRING);
         }
         //-----------------------------------------------------------------        
-        public PriceListDetails(string constr)
+        public InputBillDetails(string constr)
         {
             db = (constr.Length > 0) ? new DBAccess(constr) : new DBAccess();
         }
         //-----------------------------------------------------------------
-        ~PriceListDetails()
+        ~InputBillDetails()
         {
 
         }
@@ -50,27 +48,27 @@ namespace SalesManagerLib
         }
 
         //-----------------------------------------------------------------    
-        public int PriceListDetailId
+        public int InputBillDetailId
         {
             get
             {
-                return _PriceListDetailId;
+                return _InputBillDetailId;
             }
             set
             {
-                _PriceListDetailId = value;
+                _InputBillDetailId = value;
             }
         }
 
-        public int PriceListId
+        public int InputBillId
         {
             get
             {
-                return _PriceListId;
+                return _InputBillId;
             }
             set
             {
-                _PriceListId = value;
+                _InputBillId = value;
             }
         }
         public int ProductId
@@ -84,7 +82,6 @@ namespace SalesManagerLib
                 _ProductId = value;
             }
         }
-
         public string ProductName
         {
             get
@@ -96,28 +93,15 @@ namespace SalesManagerLib
                 _ProductName = value;
             }
         }
-
-        public byte StatusId
+        public int Quantity
         {
             get
             {
-                return _StatusId;
+                return _Quantity;
             }
             set
             {
-                _StatusId = value;
-            }
-        }
-
-        public short UnitId
-        {
-            get
-            {
-                return _UnitId;
-            }
-            set
-            {
-                _UnitId = value;
+                _Quantity = value;
             }
         }
         public double Price
@@ -131,26 +115,26 @@ namespace SalesManagerLib
                 _Price = value;
             }
         }
-        public int CrUserId
+        public string Notes
         {
             get
             {
-                return _CrUserId;
+                return _Notes;
             }
             set
             {
-                _CrUserId = value;
+                _Notes = value;
             }
         }
-        public int UpdateUserId
+        public byte StatusId
         {
             get
             {
-                return _UpdateUserId;
+                return _StatusId;
             }
             set
             {
-                _UpdateUserId = value;
+                _StatusId = value;
             }
         }
         public DateTime CrDateTime
@@ -165,28 +149,16 @@ namespace SalesManagerLib
             }
         }
 
-        public DateTime UpdDateTime
-        {
-            get
-            {
-                return _UpdDateTime;
-            }
-            set
-            {
-                _UpdDateTime = value;
-            }
-        }
-
 
 
         #endregion
         //-----------------------------------------------------------
         #region Method
-        private List<PriceListDetails> Init(SqlCommand cmd)
+        private List<InputBillDetails> Init(SqlCommand cmd)
         {
             SqlConnection con = db.GetConnection();
             cmd.Connection = con;
-            List<PriceListDetails> l_PriceListDetails = new List<PriceListDetails>();
+            List<InputBillDetails> l_InputBillDetails = new List<InputBillDetails>();
             try
             {
                 con.Open();
@@ -194,25 +166,20 @@ namespace SalesManagerLib
                 SmartDataReader smartReader = new SmartDataReader(reader);
                 while (smartReader.Read())
                 {
-                    PriceListDetails m_PriceListDetails =
-                        new PriceListDetails
-                        {
-                            PriceListDetailId = smartReader.GetInt32("PriceListDetailId"),
-                            PriceListId = smartReader.GetInt32("PriceListId"),
-                            ProductId = smartReader.GetInt32("ProductId"),
-                            ProductName = smartReader.GetString("ProductName"),
-                            UnitId = smartReader.GetInt16("UnitId"),
-                            Price = smartReader.GetFloat("Price"),
-                            StatusId = smartReader.GetByte("StatusId"),
-                            CrUserId = smartReader.GetInt32("CrUserId"),
-                            //UpdateUserId = smartReader.GetInt32("UpdateUserId"),
-                            CrDateTime = smartReader.GetDateTime("CrDateTime"),
-                            //UpdDateTime = smartReader.GetDateTime("UpdDateTime")
-                        };
-                    l_PriceListDetails.Add(m_PriceListDetails);
+                    InputBillDetails m_InputBillDetails = new InputBillDetails();
+                    m_InputBillDetails.InputBillDetailId = smartReader.GetInt32("InputBillDetailId");
+                    m_InputBillDetails.InputBillId = smartReader.GetInt32("InputBillId");
+                    m_InputBillDetails.ProductId = smartReader.GetInt32("ProductId");
+                    m_InputBillDetails.ProductName = smartReader.GetString("ProductName");
+                    m_InputBillDetails.Quantity = smartReader.GetInt32("Quantity");
+                    m_InputBillDetails.Price = smartReader.GetFloat("Price");
+                    m_InputBillDetails.Notes = smartReader.GetString("Notes");
+                    m_InputBillDetails.StatusId = smartReader.GetByte("StatusId");
+                    m_InputBillDetails.CrDateTime = smartReader.GetDateTime("CrDateTime");
+                    l_InputBillDetails.Add(m_InputBillDetails);
                 }
                 reader.Close();
-                return l_PriceListDetails;
+                return l_InputBillDetails;
             }
             catch (SqlException err)
             {
@@ -257,19 +224,20 @@ namespace SalesManagerLib
             byte RetVal = 0;
             try
             {
-                SqlCommand cmd = new SqlCommand("PriceListDetails_InsertOrUpdate");
+                SqlCommand cmd = new SqlCommand("InputBillDetails_InsertOrUpdate");
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
+                cmd.Parameters.Add(new SqlParameter("@InputBillId", this.InputBillId));
                 cmd.Parameters.Add(new SqlParameter("@ProductId", this.ProductId));
-                cmd.Parameters.Add(new SqlParameter("@UnitId", this.UnitId));
+                cmd.Parameters.Add(new SqlParameter("@ProductName", this.ProductName));
+                cmd.Parameters.Add(new SqlParameter("@Quantity", this.Quantity));
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
-                cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
-                //cmd.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId)).Direction = ParameterDirection.InputOutput;
+                cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
+                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
+                cmd.Parameters.Add(new SqlParameter("@InputBillDetailId", this.InputBillDetailId)).Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add("@SysMessageId", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
                 db.ExecuteSQL(cmd);
-                this.PriceListDetailId = int.Parse(cmd.Parameters["@PriceListDetail"].Value.ToString());
+                this.InputBillDetailId = int.Parse(cmd.Parameters["@InputBillDetailId"].Value.ToString());
                 SysMessageId = Convert.ToInt16((cmd.Parameters["@SysMessageId"].Value == null) ? "0" : cmd.Parameters["@SysMessageId"].Value);
                 RetVal = Convert.ToByte((cmd.Parameters["@SysMessageTypeId"].Value == null) ? "0" : cmd.Parameters["@SysMessageTypeId"].Value);
             }
@@ -285,9 +253,9 @@ namespace SalesManagerLib
             byte RetVal = 0;
             try
             {
-                SqlCommand cmd = new SqlCommand("PriceListDetails_Delete");
+                SqlCommand cmd = new SqlCommand("InputBillDetails_Delete");
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
+                cmd.Parameters.Add(new SqlParameter("@InputBillDetailId", this.InputBillDetailId));
                 cmd.Parameters.Add("@SysMessageId", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
                 db.ExecuteSQL(cmd);
@@ -301,9 +269,9 @@ namespace SalesManagerLib
             return RetVal;
         }
         //--------------------------------------------------------------     
-        public PriceListDetails Get()
+        public InputBillDetails Get()
         {
-            PriceListDetails retVal = new PriceListDetails();
+            InputBillDetails retVal = new InputBillDetails();
             int RowCount = 0;
             string DateFrom = "";
             string DateTo = "";
@@ -313,7 +281,7 @@ namespace SalesManagerLib
             try
             {
 
-                List<PriceListDetails> list = GetPage(DateFrom, DateTo, OrderBy, PageSize, PageNumber, ref RowCount);
+                List<InputBillDetails> list = GetPage(DateFrom, DateTo, OrderBy, PageSize, PageNumber, ref RowCount);
                 if (list.Count > 0) retVal = list[0];
             }
             catch (Exception ex)
@@ -326,29 +294,28 @@ namespace SalesManagerLib
 
         //-------------------------------------------------------------- 
 
-        public List<PriceListDetails> GetPage(string DateFrom, string DateTo, string OrderBy, int PageSize, int PageNumber, ref int RowCount)
+        public List<InputBillDetails> GetPage(string DateFrom, string DateTo, string OrderBy, int PageSize, int PageNumber, ref int RowCount)
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("PriceListDetails_GetPage");
+                SqlCommand cmd = new SqlCommand("InputBillDetails_GetPage");
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
-                cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
+                cmd.Parameters.Add(new SqlParameter("@InputBillDetailId", this.InputBillDetailId));
+                cmd.Parameters.Add(new SqlParameter("@InputBillId", this.InputBillId));
                 cmd.Parameters.Add(new SqlParameter("@ProductId", this.ProductId));
                 cmd.Parameters.Add(new SqlParameter("@ProductName", this.ProductName));
-                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
-                cmd.Parameters.Add(new SqlParameter("@UnitId", this.UnitId));
+                cmd.Parameters.Add(new SqlParameter("@Quantity", this.Quantity));
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
-                cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
-                //cmd.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
+                cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
+                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
                 if (!string.IsNullOrEmpty(DateFrom)) cmd.Parameters.Add(new SqlParameter("@DateFrom", StringUtil.ConvertToDateTime(DateFrom)));
                 if (!string.IsNullOrEmpty(DateTo)) cmd.Parameters.Add(new SqlParameter("@DateTo", StringUtil.ConvertToDateTime(DateTo)));
                 cmd.Parameters.Add(new SqlParameter("@OrderBy", OrderBy));
                 cmd.Parameters.Add(new SqlParameter("@PageSize", PageSize));
                 cmd.Parameters.Add(new SqlParameter("@PageNumber", PageNumber));
                 cmd.Parameters.Add("@RowCount", SqlDbType.Int).Direction = ParameterDirection.Output;
-                List<PriceListDetails> list = Init(cmd);
+                List<InputBillDetails> list = Init(cmd);
                 RowCount = int.Parse(cmd.Parameters["@RowCount"].Value.ToString());
                 return list;
             }
@@ -358,38 +325,6 @@ namespace SalesManagerLib
             }
         }
         //--------------------------------------------------------------
-
-        public void Insert_Auto()
-        {
-            try
-            {
-                SqlCommand cmd = new SqlCommand("PriceListDetails_Insert_Auto");
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@PriceListId", this.PriceListId));
-                cmd.Parameters.Add(new SqlParameter("@CrUserId", this.CrUserId));
-                db.ExecuteSQL(cmd);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public void UpdatePrice()
-        {
-            try
-            {
-                SqlCommand sqlCommand = new SqlCommand("PriceListDetails_Update_Price") { CommandType = CommandType.StoredProcedure };
-                sqlCommand.Parameters.Add(new SqlParameter("@Price", this.Price));
-                //sqlCommand.Parameters.Add(new SqlParameter("@UpdateUserId", this.UpdateUserId));
-                sqlCommand.Parameters.Add(new SqlParameter("@PriceListDetailId", this.PriceListDetailId));
-                this.db.ExecuteSQL(sqlCommand);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         #endregion
     }
 }

@@ -8,6 +8,7 @@ namespace SalesManager.Models
 {
     public class PriceListsModel:ViewModelBase
     {
+        public byte PriceListTypeId { get; set; }
         public short[] PriceListsId { get; set; }
         public string PriceListName { get; set; }
         public string DateFrom { get; set; }
