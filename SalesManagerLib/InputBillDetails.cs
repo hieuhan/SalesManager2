@@ -18,7 +18,7 @@ namespace SalesManagerLib
         private int _Quantity;
         private double _Price;
         private string _Notes;
-        private byte _StatusId;
+        private byte _BillStatusId;
         private DateTime _CrDateTime;
         private DBAccess db;
 
@@ -126,15 +126,15 @@ namespace SalesManagerLib
                 _Notes = value;
             }
         }
-        public byte StatusId
+        public byte BillStatusId
         {
             get
             {
-                return _StatusId;
+                return _BillStatusId;
             }
             set
             {
-                _StatusId = value;
+                _BillStatusId = value;
             }
         }
         public DateTime CrDateTime
@@ -174,7 +174,7 @@ namespace SalesManagerLib
                     m_InputBillDetails.Quantity = smartReader.GetInt32("Quantity");
                     m_InputBillDetails.Price = smartReader.GetFloat("Price");
                     m_InputBillDetails.Notes = smartReader.GetString("Notes");
-                    m_InputBillDetails.StatusId = smartReader.GetByte("StatusId");
+                    m_InputBillDetails.BillStatusId = smartReader.GetByte("BillStatusId");
                     m_InputBillDetails.CrDateTime = smartReader.GetDateTime("CrDateTime");
                     l_InputBillDetails.Add(m_InputBillDetails);
                 }
@@ -232,7 +232,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@Quantity", this.Quantity));
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
                 cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
-                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
+                cmd.Parameters.Add(new SqlParameter("@BillStatusId", this.BillStatusId));
                 cmd.Parameters.Add(new SqlParameter("@InputBillDetailId", this.InputBillDetailId)).Direction = ParameterDirection.InputOutput;
                 cmd.Parameters.Add("@SysMessageId", SqlDbType.Int).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("@SysMessageTypeId", SqlDbType.TinyInt).Direction = ParameterDirection.Output;
@@ -308,7 +308,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@Quantity", this.Quantity));
                 cmd.Parameters.Add(new SqlParameter("@Price", this.Price));
                 cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
-                cmd.Parameters.Add(new SqlParameter("@StatusId", this.StatusId));
+                cmd.Parameters.Add(new SqlParameter("@BillStatusId", this.BillStatusId));
                 if (!string.IsNullOrEmpty(DateFrom)) cmd.Parameters.Add(new SqlParameter("@DateFrom", StringUtil.ConvertToDateTime(DateFrom)));
                 if (!string.IsNullOrEmpty(DateTo)) cmd.Parameters.Add(new SqlParameter("@DateTo", StringUtil.ConvertToDateTime(DateTo)));
                 cmd.Parameters.Add(new SqlParameter("@OrderBy", OrderBy));
