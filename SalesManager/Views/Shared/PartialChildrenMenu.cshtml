@@ -1,0 +1,17 @@
+﻿@using SalesManager.AppCode
+@using SalesManagerLib
+@using SalesManager.Models
+@model SharedModel.HeaderModel
+@if (Model.ListActionForUser.HasValue())
+{
+    <ul style="@(Model.SubMenu > 0 ? "left: 250px; right: unset;" : string.Empty)">
+        @foreach (var action in Model.ListActionForUser)
+        {
+            <li>
+                <a href="@(SalesManagerConstants.ROOT_PATH)@action.Url">@action.ActionDesc</a>
+                @*<span class="more2"> » </span>*@
+                @{Html.RenderAction("PartialChildrenMenu", "Shared", new { actionId = action.ActionId, subMenu = 1 });}
+            </li>
+        }
+    </ul>
+}

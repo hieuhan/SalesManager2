@@ -23,6 +23,18 @@ namespace SalesManager.Controllers
         }
 
         [ChildActionOnly]
+        public ActionResult PartialChildrenMenu(short actionId = 0, byte subMenu = 0)
+        {
+            //Todo ds actions con theo actionParentId
+            var model = new HeaderModel
+            {
+                SubMenu = subMenu,
+                ListActionForUser = new Actions().GetChildActionByUser(_userId, actionId, 1)
+            };
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
         public ActionResult PartialPagination(PaginationModel model)
         {
             return PartialView(model);

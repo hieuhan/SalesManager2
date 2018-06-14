@@ -38,5 +38,72 @@ namespace SalesManager.Controllers
             };
             return View(model);
         }
+
+        public ActionResult Edit()
+        {
+            var model = new InputBillsEditModel
+            {
+                ListBillStatus = new BillStatus().GetAll(),
+                ListPaymentTypes = new PaymentTypes().GetAll(),
+                ListWarehouse = new Warehouse().GetAll(),
+                ListSuppliers = new Suppliers().GetAll(),
+                ListUsers = new Users().GetAll()
+            };
+            //if (manufacturerId > 0)
+            //{
+            //    var manufacturer = new Manufacturers { ManufacturerId = manufacturerId }.Get();
+            //    if (manufacturer.ManufacturerId > 0)
+            //    {
+            //        model.ManufacturerId = manufacturer.ManufacturerId;
+            //        model.ManufacturerName = manufacturer.ManufacturerName;
+            //        model.ManufacturerDesc = manufacturer.ManufacturerDesc;
+            //        model.DisplayOrder = manufacturer.DisplayOrder;
+            //    }
+            //}
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(InputBillsEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                short sysMessageId = 0;
+                var inputBill = new InputBills
+                {
+                    InputBillId = model.InputBillId,
+                    CustomerId = model.CustomerId,
+                    UserId = model.UserId,
+                    SupplierId = model.SupplierId,
+                    WarehouseId = model.WarehouseId,
+                    PaymentTypeId = model.PaymentTypeId,
+                    BillStatusId = model.BillStatusId,
+                    Notes = model.Notes
+                };
+                if (model.InputBillId > 0)
+                {
+                    inputBill.Update(ref sysMessageId);
+                }
+                else
+                {
+                    inputBill.Insert(ref sysMessageId);
+                    model.InputBillId = inputBill.InputBillId;
+                }
+
+                if (sysMessageId > 0)
+                {
+                    var sysMessage = new SystemMessages().Get(sysMessageId);
+                    ModelState.AddModelError("SystemMessages", sysMessage.SystemMessageDesc);
+                }
+                else ModelState.AddModelError("SystemMessages", "Bạn vui lòng thử lại sau.");
+            }
+            model.ListBillStatus = new BillStatus().GetAll();
+            model.ListPaymentTypes = new PaymentTypes().GetAll();
+            model.ListWarehouse = new Warehouse().GetAll();
+            model.ListSuppliers = new Suppliers().GetAll();
+            model.ListUsers = new Users().GetAll();
+            return View(model);
+        }
     }
 }

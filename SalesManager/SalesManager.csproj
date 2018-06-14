@@ -235,6 +235,7 @@
     <Content Include="Assets\images\english.png" />
     <Content Include="Assets\images\error.png" />
     <Content Include="Assets\images\facebook.png" />
+    <Content Include="Assets\images\favicon.ico" />
     <Content Include="Assets\images\google.png" />
     <Content Include="Assets\images\hien.png" />
     <Content Include="Assets\images\hien_hover.png" />
@@ -937,6 +938,8 @@
     <Content Include="Views\PriceLists\Select.cshtml" />
     <Content Include="Views\InputBills\Index.cshtml" />
     <Content Include="Views\Customers\Select.cshtml" />
+    <Content Include="Views\Shared\PartialChildrenMenu.cshtml" />
+    <Content Include="Views\InputBills\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

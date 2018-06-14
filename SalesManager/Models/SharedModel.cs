@@ -1,4 +1,5 @@
-﻿using SalesManagerLib;
+﻿using SalesManager.AppCode;
+using SalesManagerLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace SalesManager.Models
     {
         public class HeaderModel
         {
+            public byte SubMenu { get; set; }
             public List<Actions> ListActionForUser { get; set; }
         }
     }

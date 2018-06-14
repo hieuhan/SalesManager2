@@ -261,9 +261,18 @@ img {
 #nav li.menudown {
     background: url("/assets/images/menudown.png") no-repeat scroll 9px 12px;
 }
-#nav li.menudown:hover {
-    background: url("/assets/images/menudown.png") no-repeat scroll 9px 12px;
-}
+    #nav li.menudown:hover {
+        background-color: goldenrod !important;
+        background: url("/assets/images/menudown.png") no-repeat scroll 9px 12px;
+    }
+    #nav li:hover {
+        color:#fff;
+        background-color: goldenrod !important;
+        background: url("/assets/images/menudown.png") no-repeat scroll 9px 12px;
+    }
+    #nav ul li:hover > a {
+        color: #fff !important;
+    }
 #nav li.facebook {
     background: url("/assets/images/facebook.png") no-repeat scroll 9px 12px;
 }
@@ -294,18 +303,29 @@ img {
 #nav li a {
     display: block;
 }
-#nav ul li {
-    border-bottom: 1px solid #BEC7D2;
+    #nav ul li {
+        /*border-bottom: 1px solid #BEC7D2;
     border-right: medium none;
     height: 40px;
     width: 300px;
-    background: url("/assets/images/buleft.png") no-repeat scroll 5px 16px;
-}
+    background: url("/assets/images/buleft.png") no-repeat scroll 5px 16px;*/
+        border-right: medium none;
+        height: 40px;
+        width: 250px;
+        background: url("/assets/images/buleft.png") no-repeat scroll 5px 16px;
+    }
 #nav ul li a {
     border-bottom: 1px solid #BEC7D2;
     border-right: medium none;
     color: #000000;
     padding: 0 10px 0 20px;
+
+    font-weight: bold;
+    height: 41px;
+    line-height: 41px;
+    margin: 0;
+    padding: 0 10px 0 30px;
+    text-decoration: none;
 }
 #nav ul li a:hover {
     border-bottom: 1px solid #BEC7D2;
@@ -1238,4 +1258,20 @@ input.input-validation-error {
     height: 100%;
     z-index: 9999;
     background: url('http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif?e44397') 50% 50% no-repeat rgb(249,249,249);
+}
+.more2 {
+    position: absolute;
+    float: right;
+    margin-right: 10px;
+    margin-top: -32px;
+    font-size: 16px;
+    color: #555;
+    right: 0;
+}
+#nav ul ul {
+    border: 1px solid #BEC7D2;
+    display: none;
+    left: 170px;
+    top: 0;
+    visibility: hidden;
 }

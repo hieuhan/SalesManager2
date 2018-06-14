@@ -286,6 +286,7 @@ namespace SalesManagerLib
                 cmd.Parameters.Add(new SqlParameter("@PaymentTypeId", this.PaymentTypeId));
                 cmd.Parameters.Add(new SqlParameter("@Pay", this.Pay));
                 cmd.Parameters.Add(new SqlParameter("@Total", this.Total));
+                if (this.Payment != DateTime.MinValue)
                 cmd.Parameters.Add(new SqlParameter("@Payment", this.Payment));
                 cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
                 cmd.Parameters.Add(new SqlParameter("@BillStatusId", this.BillStatusId));

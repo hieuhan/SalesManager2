@@ -593,7 +593,7 @@ namespace SalesManagerLib
             }
         }
 
-        public List<Actions> GetChildActionByUser(int userId, short actionId)
+        public List<Actions> GetChildActionByUser(int userId, short actionId, byte display)
         {
             try
             {
@@ -601,6 +601,7 @@ namespace SalesManagerLib
                     new SqlCommand("Actions_GetChildByUser") { CommandType = CommandType.StoredProcedure };
                 sqlCommand.Parameters.Add(new SqlParameter("@UserId", userId));
                 sqlCommand.Parameters.Add(new SqlParameter("@ActionId", actionId));
+                sqlCommand.Parameters.Add(new SqlParameter("@Display", display));
                 return this.Init(sqlCommand);
             }
             catch (Exception ex)
