@@ -21,5 +21,7 @@ namespace SalesManager.Models
         public List<Users> ListUsers { get; set; }
         public List<Suppliers> ListSuppliers { get; set; }
         public List<Warehouse> ListWarehouse { get; set; }
+        public List<PaymentTypes> ListPaymentTypes { get; set; }
+        public List<BillStatus> ListBillStatus { get; set; }
     }
 }

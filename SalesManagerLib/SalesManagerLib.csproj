@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="ActionStatus.cs" />
+    <Compile Include="BillStatus.cs" />
     <Compile Include="CustomerGroups.cs" />
     <Compile Include="Customers.cs" />
     <Compile Include="DBAccess.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="OrderByClauses.cs" />
     <Compile Include="Origin.cs" />
     <Compile Include="OutputBillDetails.cs" />
+    <Compile Include="PaymentTypes.cs" />
     <Compile Include="PriceListDetails.cs" />
     <Compile Include="PriceLists.cs" />
     <Compile Include="PriceListTypes.cs" />

@@ -87,7 +87,13 @@
             <label class="w3-label">Phương thức thanh toán:</label>
         </div>
         <div class="w3-col s3">
-            @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+        </div>
+        <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
+            <label class="w3-label">Trạng thái:</label>
+        </div>
+        <div class="w3-col s2">
+            @Html.DropDownListFor(m => m.BillStatusId, new SelectList(Model.ListBillStatus, "StatusId", "StatusDesc", Model.BillStatusId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
         <div class="w3-col s2 w3-padding-left">
             <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
