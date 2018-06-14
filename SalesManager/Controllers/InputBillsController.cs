@@ -14,17 +14,19 @@ namespace SalesManager.Controllers
     public class InputBillsController : Controller
     {
         // GET: InputBills
-        public ActionResult Index(int customerId = 0, int userId = 0, int supplierId = 0, int page = 1, byte billStatusId = 0, byte paymentTypeId = 0, byte warehouseId = 0, string dateFrom = "", string dateTo = "")
+        public ActionResult Index(int customerId = 0, int userId = 0, int supplierId = 0, int page = 1, byte billStatusId = 0, byte paymentTypeId = 0, byte warehouseId = 0, string dateFrom = "", string dateTo = "", string fullName = "", string orderBy = "")
         {
             int rowCount = 0;
             var model = new InputBillsModel
             {
+                FullName = fullName,
+                ListOrderByClauses = OrderByClauses.Static_GetList("InputBills"),
                 ListBillStatus = new BillStatus().GetAll(),
                 ListPaymentTypes = new PaymentTypes().GetAll(),
                 ListWarehouse = new Warehouse().GetAll(),
                 ListSuppliers = new Suppliers().GetAll(),
                 ListUsers = new Users().GetAll(),
-                ListInputBills = new InputBills { CustomerId = customerId, UserId = userId, SupplierId = supplierId, BillStatusId = billStatusId, PaymentTypeId = paymentTypeId , WarehouseId = warehouseId }.GetPage(dateFrom, dateTo, string.Empty, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListInputBills = new InputBills { CustomerId = customerId, UserId = userId, SupplierId = supplierId, BillStatusId = billStatusId, PaymentTypeId = paymentTypeId , WarehouseId = warehouseId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {

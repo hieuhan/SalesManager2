@@ -44,7 +44,7 @@
             <label class="w3-label">Khách hàng: <a href="#" id="selectCustomer" data-url="/Customers/Select" title="Chọn khách hàng"><i class="fa fa-plus"></i></a></label>
         </div>
         <div class="w3-col s2">
-            @Html.TextBoxFor(m => m.CustomerName, new { @class = "w3-input w3-round w3-border w3-padding-small", disabled = "disabled" })
+            @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small" })
             @Html.HiddenFor(m=>m.CustomerId)
         </div>
         <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
@@ -79,7 +79,7 @@
             <label class="w3-label">Sắp xếp theo:</label>
         </div>
         <div class="w3-col s2">
-            @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            @Html.DropDownListFor(m => m.OrderBy, new SelectList(Model.ListOrderByClauses, "OrderBy", "OrderByName", Model.OrderBy), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
     </div>
     <div class="w3-row w3-padding-bottom">

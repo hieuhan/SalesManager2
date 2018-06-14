@@ -12,7 +12,8 @@ namespace SalesManager.Models
         public byte PaymentTypeId { get; set; }
         public byte BillStatusId { get; set; }
         public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public string FullName { get; set; }
+        public string OrderBy { get; set; }
         public int UserId { get; set; }
         public int SupplierId { get; set; }
         public string DateFrom { get; set; }
@@ -23,5 +24,6 @@ namespace SalesManager.Models
         public List<Warehouse> ListWarehouse { get; set; }
         public List<PaymentTypes> ListPaymentTypes { get; set; }
         public List<BillStatus> ListBillStatus { get; set; }
+        public List<OrderByClauses> ListOrderByClauses { get; set; }
     }
 }

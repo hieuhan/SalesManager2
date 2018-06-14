@@ -124,7 +124,7 @@ var salesManager = {
                     var customer = $("input:radio[name='CustomerId']:checked"),
                         customerName = customer.data('name'),
                         customerId = customer.val(),
-                    inuptCustomerName = window.opener.document.getElementById('CustomerName'),
+                    inuptCustomerName = window.opener.document.getElementById('FullName'),
                     inputCustomerId = window.opener.document.getElementById('CustomerId');
                     inuptCustomerName.value = customerName;
                     inputCustomerId.value = customerId;
