@@ -89,8 +89,15 @@ var salesManager = {
         $('#selectCustomer').off('click').on('click',
             function (event) {
                 event.preventDefault();
-                var url = $(this).data('url');
+                var url = '/Customers/Select';
                 salesManager.PopupCenter(url, 'popupPriceList', 1200, 800);
+            });
+
+        $('#removeSelectedCustomer').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                $('#selectCustomer').val(''); $('#CustomerId').val(0);
+                $(this).css('visibility', 'hidden');
             });
 
         $('#selectPriceList').off('click').on('click',
@@ -124,10 +131,12 @@ var salesManager = {
                     var customer = $("input:radio[name='CustomerId']:checked"),
                         customerName = customer.data('name'),
                         customerId = customer.val(),
-                    inuptCustomerName = window.opener.document.getElementById('FullName'),
+                        removeSelectedCustomer = window.opener.document.getElementById('removeSelectedCustomer'),
+                        inuptCustomerName = window.opener.document.getElementById('selectCustomer'),
                     inputCustomerId = window.opener.document.getElementById('CustomerId');
                     inuptCustomerName.value = customerName;
                     inputCustomerId.value = customerId;
+                    removeSelectedCustomer.style.visibility = 'visible';
                     window.close();
                 } else {
                     alert('Bạn vui lòng chọn khách hàng !');

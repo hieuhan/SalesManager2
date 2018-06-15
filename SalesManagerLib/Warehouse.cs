@@ -306,6 +306,15 @@ namespace SalesManagerLib
             return result;
         }
 
+        public static Warehouse Static_Get(byte warehouseId, List<Warehouse> listWarehouse)
+        {
+            Warehouse RetVal;
+            RetVal = listWarehouse.Find(x => x.WarehouseId == warehouseId);
+            if (RetVal == null)
+                RetVal = new Warehouse();
+            return RetVal;
+        }
+
         #endregion
     }
 }

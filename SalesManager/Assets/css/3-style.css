@@ -1275,3 +1275,6 @@ input.input-validation-error {
     top: 0;
     visibility: hidden;
 }
+#removeSelectedCustomer {
+    visibility: hidden;
+}

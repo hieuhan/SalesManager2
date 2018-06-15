@@ -1,221 +1,52 @@
-﻿@using SalesManagerLib
-@using SalesManager.Models
+﻿@using SalesManager.Models
 @using SalesManager.AppCode
 @model InputBillsEditModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-<div class="khungcontenpading">
-    @using (Html.BeginForm("Edit", "InputBills", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {@Html.AntiForgeryToken()
-    <div class="w3-container" style="overflow: hidden;">
-        <!--Begin LeftTop 7/12-->
-        @Html.ValidationMessageFor(m => m.SystemMessages, "", new { @class = string.Format("text-danger w3-center w3-container w3-section w3-round w3-padding {0}", Model.SystemStatus == SystemStatus.Success ? "w3-blue" : "w3-red"), id = "productMessages" })
-        <div class="w3-col s7 w3-padding-top">
-            <!-- Line 1 -->
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Nhân viên bán :</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Thêm/Sửa đơn nhập hàng</title>
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/Js")
+    @Scripts.Render("~/bundles/jqueryval")
+</head>
+<body>
 
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
-                <label class="w3-label">Khách hàng: <a href="#" id="selectCustomer" data-url="/Customers/Select" title="Chọn khách hàng"><i class="fa fa-plus"></i></a></label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", @readonly = "readonly" })
-                @Html.HiddenFor(m => m.CustomerId)
-            </div>
-            <!-- Line 2 -->
-            @*<div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Nhà cung cấp:</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
-
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
-                <label class="w3-label">Kho hàng:</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.DropDownListFor(m => m.WarehouseId, new SelectList(Model.ListWarehouse, "WarehouseId", "WarehouseDesc", Model.WarehouseId), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>*@
-
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Ghi chú:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                @Html.TextAreaFor(m => m.Notes, new { @class = "w3-input w3-border w3-round w3-padding-small", style = "height:70px;" })
-            </div>
-            <!-- Line 3 -->
-            @*<div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Phương thức thanh toán:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>*@
-            <!-- Line 5 -->
-            @*<div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Ảnh:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                <img alt="Chọn ảnh" src="@(!string.IsNullOrEmpty(Model.ImagePath) ? string.Concat(!Model.ImagePath.StartsWith("http://") ? SalesManagerConstants.ROOT_PATH : SalesManagerConstants.WEBSITE_MEDIADOMAIN, Model.ImagePath) : string.Empty)" Id="popup-media" style="width: 60px; height: 40px; cursor: pointer;" />
-                @Html.CheckBoxFor(m => m.ImageDisplay, new { @class = "w3-check" })
-                <label for="ImageDisplay" class="w3-label1">Xóa ảnh</label>
-            </div>*@
-        </div>
-        <!--End LeftTop-->
-        <!--Begin RightTop 5/12-->
-        <div class="w3-col s5 w3-padding-top w3-padding-left">
-
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Nhà cung cấp:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Kho hàng:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                @Html.DropDownListFor(m => m.WarehouseId, new SelectList(Model.ListWarehouse, "WarehouseId", "WarehouseDesc", Model.WarehouseId), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Phương thức thanh toán:</label>
-            </div>
-            <div class="w3-col s10 w3-padding-top">
-                @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
-            @*<div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Đơn
-                <div class="w3-col s2 w3-padding-top">
-                    <label class="w3-label">Phương thức thanh toán:</label>
-                </div>
-                <div class="w3-col s10 w3-padding-top">
-                    @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-                </div>vị tính:</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.DropDownListFor(m => m.UnitId, new SelectList(Model.ListUnits, "UnitId", "UnitDesc", Model.UnitId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
-                <label class="w3-label">Thứ tự:</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "w3-input w3-border w3-round w3-padding-small", type = "number", min = "0" })
-            </div>*@
-
-        </div>
-        <!--End RightTop-->
-        <!--Begin Bottom-->
-        @if (Model.InputBillId > 0)
+    @using (Html.BeginForm())
     {
-        <div class="w3-col s12 w3-padding-top">
-            <div class="w3-col s2 w3-padding-top">
-                <label class="w3-label">Nhân viên bán :</label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId), new { @class = "w3-input w3-border w3-padding-small" })
-            </div>
+        @Html.AntiForgeryToken()
+    <div class="w3-container" style="height: 390px; overflow: auto">
+        @Html.ValidationMessageFor(m => m.SystemMessages, "", new { @class = string.Format("text-danger w3-center w3-container w3-section w3-round w3-padding {0}", Model.SystemStatus == SystemStatus.Success ? "w3-blue" : "w3-red") })
+        <label class="w3-label w3-left w3-padding-top">Nhân viên bán :</label>
+        @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId), new { @class = "w3-input w3-border w3-padding-small" })
 
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
-                <label class="w3-label">Khách hàng: <a href="#" id="selectCustomer" data-url="/Customers/Select" title="Chọn khách hàng"><i class="fa fa-plus"></i></a></label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", @readonly = "readonly" })
-                @Html.HiddenFor(m => m.CustomerId)
-            </div>
-            <div class="w3-col s2 w3-padding-top w3-padding-left">
-                <label class="w3-label">Khách hàng: <a href="#" id="selectCustomer" data-url="/Customers/Select" title="Chọn khách hàng"><i class="fa fa-plus"></i></a></label>
-            </div>
-            <div class="w3-col s4 w3-padding-top">
-                @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", @readonly = "readonly" })
-                @Html.HiddenFor(m => m.CustomerId)
-            </div>
+        <label class="w3-label w3-left">Khách hàng: &nbsp;&nbsp;&nbsp;<a href="#" id="removeSelectedCustomer" title="Bỏ chọn khách hàng này"><i class="fa fa-remove" style="font-size: 20px;"></i></a></label>
+        @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", id = "selectCustomer", @readonly = "readonly", style = "cursor:zoom-in" })
+        @Html.HiddenFor(m => m.CustomerId)
 
+        <label class="w3-label w3-left">Kho hàng:</label>
+        @Html.DropDownListFor(m => m.WarehouseId, new SelectList(Model.ListWarehouse, "WarehouseId", "WarehouseDesc", Model.WarehouseId), new { @class = "w3-input w3-border w3-padding-small" })
 
-        </div>
+        <label class="w3-label w3-left">Nhà cung cấp:</label>
+        @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
 
-        <div class="w3-col s12 w3-padding-top">
-            <div class="w3-col s1 w3-padding-top">
-                <label class="w3-label">Danh sách sản phẩm:</label>
-            </div>
-            <div class="w3-col s11 w3-padding-top w3-padding-left">
-
-
-                <table class="w3-table w3-bordered w3-striped w3-border">
-                    <thead class="w3-blue">
-                        <tr>
-                            <th class="w3-border w3-center">#</th>
-                            <th class="w3-border w3-center">Tên sản phẩm</th>
-                            <th class="w3-border w3-center">Số lượng</th>
-                            <th class="w3-border w3-center">Giá</th>
-                            <th class="w3-border w3-center">Thành tiền</th>
-                            <th class="w3-border w3-center">Thao tác</th>
-                            <th class="w3-border w3-center"><input id="selectall" type="checkbox" class="w3-check"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="w3-border w3-center">1</td>
-                            <td class="w3-border">Nguyễn Văn B</td>
-                            <td class="w3-border">0989856890</td>
-                            <td class="w3-border w3-center"></td>
-                            <td class="w3-border">nguyenvana@gmail.com</td>
-                            <td class="w3-border w3-center">
-                                <a href="/Customers/Edit?customerId=2" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
-                                <a href="/Customers/delete?customerId=2" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Xác nhận xóa dữ liệu ?');" title="Xóa dữ liệu"></a>
-                            </td>
-                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="CustomerIds" value="2"></td>
-                        </tr>
-                        <tr>
-                            <td class="w3-border w3-center">2</td>
-                            <td class="w3-border">Nguyễn Văn A</td>
-                            <td class="w3-border">0912345668</td>
-                            <td class="w3-border">nguyenvana@gmail.com</td>
-                            <td class="w3-border">nguyenvana@gmail.com</td>
-                            <td class="w3-border w3-center">
-                                <a href="/Customers/Edit?customerId=1" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
-                                <a href="/Customers/delete?customerId=1" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Xác nhận xóa dữ liệu ?');" title="Xóa dữ liệu"></a>
-                            </td>
-                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="CustomerIds" value="1"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-        </div>
-}
-
-        <div class="w3-col s12 w3-padding-top">
-            <div class="w3-col s11 w3-padding-top">
-            </div>
-            @Html.HiddenFor(m => m.InputBillId)
-        </div>
-        <!--Begin Bottom-->
+        <label class="w3-label w3-left">Phương thức thanh toán:</label>
+        @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
+        
+        <label class="w3-label w3-left">Ghi chú:</label>
+        @Html.TextAreaFor(m => m.Notes, new { @class = "w3-input w3-border w3-round w3-padding-small" })
     </div>
-    <div class="w3-right-align w3-bottom w3-padding-large">
-        <a class="w3-btn w3-border w3-round w3-blue" href="/Products/Index">
-            <i class="fa fa-floppy-o fa-reply"></i> <b>Quay lại</b>
-        </a>
-        <button class="w3-btn w3-border w3-round w3-blue" type="submit" name="SaveBack" value="SaveBack">
-            <i class="fa fa-floppy-o"></i> <b>Lưu và quay lại</b>
-        </button>
-        <button class="w3-btn w3-border w3-round w3-blue" type="submit" name="SaveAdd" value="SaveAdd">
-            <i class="fa fa-plus"></i> <b>Lưu và thêm mới</b>
-        </button>
-    </div>
-}
-    <div class="clear5px"></div>
-</div>
-@section menudieuhuong{
-    <div class="menudieuhuong">
-        <div class="menudieuhuong_conen">
-            <img src="@Url.Content("~/assets/images/muitendieuhuong.png")" />
-            <b>Thêm/Sửa đơn nhập hàng</b>
+        <div class="w3-center w3-bottom w3-padding-bottom">
+            <button class="w3-btn w3-border w3-round w3-blue" type="submit"><i class="fa fa-floppy-o"></i> <b>Lưu thông tin</b></button>
         </div>
-    </div>
-}
+    }
+</body>
+</html>
 

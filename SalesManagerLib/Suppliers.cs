@@ -383,6 +383,15 @@ namespace SalesManagerLib
             return result;
         }
 
+        public static Suppliers Static_Get(int supplierId, List<Suppliers> listSuppliers)
+        {
+            Suppliers RetVal;
+            RetVal = listSuppliers.Find(x => x.SupplierId == supplierId);
+            if (RetVal == null)
+                RetVal = new Suppliers();
+            return RetVal;
+        }
+
         #endregion
     }
 }
