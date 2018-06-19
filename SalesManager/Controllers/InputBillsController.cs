@@ -19,14 +19,13 @@ namespace SalesManager.Controllers
             int rowCount = 0;
             var model = new InputBillsModel
             {
-                FullName = fullName,
                 ListOrderByClauses = OrderByClauses.Static_GetList("InputBills"),
                 ListBillStatus = new BillStatus().GetAll(),
                 ListPaymentTypes = new PaymentTypes().GetAll(),
                 ListWarehouse = new Warehouse().GetAll(),
                 ListSuppliers = new Suppliers().GetAll(),
                 ListUsers = new Users().GetAll(),
-                ListInputBills = new InputBills { CustomerId = customerId, UserId = userId, SupplierId = supplierId, BillStatusId = billStatusId, PaymentTypeId = paymentTypeId , WarehouseId = warehouseId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
+                ListInputBills = new InputBills { SupplierId = supplierId, BillStatusId = billStatusId, PaymentTypeId = paymentTypeId , WarehouseId = warehouseId }.GetPage(dateFrom, dateTo, orderBy, SalesManagerConstants.RowAmount20, page > 0 ? page - 1 : page, ref rowCount),
                 RowCount = rowCount,
                 Pagination = new PaginationModel
                 {
@@ -73,12 +72,9 @@ namespace SalesManager.Controllers
                 var inputBill = new InputBills
                 {
                     InputBillId = model.InputBillId,
-                    CustomerId = model.CustomerId,
-                    UserId = model.UserId,
                     SupplierId = model.SupplierId,
                     WarehouseId = model.WarehouseId,
                     PaymentTypeId = model.PaymentTypeId,
-                    BillStatusId = model.BillStatusId,
                     Notes = model.Notes
                 };
                 if (model.InputBillId > 0)
@@ -87,6 +83,7 @@ namespace SalesManager.Controllers
                 }
                 else
                 {
+                    inputBill.BillStatusId = 1; //Chua thanh toan
                     inputBill.Insert(ref sysMessageId);
                     model.InputBillId = inputBill.InputBillId;
                 }

@@ -124,6 +124,12 @@ var salesManager = {
                 }
             });
 
+        $('.inputBillDetails').off('click').on('click',
+            function (event) {
+                event.preventDefault();
+                salesManager.PopupCenter($(this).data('url'), 'InputBillDetails', 1200, 800);
+            });
+
         $('#addCustomer').off('click').on('click',
             function (event) {
                 event.preventDefault();

@@ -18,6 +18,10 @@ namespace SalesManager.AppCode.Attributes
                     HttpContext.Current.Request.Url.AbsolutePath);
                 if (!isInPageRole)
                 {
+                    Logger.Start();
+                    var log = new Logger(typeof(SalesManagerAuthorizeAttribute));
+                    log.Info(string.Format("Url: {0} AccessDenied!", HttpContext.Current.Request.Url.AbsolutePath));
+
                     filterContext.Result = new RedirectToRouteResult(new
                         RouteValueDictionary(new { controller = "Error", action = "AccessDenied" }));
                 }

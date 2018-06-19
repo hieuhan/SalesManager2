@@ -1,4 +1,5 @@
 ﻿using SalesManager.Models;
+using SalesManagerLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,11 @@ namespace SalesManager.AppCode.Attributes
             {
                 throw new ArgumentNullException("filterContext is null");
             }
-            //ICSoft.ViewLibV3.LogUtil.WriteLog(filterContext.Exception.ToString(), "LawsHandleErrorAttribute OnException");
+
+            Logger.Start();
+            var log = new Logger(typeof(SalesManagerHandleErrorAttribute));
+            log.Log(Logger.ERROR, "", filterContext.Exception);
+
             if (filterContext.ExceptionHandled || !filterContext.HttpContext.IsCustomErrorEnabled)
             {
                 return;

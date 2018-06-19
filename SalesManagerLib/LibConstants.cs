@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace SalesManagerLib
 {
@@ -16,5 +17,6 @@ namespace SalesManagerLib
         public static string LOG_DIR = ConfigurationManager.AppSettings["LOG_DIR"] ?? ConfigurationManager.AppSettings["LOG_DIR"];
         public static string CULTURE_VN = "vi-VN";
         public static string ROLENAME_ADMIN = ConfigurationManager.AppSettings["ROLENAME_ADMIN"] ?? "";
+        public static string LOG_FILE_PATH = ConfigurationManager.AppSettings["LOG_FILE_PATH"] ?? string.Concat(HttpContext.Current.Request.PhysicalApplicationPath, "\\Logs");
     }
 }

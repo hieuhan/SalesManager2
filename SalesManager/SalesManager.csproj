@@ -154,6 +154,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InputBillDetailsController.cs" />
     <Compile Include="Controllers\InputBillsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\MediaGroupsController.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Models\ActionsModel.cs" />
     <Compile Include="Models\CustomerGroupModel.cs" />
     <Compile Include="Models\CustomersModel.cs" />
+    <Compile Include="Models\InputBillDetailsModel.cs" />
     <Compile Include="Models\InputBillsModel.cs" />
     <Compile Include="Models\ManufacturersModel.cs" />
     <Compile Include="Models\MediaGroupsModel.cs" />
@@ -940,6 +942,7 @@
     <Content Include="Views\Customers\Select.cshtml" />
     <Content Include="Views\Shared\PartialChildrenMenu.cshtml" />
     <Content Include="Views\InputBills\Edit.cshtml" />
+    <Content Include="Views\InputBillDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

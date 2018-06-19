@@ -1278,3 +1278,33 @@ input.input-validation-error {
 #removeSelectedCustomer {
     visibility: hidden;
 }
+select {
+    height: 32px;
+    padding: 4px;
+    line-height: 32px;
+    text-indent: 4px;
+    cursor: pointer;
+}
+
+#footer-wrap {
+    clear: both;
+    /* width: 910px; */
+    font-size: 95%;
+    padding: 20px 0;
+    text-align: left;
+}
+#footer {
+    clear: both;
+    color: #666;
+    margin: 0 auto 10px auto;
+    /* width: 850px; */
+    padding: 5px 0;
+    text-align: center;
+    /*background: #F8F7F7;*/
+    border-top: 1px solid #F2F2F2;
+}
+#footer-wrap a {
+    text-decoration: none;
+    color: #666666;
+    font-weight: bold;
+}

@@ -1,5 +1,6 @@
 ﻿using SalesManager.AppCode;
 using SalesManager.AppCode.Attributes;
+using SalesManager.Models;
 using SalesManagerLib;
 using System;
 using System.Collections.Generic;

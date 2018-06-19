@@ -54,6 +54,7 @@
     <Compile Include="InputBillDetails.cs" />
     <Compile Include="InputBills.cs" />
     <Compile Include="LibConstants.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Manufacturers.cs" />
     <Compile Include="md5.cs" />
     <Compile Include="MediaGroups.cs" />

@@ -23,23 +23,18 @@
     {
         @Html.AntiForgeryToken()
     <div class="w3-container" style="height: 390px; overflow: auto">
-        @Html.ValidationMessageFor(m => m.SystemMessages, "", new { @class = string.Format("text-danger w3-center w3-container w3-section w3-round w3-padding {0}", Model.SystemStatus == SystemStatus.Success ? "w3-blue" : "w3-red") })
-        <label class="w3-label w3-left w3-padding-top">Nhân viên bán :</label>
-        @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId), new { @class = "w3-input w3-border w3-padding-small" })
-
-        <label class="w3-label w3-left">Khách hàng: &nbsp;&nbsp;&nbsp;<a href="#" id="removeSelectedCustomer" title="Bỏ chọn khách hàng này"><i class="fa fa-remove" style="font-size: 20px;"></i></a></label>
-        @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", id = "selectCustomer", @readonly = "readonly", style = "cursor:zoom-in" })
-        @Html.HiddenFor(m => m.CustomerId)
-
         <label class="w3-label w3-left">Kho hàng:</label>
+        @Html.ValidationMessageFor(m => m.WarehouseId, "", new { @class = "text-danger" })
         @Html.DropDownListFor(m => m.WarehouseId, new SelectList(Model.ListWarehouse, "WarehouseId", "WarehouseDesc", Model.WarehouseId), new { @class = "w3-input w3-border w3-padding-small" })
 
         <label class="w3-label w3-left">Nhà cung cấp:</label>
+        @Html.ValidationMessageFor(m => m.SupplierId, "", new { @class = "text-danger" })
         @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
 
         <label class="w3-label w3-left">Phương thức thanh toán:</label>
+        @Html.ValidationMessageFor(m => m.PaymentTypeId, "", new { @class = "text-danger" })
         @Html.DropDownListFor(m => m.PaymentTypeId, new SelectList(Model.ListPaymentTypes, "PaymentTypeId", "PaymentTypeDesc", Model.PaymentTypeId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small" })
-        
+
         <label class="w3-label w3-left">Ghi chú:</label>
         @Html.TextAreaFor(m => m.Notes, new { @class = "w3-input w3-border w3-round w3-padding-small" })
     </div>

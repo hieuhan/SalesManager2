@@ -1,0 +1,393 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chi tiết đơn nhập hàng</title>
+    @Styles.Render("~/bundles/Css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+</head>
+<body style="">
+    <form action="" method="post">
+        <style>
+            body {
+                background: none;
+            }
+        </style>
+        <div class="w3-row w3-padding-bottom">
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Site :</label>
+            </div>
+            <div class="w3-col s3">
+                <select id="SiteId" name="SiteId" class="w3-input w3-border w3-padding-small" onchange="this.form.submit()">
+                    <option selected="selected" value="7">tusachlophoc.vn</option>
+                    <option value="1">Web default</option>
+                </select>
+            </div>
+            <div class="w3-col s1 w3-padding-top w3-padding-left">
+                <label class="w3-label">Loại dữ liệu:</label>
+            </div>
+            <div class="w3-col s3">
+                <select id="DataTypeId" name="DataTypeId" class="w3-input w3-border w3-padding-small" onchange="this.form.submit()">
+                    <option value="">...</option>
+                    <option selected="selected" value="1">Bài viết</option>
+                    <option value="2">Sản phẩm</option>
+                    <option value="3">Sách</option>
+                    <option value="4">Liên kết từ điển dữ liệu</option>
+                    <option value="5">Tác giả</option>
+                    <option value="6">Nhà tài trợ</option>
+                    <option value="7">Bạn đọc viết</option>
+                </select>
+            </div>
+            <div class="w3-col s1 w3-padding-top w3-padding-left">
+                <label class="w3-label">Nguồn:</label>
+            </div>
+            <div class="w3-col s3">
+                <select id="DataSourceId" name="DataSourceId" class="w3-input w3-border w3-padding-small" onchange="this.form.submit()">
+                    <option value="">...</option>
+                    <option value="6">bongda24h</option>
+                    <option value="7">sendo.vn</option>
+                    <option value="4">soha.vn</option>
+                    <option value="8">tamvocviet.vn</option>
+                    <option value="1">vnexpress.net</option>
+                    <option value="2">Zing.vn</option>
+                </select>
+            </div>
+            <div class="w3-col s1 w3-padding-top w3-padding-left">
+
+            </div>
+        </div>
+        <div class="w3-row w3-padding-bottom">
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Chuyên mục:</label>
+            </div>
+            <div class="w3-col s3">
+                <select id="CategoryId" name="CategoryId" class="w3-input w3-border w3-padding-small" onchange="this.form.submit()">
+                    <option value="">...</option>
+                    <option value="16">--Thiếu nhi</option>
+                    <option value="17">--Văn học</option>
+                    <option value="18">--Lịch sử - Địa lý</option>
+                    <option value="19">Thư ngỏ</option>
+                    <option value="20">Tin tức</option>
+                    <option value="21">Kỹ năng đọc</option>
+                    <option value="22">Sách</option>
+                    <option value="23">Trường</option>
+                    <option value="24">Tư liệu</option>
+                    <option value="25">Học sinh nói</option>
+                    <option value="26">Thầy cô chia sẻ</option>
+                    <option value="27">Nhà tài trợ</option>
+                    <option value="28">Tin tài trợ</option>
+                    <option value="29">Chuyên gia</option>
+                    <option value="30">Gương sáng</option>
+                    <option value="34">Sách hay</option>
+                    <option value="35">--Ảnh</option>
+                    <option value="36">--Video Clip</option>
+                    <option value="37">--Ebook</option>
+                    <option value="38">Đăng ký tài trợ</option>
+                    <option value="42">Hot news</option>
+                    <option value="43">Sách</option>
+                    <option value="45">Nhà tài trợ</option>
+                    <option value="46">--Sách thiết yếu</option>
+                    <option value="47">----Mầm non</option>
+                    <option value="50">----THCS</option>
+                    <option value="51">----THPT</option>
+                    <option value="52">--Sách thiết yếu</option>
+                    <option value="53">Thể loại sách</option>
+                    <option value="54">--Kỹ năng</option>
+                    <option value="55">--Danh nhân</option>
+                    <option value="56">--Truyện tranh</option>
+                    <option value="57">----Tiểu học</option>
+                    <option value="58">----Tiểu học</option>
+                    <option value="59">----Mầm non</option>
+                    <option value="60">----THCS</option>
+                    <option value="61">----THPT</option>
+                    <option value="62">--Sách tham khảo</option>
+                    <option value="63">--Sách tham khảo</option>
+                    <option value="65">Liên hệ</option>
+                    <option value="66">Trang chủ</option>
+                    <option value="67">Gửi tin</option>
+                </select>
+            </div>
+            <div class="w3-col s1 w3-padding-top w3-padding-left">
+                <label class="w3-label">Trạng thái:</label>
+            </div>
+            <div class="w3-col s3">
+                <select id="StatusId" name="StatusId" class="w3-input w3-border w3-padding-small" onchange="this.form.submit()">
+                    <option value="">...</option>
+                    <option value="3">Mới thêm</option>
+                    <option value="1">Duyệt</option>
+                    <option value="2">Không duyệt</option>
+                </select>
+            </div><div class="w3-col s1 w3-padding-top w3-padding-left">
+                <label class="w3-label">Từ ngày:</label>
+            </div>
+            <div class="w3-col s3">
+                <div class="w3-col s5">
+                    <input type="text" id="DateFrom" name="DateFrom" value="" class="w3-input w3-round w3-border w3-padding-small datepicker hasDatepicker">
+                </div>
+                <div class="w3-col s2 w3-padding-top w3-padding-left">
+                    <label class="w3-label">Đến:</label>
+                </div>
+                <div class="w3-col s5">
+                    <input type="text" id="DateTo" name="DateTo" value="" class="w3-input w3-round w3-border w3-padding-small datepicker hasDatepicker">
+                </div>
+            </div>
+        </div>
+        <div class="w3-row w3-padding-bottom">
+
+            <div class="w3-col s1 w3-padding-top">
+                <label class="w3-label">Từ khóa:</label>
+            </div>
+            <div class="w3-col s3">
+                <input type="text" id="Keyword" name="Keyword" value="" class="w3-input w3-round w3-border w3-padding-small">
+            </div>
+            <div class="w3-col s2 w3-padding-left">
+                <button class="w3-btn w3-round w3-light-grey w3-border w3-padding-small" type="submit">
+                    <i class="fa "></i> Tìm kiếm
+                </button>
+            </div>
+        </div>
+        <hr style="margin: 5px 0 5px">
+    </form><form action="/articles/del_multi_articlerelate" method="post">
+        <div class="w3-col s12">
+            <div class="w3-padding-top w3-left">
+                <b>Tổng cộng: 169</b>
+            </div>
+            <input type="hidden" id="oArticleId" name="oArticleId" value="2968">	<div class="w3-padding-bottom w3-right">
+                <button class="w3-btn w3-round w3-light-grey w3-border w3-hover-orange" name="delete" value="delete" type="submit">
+                    <i class="fa fa-trash"></i> Xóa
+                </button>
+            </div>
+        </div>
+        <table class="w3-col s12 w3-table w3-bordered w3-striped">
+            <tbody>
+                <tr>
+                    <td class="w3-col s6">
+                        <div class="w3-border" style="height:350px; overflow:auto;">
+                            <table class="w3-table w3-bordered w3-striped w3-border">
+                                <thead class="w3-blue">
+                                    <tr>
+                                        <th class="w3-border w3-center" style="width:50px;">#</th>
+                                        <th class="w3-border">Tiêu đề</th>
+                                        <th class="w3-border w3-center" style="width:80px;">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="w3-border w3-center">1</td>
+                                        <td class="w3-border">
+                                            Phó Chủ tịch UBND tỉnh Nam Định tặng 253 đầu sách cho trường Tiểu học Nghĩa Phong
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2968" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">2</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 14/11/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2966" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">3</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 17/10/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2965" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">4</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 27/9/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2964" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">5</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 10/10/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2963" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">6</td>
+                                        <td class="w3-border">
+                                            Huyện Giao Thủy khai mạc Tuần lễ hưởng ứng học tập suốt đời năm 2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2962" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">7</td>
+                                        <td class="w3-border">
+                                            Kế hoạch chương trình Tủ sách lớp học huyện Nghĩa Hưng
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2924" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">8</td>
+                                        <td class="w3-border">
+                                            Kế hoạch xây dựng, triển khai, quản lý và sử dụng Tủ sách lớp học huyện Nghĩa Hưng
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2923" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">9</td>
+                                        <td class="w3-border">
+                                            Báo cáo sơ kết chương trình Tủ sách lớp học huyện Nghĩa Hưng
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2922" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">10</td>
+                                        <td class="w3-border">
+                                            Đồng chí Bạch Ngọc Chiến, Phó Chủ tịch UBND tỉnh Nam Định kiểm tra việc thực hiện chương trình xây dựng tủ sách lớp học  tỉnh Nam Định
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2921" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">11</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 19/9/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2915" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">12</td>
+                                        <td class="w3-border">
+                                            NXB Kim Đồng giới thiệu ấn phẩm mới - 13/9/2016
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2914" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">13</td>
+                                        <td class="w3-border">
+                                            Gợi ý chia sách về các lớp học
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2887" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">14</td>
+                                        <td class="w3-border">
+                                            Công văn chỉ đạo của Sở GDĐT tỉnh Nam Định tiếp tục thực hiện chương trình xây dựng 12.662 tủ sách lớp học
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2886" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w3-border w3-center">15</td>
+                                        <td class="w3-border">
+                                            Điểm tin về mô hình "Tủ sách lớp học" trên chương trình VTV Chào buổi sáng
+
+                                        </td>
+                                        <td class="w3-border w3-center">
+                                            <a href="javascript:" class="fa fa-plus-circle w3-xlarge w3-text-blue w3-hover-text-orange selectarticle" data-articleid="2875" title="Chọn bài viết"></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                    <td class="w3-col s6">
+                        <div class="w3-border" style="height:350px; overflow:auto;">
+                            <table class="w3-table w3-bordered w3-striped w3-border">
+                                <thead class="w3-blue">
+                                    <tr>
+                                        <th class="w3-border w3-center" style="width:50px;">#</th>
+                                        <th class="w3-border">Tiêu đề</th>
+                                        <th class="w3-border w3-center" style="width:80px;">Thao tác</th>
+                                        <th class="w3-border w3-center" style="width:30px;"><input id="selectall" type="checkbox"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="content-ArticleRelates"></tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="w3-col s12">
+            <div class="w3-pagination w3-left">
+                <p class="w3-tag w3-teal w3-round">
+                    Trang: 1/12
+                </p>
+            </div>
+            <div class="w3-right w3-padding-top">
+                <ul class="w3-pagination w3-round w3-border">
+                    <li><a href="/articles/selectarticlerelates" class="w3-border-right">Trang đầu</a></li>
+                    <li><a href="/articles/selectarticlerelates?page=1" class="w3-border-right">Trước</a></li>
+                    <li><a href="/articles/selectarticlerelates?page=2" class="w3-border-right">Sau</a></li>
+                    <li><a href="/articles/selectarticlerelates?page=12">Trang cuối</a></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('a.selectarticle').on('click', function (e) {
+                var articlerefid = $(this).attr("data-articleid");
+                var articleid = 2968;
+                $.ajax({
+                    type: "get",
+                    url: "/jsondata/save_articlerelates/" + articleid + "-" + articlerefid,
+                    success: function (response) {
+                        if (response == "Error") {
+                            alert("Đã xảy ra lỗi!");
+
+                        } else if (response != "Exist" && response != "Error") {
+                            $("#content-ArticleRelates").html(response);
+                        }
+                    }
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+</body>
+</html>

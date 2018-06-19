@@ -1,0 +1,15 @@
+Log Time : 16/06/2018 15:19:19.981
+ThreadId : 10
+Logger : SalesManagerHandleErrorAttribute
+Level : ERROR
+
+Message:	
+Cannot access a disposed object.
+   at System.Threading.TimerQueueTimer.Change(UInt32 dueTime, UInt32 period)
+   at System.Threading.Timer.Change(Int32 dueTime, Int32 period)
+   at SalesManagerLib.Logger.Start() in D:\SalesManager\SalesManagerLib\Logger.cs:line 36
+   at SalesManager.AppCode.Attributes.SalesManagerAuthorizeAttribute.OnAuthorization(AuthorizationContext filterContext) in D:\SalesManager\SalesManager\AppCode\Attributes\SalesManagerAuthorizeAttribute.cs:line 21
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAuthorizationFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__19(AsyncCallback asyncCallback, Object asyncState)
+
+==========================================================================================================

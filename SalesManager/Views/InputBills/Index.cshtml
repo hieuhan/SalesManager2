@@ -9,13 +9,13 @@
     $(document).ready(function () {
         $('a.popup').on('click', function (e) {
             var page = $(this).attr("href");
-            var cdialog = $('<div id="divEdit" style="overflow:hidden;"></div>')
+            var cdialog = $('<div id="divEdit" class="ui-dialog-content ui-widget-content" style="overflow:hidden;"></div>')
                 .html('<iframe id="ifEdit" style="border: 0px;" src="' + page + '" width="100%" height="100%" scrolling="yes"></iframe>')
                 .dialog({
                     autoOpen: false,
                     modal: true,
-                    height: 500,
-                    width: 650,
+                    height: 650,
+                    width: 1200,
                     title: $(this).attr("title"),
                     closeText: 'Đóng',
                     close: function (event, ui) {
@@ -32,20 +32,13 @@
 {
     <div class="w3-row w3-padding-bottom">
         <div class="w3-col s1 w3-padding-top">
-            <label class="w3-label">Nhân viên nhập :</label>
+            <label class="w3-label">Nhà cung cấp:</label>
         </div>
         <div class="w3-col s3">
-            @Html.DropDownListFor(m => m.UserId, new SelectList(Model.ListUsers, "UserId", "UserName", Model.UserId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
+            @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
         <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
-            <label class="w3-label">Khách hàng: &nbsp;&nbsp;&nbsp;<a href="#" id="removeSelectedCustomer" title="Xóa điều kiện lọc theo khách hàng"><i class="fa fa-remove" style="font-size: 20px;"></i></a></label>
-        </div>
-        <div class="w3-col s2">
-            @Html.TextBoxFor(m => m.FullName, new { @class = "w3-input w3-round w3-border w3-padding-small", id= "selectCustomer", @readonly = "readonly", style = "cursor:zoom-in" })
-            @Html.HiddenFor(m=>m.CustomerId)
-        </div>
-        <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
-            <label class="w3-label">Nhà cung cấp:</label>
+            <label class="w3-label">Kho hàng:</label>
         </div>
         <div class="w3-col s2">
             @Html.DropDownListFor(m => m.SupplierId, new SelectList(Model.ListSuppliers, "SupplierId", "SupplierName", Model.SupplierId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
@@ -57,20 +50,14 @@
         </div>
         <div class="w3-col s3">
             <div class="w3-col s5">
-                @Html.TextBoxFor(m => m.DateFrom, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+                @Html.TextBoxFor(m => m.DateFrom, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker", autocomplete = "off" })
             </div>
             <div class="w3-col s2 w3-padding-top w3-padding-left">
                 <label class="w3-label">Đến:</label>
             </div>
             <div class="w3-col s5">
-                @Html.TextBoxFor(m => m.DateTo, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker" })
+                @Html.TextBoxFor(m => m.DateTo, new { @class = "w3-input w3-round w3-border w3-padding-small datepicker", autocomplete = "off" })
             </div>
-        </div>
-        <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
-            <label class="w3-label">Kho hàng:</label>
-        </div>
-        <div class="w3-col s2">
-            @Html.DropDownListFor(m => m.WarehouseId, new SelectList(Model.ListWarehouse, "WarehouseId", "WarehouseDesc", Model.WarehouseId).AddDefaultOption("...", "0"), new { @class = "w3-input w3-border w3-padding-small", onchange = "this.form.submit()" })
         </div>
         <div class="w3-col w3-padding-top w3-padding-left w3-padding-right" style="width:11%;">
             <label class="w3-label">Sắp xếp theo:</label>
@@ -123,11 +110,10 @@
             <thead class="w3-blue">
                 <tr>
                     <th class="w3-border w3-center">#</th>
-                    <th class="w3-border w3-center" width="20%">Nhân viên nhập</th>
                     <th class="w3-border w3-center" width="20%">Nhà cung cấp</th>
                     <th class="w3-border w3-center">Dư nợ</th>
                     <th class="w3-border w3-center">Kho hàng</th>
-                    <th class="w3-border w3-center" style="width:80px">Loại thanh toán</th>
+                    <th class="w3-border w3-center" style="width:150px">Loại thanh toán</th>
                     <th class="w3-border w3-center">Ghi chú</th>
                     <th class="w3-border w3-center">Trạng thái</th>
                     <th class="w3-border w3-center">Thao tác</th>
@@ -143,41 +129,49 @@
                         int number = i + (Model.Pagination.PageIndex > 0 ? Model.Pagination.PageIndex - 1 : Model.Pagination.PageIndex) * Model.Pagination.PageSize + 1;
                         <tr>
                             <td class="w3-border w3-center">@(number)</td>
-                            <td class="w3-border">@Users.Static_Get(inputBill.UserId,Model.ListUsers).FullName</td>
-                            <td class="w3-border">@Suppliers.Static_Get(inputBill.SupplierId,Model.ListSuppliers).SupplierName</td>
+                            <td class="w3-border">
+                                <div style="float:left; width: calc(100% - 25px);">
+                                    <label style="font-weight:bold;">@Suppliers.Static_Get(inputBill.SupplierId, Model.ListSuppliers).SupplierName</label>
+                                </div>
+                                <div style="float:left; width:25px;">
+                                    <div style="float: left;">
+                                        <a href="@(SalesManagerConstants.ROOT_PATH)InputBillDetails/Index?InputBillId=@inputBill.InputBillId" class="fa fa-pencil-square w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Chọn sản phẩm"></a>
+                                    </div>
+                                </div>
+                            </td>
                             <td class="w3-border">@inputBill.DebitBalance.CurrencyToString()</td>
                             <td class="w3-border w3-center">@Warehouse.Static_Get(inputBill.WarehouseId, Model.ListWarehouse).WarehouseDesc</td>
-                            <td class="w3-border w3-center">@PaymentTypes.Static_Get(inputBill.PaymentTypeId,Model.ListPaymentTypes).PaymentTypeDesc
-                                @*<input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="@priceList.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
-                                    <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />*@
-                            </td>
-                            <td class="w3-border w3-center w3-small">
-                                @inputBill.Notes.TrimmedOrDefault(string.Empty)
-                                @*Người tạo:
+                            <td class="w3-border w3-center">
+                                @PaymentTypes.Static_Get(inputBill.PaymentTypeId, Model.ListPaymentTypes).PaymentTypeDesc
+                            @*<input type="number" name="PriceListsDisplayOrders[@i].DisplayOrder" value="@priceList.DisplayOrder" class="w3-input w3-border w3-round w3-padding-tiny w3-center" />
+                                <input type="hidden" name="PriceListsDisplayOrders[@i].PriceListId" value="@priceList.PriceListId" />*@
+                        </td>
+                        <td class="w3-border w3-center w3-small">
+                            @inputBill.Notes.TrimmedOrDefault(string.Empty)
+                            @*Người tạo:
+                                <label class="w3-label">
+                                    <b>@Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName</b>
+                                </label>
+                                @if (priceList.UpdateUserId > 0)
+                                {<br />
+                                    <span>Cập nhật:</span>
                                     <label class="w3-label">
-                                        <b>@Users.Static_Get(priceList.CrUserId, Model.ListUsers).UserName</b>
+                                        <b>@Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName</b>
                                     </label>
-                                    @if (priceList.UpdateUserId > 0)
-                                    {<br />
-                                        <span>Cập nhật:</span>
-                                        <label class="w3-label">
-                                            <b>@Users.Static_Get(priceList.UpdateUserId, Model.ListUsers).UserName</b>
-                                        </label>
-                                    }
-                                    <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")*@
-                            </td>
-                            <td class="w3-border w3-center">
-                                @BillStatus.Static_Get(inputBill.BillStatusId,Model.ListBillStatus).StatusDesc
-                                @*@Status.Static_Get(priceList.StatusId, Model.ListStatus).StatusDesc*@
-                            </td>
-                            <td class="w3-border w3-center">
-                                @*<a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit?priceListId=@priceList.PriceListId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
-                                    <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/delete?priceListId=@priceList.PriceListId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Xác nhận xóa dữ liệu ?');" title="Xóa dữ liệu"></a>*@
-                            </td>
-                            <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="PriceListsId" value="@inputBill.InputBillId"></td>
-                        </tr>
-                    }
+                                }
+                                <br />@priceList.CrDateTime.toString(string.Empty, "dd/MM/yyyy HH:mm")*@
+                        </td>
+                        <td class="w3-border w3-center">
+                            @BillStatus.Static_Get(inputBill.BillStatusId, Model.ListBillStatus).StatusDesc
+                        </td>
+                        <td class="w3-border w3-center">
+                            @*<a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/Edit?priceListId=@priceList.PriceListId" class="fa fa-pencil-square-o w3-xlarge w3-text-blue w3-hover-text-orange popup" title="Sửa thông tin"></a>
+                                <a href="@(SalesManagerConstants.ROOT_PATH)PriceLists/delete?priceListId=@priceList.PriceListId" class="fa fa-trash w3-xlarge w3-text-blue w3-hover-text-orange" onclick="return confirm('Xác nhận xóa dữ liệu ?');" title="Xóa dữ liệu"></a>*@
+                        </td>
+                        <td class="w3-border w3-center"><input class="checkall w3-check" type="checkbox" name="PriceListsId" value="@inputBill.InputBillId"></td>
+                    </tr>
                 }
+            }
             </tbody>
         </table>
     </div>

@@ -12,15 +12,12 @@ namespace SalesManagerLib
     {
         #region Private Properties
         private int _InputBillId;
-        private int _UserId;
         private int _SupplierId;
         private double _DebitBalance;
         private byte _WarehouseId;
-        private int _CustomerId;
         private byte _PaymentTypeId;
         private double _Pay;
         private double _Total;
-        private DateTime _Payment;
         private string _Notes;
         private byte _BillStatusId;
         private DateTime _CrDateTime;
@@ -63,18 +60,6 @@ namespace SalesManagerLib
                 _InputBillId = value;
             }
         }
-
-        public int UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                _UserId = value;
-            }
-        }
         public int SupplierId
         {
             get
@@ -108,17 +93,6 @@ namespace SalesManagerLib
                 _WarehouseId = value;
             }
         }
-        public int CustomerId
-        {
-            get
-            {
-                return _CustomerId;
-            }
-            set
-            {
-                _CustomerId = value;
-            }
-        }
         public byte PaymentTypeId
         {
             get
@@ -150,17 +124,6 @@ namespace SalesManagerLib
             set
             {
                 _Total = value;
-            }
-        }
-        public DateTime Payment
-        {
-            get
-            {
-                return _Payment;
-            }
-            set
-            {
-                _Payment = value;
             }
         }
         public string Notes
@@ -216,15 +179,12 @@ namespace SalesManagerLib
                 {
                     InputBills m_InputBills = new InputBills();
                     m_InputBills.InputBillId = smartReader.GetInt32("InputBillId");
-                    m_InputBills.UserId = smartReader.GetInt32("UserId");
                     m_InputBills.SupplierId = smartReader.GetInt32("SupplierId");
                     m_InputBills.DebitBalance = smartReader.GetFloat("DebitBalance");
                     m_InputBills.WarehouseId = smartReader.GetByte("WarehouseId");
-                    m_InputBills.CustomerId = smartReader.GetInt32("CustomerId");
                     m_InputBills.PaymentTypeId = smartReader.GetByte("PaymentTypeId");
                     m_InputBills.Pay = smartReader.GetFloat("Pay");
                     m_InputBills.Total = smartReader.GetFloat("Total");
-                    m_InputBills.Payment = smartReader.GetDateTime("Payment");
                     m_InputBills.Notes = smartReader.GetString("Notes");
                     m_InputBills.BillStatusId = smartReader.GetByte("BillStatusId");
                     m_InputBills.CrDateTime = smartReader.GetDateTime("CrDateTime");
@@ -278,16 +238,12 @@ namespace SalesManagerLib
             {
                 SqlCommand cmd = new SqlCommand("InputBills_InsertOrUpdate");
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add(new SqlParameter("@UserId", this.UserId));
                 cmd.Parameters.Add(new SqlParameter("@SupplierId", this.SupplierId));
                 cmd.Parameters.Add(new SqlParameter("@DebitBalance", this.DebitBalance));
                 cmd.Parameters.Add(new SqlParameter("@WarehouseId", this.WarehouseId));
-                cmd.Parameters.Add(new SqlParameter("@CustomerId", this.CustomerId));
                 cmd.Parameters.Add(new SqlParameter("@PaymentTypeId", this.PaymentTypeId));
                 cmd.Parameters.Add(new SqlParameter("@Pay", this.Pay));
                 cmd.Parameters.Add(new SqlParameter("@Total", this.Total));
-                if (this.Payment != DateTime.MinValue)
-                cmd.Parameters.Add(new SqlParameter("@Payment", this.Payment));
                 cmd.Parameters.Add(new SqlParameter("@Notes", this.Notes));
                 cmd.Parameters.Add(new SqlParameter("@BillStatusId", this.BillStatusId));
                 cmd.Parameters.Add(new SqlParameter("@InputBillId", this.InputBillId)).Direction = ParameterDirection.InputOutput;
@@ -359,11 +315,9 @@ namespace SalesManagerLib
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add(new SqlParameter("@InputBillId", this.InputBillId));
-                cmd.Parameters.Add(new SqlParameter("@UserId", this.UserId));
                 cmd.Parameters.Add(new SqlParameter("@SupplierId", this.SupplierId));
                 cmd.Parameters.Add(new SqlParameter("@DebitBalance", this.DebitBalance));
                 cmd.Parameters.Add(new SqlParameter("@WarehouseId", this.WarehouseId));
-                cmd.Parameters.Add(new SqlParameter("@CustomerId", this.CustomerId));
                 cmd.Parameters.Add(new SqlParameter("@PaymentTypeId", this.PaymentTypeId));
                 cmd.Parameters.Add(new SqlParameter("@Pay", this.Pay));
                 cmd.Parameters.Add(new SqlParameter("@Total", this.Total));

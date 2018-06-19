@@ -1,4 +1,5 @@
 ﻿using SalesManager.Controllers;
+using SalesManagerLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,10 @@ namespace SalesManager
             var httpStatusCode = httpException.GetHttpCode();
             if (exception != null)
             {
+                Logger.Start();
+                var log = new Logger(typeof(MvcApplication)); 
+                log.Log(Logger.ERROR, "Application_Error", exception);
+
                 var routeData = new RouteData();
                 routeData.Values["controller"] = "Error";
                 routeData.Values["action"] = "Index";
